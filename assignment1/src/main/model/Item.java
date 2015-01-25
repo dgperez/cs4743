@@ -46,5 +46,13 @@ public class Item {
 	public void setVendor(String vendor) {
 		this.vendor = vendor;
 	}
+	
+	@Override
+	public String toString(){
+		return "Part#: " + this.partNumber + ", " +
+				"Part Name: " + this.partName + ", " +
+				((!this.vendor.isEmpty()) ? "Vendor: " + this.vendor + ", " : "")  
+				+ "Quantity: " + this.quantity;
+	}
 
 }
