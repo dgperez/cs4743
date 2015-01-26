@@ -1,8 +1,8 @@
 package main.controller;
 
-public class PrimaryController {
+public class PartsDetailController {
 
-	public PrimaryController() {
+	public PartsDetailController() {
 		// TODO Auto-generated constructor stub
 	}
 

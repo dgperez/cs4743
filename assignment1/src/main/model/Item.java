@@ -27,8 +27,8 @@ public class Item {
 		return partNumber;
 	}
 	
-	public void setPartNumber(String partName) {
-		this.partName = partName;
+	public void setPartNumber(String partNumber) {
+		this.partNumber = partNumber;
 	}
 
 	public String getPartName() {
