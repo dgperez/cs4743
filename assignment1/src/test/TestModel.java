@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.Assert.*;
+import main.model.Inventory;
 import main.model.Item;
 
 import org.junit.Test;
@@ -22,6 +23,8 @@ public class TestModel {
 		   i.getVendor().equals("vendorNameGoesHere") && 
 		   i.getQuantity() == 10);
 	}
+	
+	
 
 	@Test
 	public void editpartNumberTest() {
@@ -50,5 +53,40 @@ public class TestModel {
 		i.setQuantity(1);
 		assertTrue(i.getQuantity() == 1);
 	}
+
+	@Test
+	public void createInventoryTest() {
+		Inventory i = new Inventory();
+		i.createInventory();
+		assertEquals(0, i.getInventory().lastIndexOf(i)+1);
+	}
+
+	@Test
+	public void addItemToInventoryTest() {
+		Inventory i = new Inventory();
+		i.createInventory();
+		Item o = new Item("1", "partNameGoesHere", "vendorNameGoesHere", 10);
+		try {
+			i.addItem(o, i.getInventory());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertTrue(i.getInventory().contains(o));
+	}
+
+	@Test
+	public void removeItemFromInventoryTest() {
+		Inventory i = new Inventory();
+		i.createInventory();
+		Item o = new Item("1", "partNameGoesHere", "vendorNameGoesHere", 10);
+		try {
+			i.addItem(o, i.getInventory());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertTrue(i.getInventory().contains(o));
+	}
+
+	
 	
 }
