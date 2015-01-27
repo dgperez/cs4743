@@ -4,7 +4,6 @@ import main.controller.InventoryListController;
 import main.model.Inventory;
 import main.model.Item;
 import main.view.InventoryListView;
-import main.view.PartsDetailView;
 
 public class Cabinetron {
 

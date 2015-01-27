@@ -54,6 +54,7 @@ public class Inventory {
 	public void removeItem(Item item, List<Item> inventory) {
 		inventory.remove(item);
 		this.updateView();
+		this.closeOpenObservers(item);
 	}
 	
 	/**
@@ -62,7 +63,9 @@ public class Inventory {
 	 * @param inventory 
 	 */
 	public void removeItem(int index, List<Item> inventory) {
-		inventory.remove(index);
+		Item temp = inventory.remove(index);
+		this.updateView();
+		this.closeOpenObservers(temp);
 	}
 	
 	public void registerView(InventoryListView inventoryListView){
@@ -76,6 +79,21 @@ public class Inventory {
 	private void updateObservers(){
 		for(PartsDetailView partsDetailView : this.observers){
 			partsDetailView.refreshObserver();
+		}
+	}
+	
+	private void closeOpenObservers(Item item){
+		ArrayList<PartsDetailView> itemsToRemove = new ArrayList<PartsDetailView>();
+		for(PartsDetailView partsDetailView : this.observers){
+			if(partsDetailView.containsItem(item)){
+				itemsToRemove.add(partsDetailView);
+			}
+		}
+		
+		this.observers.removeAll(itemsToRemove);
+		
+		for(PartsDetailView removedViews : itemsToRemove){
+			removedViews.dispose();
 		}
 	}
 	

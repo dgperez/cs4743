@@ -29,7 +29,7 @@ public class InventoryListController implements MouseListener, ActionListener {
 	public void mouseClicked(MouseEvent e) {
 		if(e.getClickCount() == 2){
 			if(e.getSource() instanceof JList){
-				JList list = (JList)e.getSource();
+				JList<Object> list = (JList<Object>)e.getSource();
 				Item tempItem = (Item)list.getSelectedValue();
 				PartsDetailView view = new PartsDetailView();
 				this.inventory.registerObservers(view);

@@ -57,6 +57,51 @@ public class Item {
 	}
 	
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((partName == null) ? 0 : partName.hashCode());
+		result = prime * result
+				+ ((partNumber == null) ? 0 : partNumber.hashCode());
+		result = prime * result + quantity;
+		result = prime * result + (toEdit ? 1231 : 1237);
+		result = prime * result + ((vendor == null) ? 0 : vendor.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Item other = (Item) obj;
+		if (partName == null) {
+			if (other.partName != null)
+				return false;
+		} else if (!partName.equals(other.partName))
+			return false;
+		if (partNumber == null) {
+			if (other.partNumber != null)
+				return false;
+		} else if (!partNumber.equals(other.partNumber))
+			return false;
+		if (quantity != other.quantity)
+			return false;
+		if (toEdit != other.toEdit)
+			return false;
+		if (vendor == null) {
+			if (other.vendor != null)
+				return false;
+		} else if (!vendor.equals(other.vendor))
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString(){
 		return "Part Name: " + this.partName + ", " +
 				"Part#: " + this.partNumber + ", " +

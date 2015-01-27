@@ -13,11 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import sun.org.mozilla.javascript.internal.UintMap;
-
-import main.controller.InventoryListController;
 import main.controller.PartsDetailController;
-import main.model.Inventory;
 import main.model.Item;
 
 public class PartsDetailView extends JFrame {
@@ -162,5 +158,9 @@ public class PartsDetailView extends JFrame {
 		String temp = this.partQuantity.getText();
 		return (temp != null && temp.matches("^[0-9]+$")) 
 				? Integer.parseInt(temp) : -1;
+	}
+	
+	public boolean containsItem(Item item){
+		return (this.item == item);
 	}
 }
