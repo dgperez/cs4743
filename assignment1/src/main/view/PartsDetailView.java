@@ -1,9 +1,11 @@
 package main.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import main.controller.InventoryListController;
+import main.model.Inventory;
 import main.model.Item;
 
 public class PartsDetailView extends JFrame {
@@ -46,9 +50,19 @@ public class PartsDetailView extends JFrame {
 	
 	private Item item;
 	
-	public PartsDetailView() {
+	private JPanel controls;
+	
+	private JPanel inputs;
+	
+	private Inventory inventory;
+	
+	private JButton savePart;
+	
+	public PartsDetailView(Inventory inventory) {
 		
-		JPanel inputs = new JPanel(new BorderLayout(5, 5));
+		this.inventory = inventory;
+		
+		this.inputs = new JPanel(new BorderLayout(5, 5));
 		
 		JPanel labelsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
 		JPanel fieldsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
@@ -61,8 +75,8 @@ public class PartsDetailView extends JFrame {
 		
 		this.partQuantity = new JTextField(10);
 		
-		inputs.add(labelsPanel, BorderLayout.WEST);
-		inputs.add(fieldsPanel, BorderLayout.CENTER);
+		this.inputs.add(labelsPanel, BorderLayout.WEST);
+		this.inputs.add(fieldsPanel, BorderLayout.CENTER);
 		
 		labelsPanel.add(this.partNumberLabel);
 		fieldsPanel.add(this.partNumber);
@@ -76,14 +90,17 @@ public class PartsDetailView extends JFrame {
 		labelsPanel.add(this.partQuantityLabel);
 		fieldsPanel.add(this.partQuantity);
 		
-		JPanel controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
+		this.controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
 		
-		controls.add(new JButton("Save Part"));
+		this.savePart = new JButton("Save Part");
+		this.savePart.setActionCommand("save");
+		
+		this.controls.add(this.savePart);
 	
 		JPanel gui = new JPanel(new BorderLayout(10, 10));
 		gui.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		gui.add(inputs, BorderLayout.CENTER);
-		gui.add(controls, BorderLayout.SOUTH);
+		gui.add(this.inputs, BorderLayout.CENTER);
+		gui.add(this.controls, BorderLayout.SOUTH);
 		
 		add(gui);
 		
@@ -108,6 +125,18 @@ public class PartsDetailView extends JFrame {
 		this.partName.setText(this.item.getPartName());
 		this.vendor.setText(this.item.getVendor());
 		this.partQuantity.setText(Integer.toString(this.item.getQuantity()));
+	}
+	
+	public void registerListener(InventoryListController listener){
+		
+		// add listener for buttons
+		Component[] components = this.controls.getComponents();
+		for (Component component : components) {
+			if (component instanceof AbstractButton) {
+				AbstractButton button = (AbstractButton) component;
+				button.addActionListener(listener);
+			}
+		}
 	}
 
 }
