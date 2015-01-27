@@ -29,7 +29,6 @@ public class Inventory {
 		boolean partExists = false;
 		for(Item i : inventory) {
 			if(i.getPartName().equals(item.getPartName())) {
-				System.out.println(i.getPartName() + " " + item.getPartName());
 				partExists = true;
 				if(!i.canEditPart()){
 					throw new Exception("Part number already exists in the list.");

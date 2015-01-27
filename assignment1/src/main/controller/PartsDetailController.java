@@ -38,6 +38,7 @@ public class PartsDetailController implements ActionListener {
 				tempItem.setEditPart(editPart);
 				if(this.item == null){
 					this.item = tempItem;
+					this.view.setItem(this.item);
 				}
 				this.item.setEditPart(editPart);
 				if(this.validateSavedItem(tempItem)){
