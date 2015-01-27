@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 import main.model.Inventory;
 import main.model.Item;
@@ -18,7 +19,8 @@ public class InventoryListController implements MouseListener, ActionListener {
 	
 	private Inventory inventory;
 
-	public InventoryListController(InventoryListView listView, Inventory inventory) {
+	public InventoryListController(InventoryListView listView, 
+			Inventory inventory) {
 		this.listView = listView;
 		this.inventory = inventory;
 	}
@@ -28,9 +30,15 @@ public class InventoryListController implements MouseListener, ActionListener {
 		if(e.getClickCount() == 2){
 			if(e.getSource() instanceof JList){
 				JList list = (JList)e.getSource();
-				PartsDetailView view = new PartsDetailView(this.inventory);
-				view.setItem((Item)list.getSelectedValue());
-				view.showPartsDetailView();
+				Item tempItem = (Item)list.getSelectedValue();
+				PartsDetailView view = new PartsDetailView();
+				this.inventory.registerObservers(view);
+				view.setItem(tempItem);
+				PartsDetailController partController = 
+						new PartsDetailController(view, 
+								tempItem, this.inventory);
+				partController.editPart();
+				view.registerListener(partController);
 			}
 		}
 	}
@@ -50,11 +58,24 @@ public class InventoryListController implements MouseListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if("add".equals(e.getActionCommand())){
-			
+			PartsDetailView view = new PartsDetailView();
+			PartsDetailController partController = 
+					new PartsDetailController(view, 
+							null, this.inventory);
+			this.inventory.registerObservers(view);
+			partController.itemIsNew();
+			view.registerListener(partController);
 		} else if ("delete".equals(e.getActionCommand())){
-			
+			Object temp = this.listView.getSelectedListItem();
+			if(temp != null){
+				Item tempItem = (Item)temp;
+				this.inventory.removeItem(tempItem, 
+						this.inventory.getInventory());
+			} else {
+				JOptionPane.showMessageDialog(null, 
+						"Select an item in the list to delete.", 
+						"No Item to Delete", JOptionPane.ERROR_MESSAGE);
+			}
 		}
-		
 	}
-	
 }

@@ -16,7 +16,7 @@ import javax.swing.JScrollPane;
 import main.controller.InventoryListController;
 import main.model.Inventory;
 
-public class InventoryListView extends JFrame {
+public class InventoryListView extends JFrame{
 	
 	/**
 	 * 
@@ -95,5 +95,9 @@ public class InventoryListView extends JFrame {
 	public void refreshList(Inventory inventory){
 		this.list.setListData(this.inventory.getInventory().toArray());
 		this.list.repaint();
+	}
+	
+	public Object getSelectedListItem(){
+		return this.list.getSelectedValue();
 	}
 }

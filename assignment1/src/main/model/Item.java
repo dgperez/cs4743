@@ -5,6 +5,7 @@ public class Item {
 	private String partName;
 	private String vendor;
 	private int quantity;
+	private boolean toEdit = false;
 	
 	public Item(String partNumber, String partName, String vendor,
 			int quantity) {
@@ -47,10 +48,18 @@ public class Item {
 		this.vendor = vendor;
 	}
 	
+	public void setEditPart(boolean editPart){
+		this.toEdit = editPart;
+	}
+	
+	public boolean canEditPart(){
+		return this.toEdit;
+	}
+	
 	@Override
 	public String toString(){
-		return "Part#: " + this.partNumber + ", " +
-				"Part Name: " + this.partName + ", " +
+		return "Part Name: " + this.partName + ", " +
+				"Part#: " + this.partNumber + ", " +
 				((!this.vendor.isEmpty()) ? "Vendor: " + this.vendor + ", " : "")  
 				+ "Quantity: " + this.quantity;
 	}

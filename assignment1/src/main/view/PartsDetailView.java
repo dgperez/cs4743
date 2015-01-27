@@ -13,7 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import sun.org.mozilla.javascript.internal.UintMap;
+
 import main.controller.InventoryListController;
+import main.controller.PartsDetailController;
 import main.model.Inventory;
 import main.model.Item;
 
@@ -54,13 +57,9 @@ public class PartsDetailView extends JFrame {
 	
 	private JPanel inputs;
 	
-	private Inventory inventory;
-	
 	private JButton savePart;
 	
-	public PartsDetailView(Inventory inventory) {
-		
-		this.inventory = inventory;
+	public PartsDetailView() {
 		
 		this.inputs = new JPanel(new BorderLayout(5, 5));
 		
@@ -117,17 +116,25 @@ public class PartsDetailView extends JFrame {
 	
 	public void setItem(Item item){
 		this.item = item;
-		this.refreshItemDisplayed();
+		this.refreshObserver();
 	}
 	
-	public void refreshItemDisplayed(){
+	public Item getItem(){
+		return new Item(this.getPartNumber(),
+				this.getPartName(),
+				this.getVendor(),
+				this.getQuantity());
+				
+	}
+	
+	public void refreshObserver(){
 		this.partNumber.setText(this.item.getPartNumber());
 		this.partName.setText(this.item.getPartName());
 		this.vendor.setText(this.item.getVendor());
 		this.partQuantity.setText(Integer.toString(this.item.getQuantity()));
 	}
 	
-	public void registerListener(InventoryListController listener){
+	public void registerListener(PartsDetailController listener){
 		
 		// add listener for buttons
 		Component[] components = this.controls.getComponents();
@@ -139,4 +146,21 @@ public class PartsDetailView extends JFrame {
 		}
 	}
 
+	public String getPartNumber(){
+		return this.partNumber.getText();
+	}
+	
+	public String getPartName(){
+		return this.partName.getText();
+	}
+	
+	public String getVendor(){
+		return this.vendor.getText();
+	}
+	
+	public int getQuantity(){
+		String temp = this.partQuantity.getText();
+		return (temp != null && temp.matches("^[0-9]+$")) 
+				? Integer.parseInt(temp) : -1;
+	}
 }

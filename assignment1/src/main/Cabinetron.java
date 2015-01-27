@@ -14,6 +14,8 @@ public class Cabinetron {
 	public static void main(String[] args){
 		Inventory inventoryList = new Inventory();
 		inventoryList.createInventory();
+		InventoryListView test1 = new InventoryListView(inventoryList);
+		inventoryList.registerView(test1);
 
 		Item demo1 = new Item("0001", "Part1", "Vendor1", 2);
 		Item demo2 = new Item("0003", "Part3", "Vendor2", 3);
@@ -24,43 +26,15 @@ public class Cabinetron {
 			inventoryList.addItem(demo1, inventoryList.getInventory());
 			inventoryList.addItem(demo2, inventoryList.getInventory());
 			inventoryList.addItem(demo3, inventoryList.getInventory());
+			inventoryList.addItem(demo4, inventoryList.getInventory());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		InventoryListView test1 = new InventoryListView(inventoryList);
-		
-		PartsDetailView test2 = new PartsDetailView(inventoryList);
 		
 		InventoryListController controller = new InventoryListController(test1, inventoryList);
 		
 		test1.registerListener(controller);
-		
-		test2.setItem(demo1);
-		test2.showPartsDetailView();
-		
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		
-		demo1.setPartNumber("9999");
-		demo1.setPartName("part-test");
-		demo1.setVendor("noVendor");
-		demo1.setQuantity(100);
-		test2.refreshItemDisplayed();
-		
-		try {
-			inventoryList.addItem(demo4, inventoryList.getInventory());
-			test1.refreshList(inventoryList);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 	}
 
 }
