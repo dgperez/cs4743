@@ -23,7 +23,7 @@ public class InventoryListView extends JFrame {
 	 */
 	private static final long serialVersionUID = -354701430566371345L;
 
-	private final JList<Object> list;
+	private JList<Object> list;
 	
 	private JButton addPart;
 	
@@ -34,22 +34,24 @@ public class InventoryListView extends JFrame {
 	private JScrollPane scrollPane;
 	
 	private JPanel controls;
+	
+	private JPanel panel;
 
 	public InventoryListView(Inventory inventory) {
 		super("Cabinetron Inventory");
 		
 		this.inventory = inventory;
 		
-		JPanel panel = new JPanel();
-		panel.setLayout(new BorderLayout());
-		panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		this.panel = new JPanel();
+		this.panel.setLayout(new BorderLayout());
+		this.panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		
 		this.list = new JList<Object>(this.inventory.getInventory().toArray());
 		
 		this.scrollPane = new JScrollPane();
 		this.scrollPane.getViewport().add(this.list);
 		this.scrollPane.setPreferredSize(new Dimension(250, 200));
-		panel.add(this.scrollPane);
+		this.panel.add(this.scrollPane);
 		
 		this.controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 2));
 		
@@ -61,7 +63,7 @@ public class InventoryListView extends JFrame {
 		this.deletePart.setActionCommand("delete");
 		this.controls.add(this.deletePart);
 		
-		add(panel, BorderLayout.CENTER);
+		add(this.panel, BorderLayout.CENTER);
 		add(this.controls, BorderLayout.SOUTH);
 		
 		pack();
@@ -88,5 +90,10 @@ public class InventoryListView extends JFrame {
 				button.addActionListener(listener);
 			}
 		}
+	}
+	
+	public void refreshList(Inventory inventory){
+		this.list.setListData(this.inventory.getInventory().toArray());
+		this.list.repaint();
 	}
 }

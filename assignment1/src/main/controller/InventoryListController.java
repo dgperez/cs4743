@@ -28,7 +28,7 @@ public class InventoryListController implements MouseListener, ActionListener {
 		if(e.getClickCount() == 2){
 			if(e.getSource() instanceof JList){
 				JList list = (JList)e.getSource();
-				PartsDetailView view = new PartsDetailView();
+				PartsDetailView view = new PartsDetailView(this.inventory);
 				view.setItem((Item)list.getSelectedValue());
 				view.showPartsDetailView();
 			}
@@ -49,7 +49,11 @@ public class InventoryListController implements MouseListener, ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(e.getActionCommand());
+		if("add".equals(e.getActionCommand())){
+			
+		} else if ("delete".equals(e.getActionCommand())){
+			
+		}
 		
 	}
 	

@@ -1,9 +1,33 @@
 package main.controller;
 
-public class PartsDetailController {
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-	public PartsDetailController() {
-		// TODO Auto-generated constructor stub
+import main.model.Inventory;
+import main.model.Item;
+import main.view.PartsDetailView;
+
+public class PartsDetailController implements ActionListener {
+
+	private PartsDetailView view;
+	
+	private Item item;
+	
+	private Inventory inventory;
+	
+	public PartsDetailController(PartsDetailView view
+			, Item item
+			, Inventory inventory) {
+		this.view = view;
+		this.item = item;
+		this.inventory = inventory;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getActionCommand().equals("save")){
+			
+		}
 	}
 
 }
