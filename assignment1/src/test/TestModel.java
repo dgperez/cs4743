@@ -87,6 +87,12 @@ public class TestModel {
 		assertTrue(i.getInventory().contains(o));
 	}
 
-	
+	@Test
+	public void checkIncrimentingId() {
+		Item i = new Item("1", "partNameGoesHere", "vendorNameGoesHere", 10);
+		assertEquals(4, i.getId());
+		Item j = new Item("2", "partName", "vendorName", 5);
+		assertEquals(5, j.getId());
+	}
 	
 }
