@@ -1,7 +1,7 @@
 package main.model;
 
 public class Item {
-	private static int memberNumber = 0;
+	private static int memberNumber = 1;
 	private int id;
 	private String partNumber;
 	private String partName;

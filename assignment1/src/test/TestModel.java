@@ -89,10 +89,11 @@ public class TestModel {
 
 	@Test
 	public void checkIncrimentingId() {
+		/* main creates 4 items so new items will start at id=5 */
 		Item i = new Item("1", "partNameGoesHere", "vendorNameGoesHere", 10);
-		assertEquals(4, i.getId());
+		assertEquals(5, i.getId());
 		Item j = new Item("2", "partName", "vendorName", 5);
-		assertEquals(5, j.getId());
+		assertEquals(6, j.getId());
 	}
 	
 }
