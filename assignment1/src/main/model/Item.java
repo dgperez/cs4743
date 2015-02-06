@@ -114,7 +114,7 @@ public class Item {
 
 	@Override
 	public String toString(){
-		return "Part Name: " + this.partName + ", " +
+		return "Id: " + this.id + ", Part Name: " + this.partName + ", " +
 				"Part#: " + this.partNumber + ", " +
 				((!this.vendor.isEmpty()) ? "Vendor: " + this.vendor + ", " : "")  
 				+ "Quantity: " + this.quantity;
