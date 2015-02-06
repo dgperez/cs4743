@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,6 +16,7 @@ import javax.swing.JTextField;
 
 import main.controller.PartsDetailController;
 import main.model.Item;
+import main.model.Item.UnitOfQuantity;
 
 public class PartsDetailView extends JFrame {
 
@@ -39,6 +41,8 @@ public class PartsDetailView extends JFrame {
 	 * */
 	private JTextField partQuantity;
 	
+	private JComboBox<UnitOfQuantity> unitOfQuantity;
+	
 	private JLabel partNumberLabel = new JLabel("Part Number: ");
 	
 	private JLabel partNameLabel = new JLabel("Part Name: ");
@@ -46,6 +50,8 @@ public class PartsDetailView extends JFrame {
 	private JLabel vendorLabel = new JLabel("Vendor: ");
 	
 	private JLabel partQuantityLabel = new JLabel("Quantity: ");
+	
+	private JLabel partUnitOfQuantity = new JLabel("Unit Of Quantity");
 	
 	private Item item;
 	
@@ -73,6 +79,9 @@ public class PartsDetailView extends JFrame {
 		this.inputs.add(labelsPanel, BorderLayout.WEST);
 		this.inputs.add(fieldsPanel, BorderLayout.CENTER);
 		
+		this.unitOfQuantity = 
+				new JComboBox<UnitOfQuantity>(UnitOfQuantity.values());
+		
 		labelsPanel.add(this.partNumberLabel);
 		fieldsPanel.add(this.partNumber);
 		
@@ -84,6 +93,9 @@ public class PartsDetailView extends JFrame {
 		
 		labelsPanel.add(this.partQuantityLabel);
 		fieldsPanel.add(this.partQuantity);
+		
+		labelsPanel.add(this.partUnitOfQuantity);
+		fieldsPanel.add(this.unitOfQuantity);
 		
 		this.controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
 		
@@ -119,7 +131,8 @@ public class PartsDetailView extends JFrame {
 		return new Item(this.getPartNumber(),
 				this.getPartName(),
 				this.getVendor(),
-				this.getQuantity());
+				this.getQuantity(),
+				this.getUnitOfQuantity());
 				
 	}
 	
@@ -158,6 +171,10 @@ public class PartsDetailView extends JFrame {
 		String temp = this.partQuantity.getText();
 		return (temp != null && temp.matches("^[0-9]+$")) 
 				? Integer.parseInt(temp) : -1;
+	}
+	
+	public UnitOfQuantity getUnitOfQuantity(){
+		return (UnitOfQuantity)this.unitOfQuantity.getSelectedItem();
 	}
 	
 	public boolean containsItem(Item item){

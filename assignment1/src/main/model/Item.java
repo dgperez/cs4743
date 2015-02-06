@@ -6,14 +6,25 @@ public class Item {
 	private String vendor;
 	private int quantity;
 	private boolean toEdit = false;
+		
+	private UnitOfQuantity currentUnit;
 	
 	public Item(String partNumber, String partName, String vendor,
-			int quantity) {
+			int quantity, UnitOfQuantity unit) {
 		super();
 		this.partNumber = partNumber;
 		this.partName = partName;
 		this.vendor = vendor;
 		this.quantity = quantity;
+		this.currentUnit = unit;
+	}
+	
+	public Item.UnitOfQuantity getUnitOfQuantity(){
+		return this.currentUnit;
+	}
+	
+	public void setUnitOfQuantity(Item.UnitOfQuantity unit){
+		this.currentUnit = unit;
 	}
 
 	public int getQuantity() {
@@ -105,8 +116,35 @@ public class Item {
 	public String toString(){
 		return "Part Name: " + this.partName + ", " +
 				"Part#: " + this.partNumber + ", " +
-				((!this.vendor.isEmpty()) ? "Vendor: " + this.vendor + ", " : "")  
-				+ "Quantity: " + this.quantity;
+				((!this.vendor.isEmpty()) 
+						? "Vendor: " + this.vendor + ", " : "")  
+				+ "Quantity: " + this.quantity
+				+ " " + this.currentUnit;
 	}
 
+	public enum UnitOfQuantity{
+		UNKNOWN("Unknown"),
+		LINEAR_FEET("Linear Feet"),
+		PIECES("Pieces");
+		
+		private final String unit;
+		
+		UnitOfQuantity(String unit){
+			this.unit = unit;
+		}
+		
+		public static String[] getUnitValues(){
+			UnitOfQuantity[] units = UnitOfQuantity.values();
+			String[] tempArray = new String[units.length];
+			for(int i = 0; i < units.length; i++){
+				tempArray[i] = units[i].toString();
+			}
+			return tempArray;
+		}
+		
+		@Override
+		public String toString(){
+			return this.unit;
+		}
+	}
 }

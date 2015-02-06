@@ -3,6 +3,7 @@ package main;
 import main.controller.InventoryListController;
 import main.model.Inventory;
 import main.model.Item;
+import main.model.Item.UnitOfQuantity;
 import main.view.InventoryListView;
 
 public class Cabinetron {
@@ -16,10 +17,15 @@ public class Cabinetron {
 		InventoryListView test1 = new InventoryListView(inventoryList);
 		inventoryList.registerView(test1);
 
-		Item demo1 = new Item("0001", "Part1", "Vendor1", 2);
-		Item demo2 = new Item("0003", "Part3", "Vendor2", 3);
-		Item demo3 = new Item("0014", "Part19", "Vendor4", 5);
-		Item demo4 = new Item("0099", "Eva01", "NERV", 1);
+		Item demo1 = 
+				new Item("0001", "Part1", "Vendor1", 2, UnitOfQuantity.PIECES);
+		Item demo2 = 
+				new Item("0003", "Part3", "Vendor2", 3, UnitOfQuantity.PIECES);
+		Item demo3 = 
+				new Item("0014", "Part19", "Vendor4", 5, 
+						UnitOfQuantity.LINEAR_FEET);
+		Item demo4 = 
+				new Item("0099", "Eva01", "NERV", 1, UnitOfQuantity.PIECES);
 		
 		try {
 			inventoryList.addItem(demo1, inventoryList.getInventory());

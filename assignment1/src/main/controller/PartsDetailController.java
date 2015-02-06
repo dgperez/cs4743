@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import main.model.Inventory;
 import main.model.Item;
+import main.model.Item.UnitOfQuantity;
 import main.view.PartsDetailView;
 
 public class PartsDetailController implements ActionListener {
@@ -51,7 +52,6 @@ public class PartsDetailController implements ActionListener {
 				JOptionPane.showMessageDialog(null, 
 						"A part already exists with that part name.", 
 						"Part Exists", JOptionPane.ERROR_MESSAGE);
-				//ex.printStackTrace();
 			}
 		}
 	}
@@ -81,6 +81,9 @@ public class PartsDetailController implements ActionListener {
 		if(item.getQuantity() <= 0 && this.newItem){
 			valid = false;
 			message += "Initial quantity must be greater than zero.\n";
+		}
+		if(item.getUnitOfQuantity().equals(UnitOfQuantity.UNKNOWN)){
+			message += "Quantity cannot be 'Unknown'.\n";
 		}
 		if(!valid){
 			System.out.println(message);
