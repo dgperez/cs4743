@@ -12,7 +12,7 @@ public class TestModel {
 	@Test
 	public void createItemTest1() {
 		Item i = new Item("1", "partNameGoesHere", "", 10, 
-				UnitOfQuantity.PIECES);
+				UnitOfQuantity.PIECES, "");
 		assertTrue(i.getPartName().equals("partNameGoesHere") && 
 		   i.getVendor().equals("") && 
 		   i.getQuantity() == 10 &&
@@ -22,7 +22,7 @@ public class TestModel {
 	@Test
 	public void createItemTest2() {
 		Item i = new Item("1", "partNameGoesHere", "vendorNameGoesHere", 10,
-				UnitOfQuantity.PIECES);
+				UnitOfQuantity.PIECES, "");
 		assertTrue(i.getPartName().equals("partNameGoesHere") && 
 		   i.getVendor().equals("vendorNameGoesHere") && 
 		   i.getQuantity() == 10 && 
@@ -34,7 +34,7 @@ public class TestModel {
 	@Test
 	public void editpartNumberTest() {
 		Item i = new Item("1", "partNameGoesHere", "vendorNameGoesHere", 10,
-				UnitOfQuantity.PIECES);
+				UnitOfQuantity.PIECES, "");
 		i.setPartNumber("2");
 		assertTrue(i.getPartNumber().equals("2"));
 	}
@@ -42,7 +42,7 @@ public class TestModel {
 	@Test
 	public void editpartNameTest() {
 		Item i = new Item("1", "partNameGoesHere", "vendorNameGoesHere", 10,
-				UnitOfQuantity.PIECES);
+				UnitOfQuantity.PIECES, "");
 		i.setPartName("newPartName");
 		assertTrue(i.getPartName().equals("newPartName"));
 	}
@@ -50,7 +50,7 @@ public class TestModel {
 	@Test
 	public void editVendorTest() {
 		Item i = new Item("1", "partNameGoesHere", "vendorNameGoesHere", 10,
-				UnitOfQuantity.PIECES);
+				UnitOfQuantity.PIECES, "");
 		i.setVendor("newVendor");
 		assertTrue(i.getVendor().equals("newVendor"));
 	}
@@ -58,7 +58,7 @@ public class TestModel {
 	@Test
 	public void editQuantityTest() {
 		Item i = new Item("1", "partNameGoesHere", "vendorNameGoesHere", 10,
-				UnitOfQuantity.PIECES);
+				UnitOfQuantity.PIECES, "");
 		i.setQuantity(1);
 		assertTrue(i.getQuantity() == 1);
 	}
@@ -75,7 +75,7 @@ public class TestModel {
 		Inventory i = new Inventory();
 		i.createInventory();
 		Item o = new Item("1", "partNameGoesHere", "vendorNameGoesHere", 10,
-				UnitOfQuantity.PIECES);
+				UnitOfQuantity.PIECES, "asdf");
 		try {
 			i.addItem(o, i.getInventory());
 		} catch (Exception e) {
@@ -83,13 +83,13 @@ public class TestModel {
 		}
 		assertTrue(i.getInventory().contains(o));
 	}
-
+	
 	@Test
 	public void removeItemFromInventoryTest() {
 		Inventory i = new Inventory();
 		i.createInventory();
 		Item o = new Item("1", "partNameGoesHere", "vendorNameGoesHere", 10,
-				UnitOfQuantity.PIECES);
+				UnitOfQuantity.PIECES, "");
 		try {
 			i.addItem(o, i.getInventory());
 		} catch (Exception e) {
@@ -102,11 +102,18 @@ public class TestModel {
 	public void checkIncrimentingId() {
 		/* main creates 4 items so new items will start at id=5 */
 		Item i = new Item("1", "partNameGoesHere", "vendorNameGoesHere", 10,
-				UnitOfQuantity.PIECES);
+				UnitOfQuantity.PIECES, "");
 		assertEquals(5, i.getId());
 		Item j = new Item("2", "partName", "vendorName", 5,
-				UnitOfQuantity.PIECES);
+				UnitOfQuantity.PIECES, "");
 		assertEquals(6, j.getId());
 	}
-	
+	@Test
+	public void externalPartNumberTest() {
+		Item i = new Item("1", "partNameGoesHere", "vendorNameGoesHere", 10,
+				UnitOfQuantity.PIECES, "externalPartNumber#1");
+		assertEquals("externalPartNumber#1", i.getExternalPartNumber());
+		i.setExternalPartNumber("externalPartNumber#2");
+		assertEquals("externalPartNumber#2", i.getExternalPartNumber());
+	}
 }

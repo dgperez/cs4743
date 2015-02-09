@@ -18,14 +18,14 @@ public class Cabinetron {
 		inventoryList.registerView(test1);
 
 		Item demo1 = 
-				new Item("0001", "Part1", "Vendor1", 2, UnitOfQuantity.PIECES);
+				new Item("0001", "Part1", "Vendor1", 2, UnitOfQuantity.PIECES, "");
 		Item demo2 = 
-				new Item("0003", "Part3", "Vendor2", 3, UnitOfQuantity.PIECES);
+				new Item("0003", "Part3", "Vendor2", 3, UnitOfQuantity.PIECES, "");
 		Item demo3 = 
 				new Item("0014", "Part19", "Vendor4", 5, 
-						UnitOfQuantity.LINEAR_FEET);
+						UnitOfQuantity.LINEAR_FEET, "");
 		Item demo4 = 
-				new Item("0099", "Eva01", "NERV", 1, UnitOfQuantity.PIECES);
+				new Item("0099", "Eva01", "NERV", 1, UnitOfQuantity.PIECES, "exPart#4");
 		
 		try {
 			inventoryList.addItem(demo1, inventoryList.getInventory());

@@ -42,6 +42,10 @@ public class PartsDetailView extends JFrame {
 	/** Unsigned integer, initial entry must be greater than 0.
 	 * */
 	private JTextField partQuantity;
+
+	/** Alphanumeric and symbols. Max length is 50. 
+	 */
+	private JTextField externalPartNumber;
 	
 	private JComboBox<UnitOfQuantity> unitOfQuantity;
 
@@ -56,6 +60,8 @@ public class PartsDetailView extends JFrame {
 	private JLabel partQuantityLabel = new JLabel("Quantity: ");
 	
 	private JLabel partUnitOfQuantity = new JLabel("Unit Of Quantity");
+	
+	private JLabel externalPartNumberLabel = new JLabel("External Part Number: ");
 	
 	private Item item;
 	
@@ -83,6 +89,8 @@ public class PartsDetailView extends JFrame {
 		
 		this.partQuantity = new JTextField(10);
 		
+		this.externalPartNumber = new JTextField(10);
+		
 		this.inputs.add(labelsPanel, BorderLayout.WEST);
 		this.inputs.add(fieldsPanel, BorderLayout.CENTER);
 		
@@ -106,6 +114,9 @@ public class PartsDetailView extends JFrame {
 		
 		labelsPanel.add(this.partUnitOfQuantity);
 		fieldsPanel.add(this.unitOfQuantity);
+		
+		labelsPanel.add(this.externalPartNumberLabel);
+		fieldsPanel.add(this.externalPartNumber);
 		
 		this.controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
 		
@@ -142,7 +153,8 @@ public class PartsDetailView extends JFrame {
 				this.getPartName(),
 				this.getVendor(),
 				this.getQuantity(),
-				this.getUnitOfQuantity());
+				this.getUnitOfQuantity(),
+				this.getExternalPartNumber());
 				
 	}
 	
@@ -152,6 +164,7 @@ public class PartsDetailView extends JFrame {
 		this.partName.setText(this.item.getPartName());
 		this.vendor.setText(this.item.getVendor());
 		this.partQuantity.setText(Integer.toString(this.item.getQuantity()));
+		this.externalPartNumber.setText(this.item.getExternalPartNumber());
 	}
 	
 	public void registerListener(PartsDetailController listener){
@@ -186,6 +199,10 @@ public class PartsDetailView extends JFrame {
 	
 	public UnitOfQuantity getUnitOfQuantity(){
 		return (UnitOfQuantity)this.unitOfQuantity.getSelectedItem();
+	}
+	
+	public String getExternalPartNumber(){
+		return this.externalPartNumber.getText();
 	}
 	
 	public boolean containsItem(Item item){

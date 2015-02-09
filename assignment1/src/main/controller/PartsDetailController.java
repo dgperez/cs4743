@@ -83,7 +83,13 @@ public class PartsDetailController implements ActionListener {
 			message += "Initial quantity must be greater than zero.\n";
 		}
 		if(item.getUnitOfQuantity().equals(UnitOfQuantity.UNKNOWN)){
+			valid = false;
 			message += "Quantity cannot be 'Unknown'.\n";
+		}
+		if(!item.getExternalPartNumber().isEmpty() && 
+				item.getExternalPartNumber().length() > 50){
+			valid = false;
+			message += "External Part Number must be between 0 and 50 characters long.\n";
 		}
 		if(!valid){
 			System.out.println(message);

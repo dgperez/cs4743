@@ -8,18 +8,19 @@ public class Item {
 	private String vendor;
 	private int quantity;
 	private boolean toEdit = false;
+	private String externalPartNumber;
 		
 	private UnitOfQuantity currentUnit;
-	
-	public Item(String partNumber, String partName, String vendor,
-			int quantity, UnitOfQuantity unit) {
-		super();
+
+	public Item(String partNumber, String partName, String vendor, 
+			int quantity, UnitOfQuantity unit, String externalPartNumber) {
 		id = memberNumber++;
 		this.partNumber = partNumber;
 		this.partName = partName;
 		this.vendor = vendor;
 		this.quantity = quantity;
 		this.currentUnit = unit;
+		this.setExternalPartNumber(externalPartNumber);
 	}
 	
 	public Item.UnitOfQuantity getUnitOfQuantity(){
@@ -29,11 +30,7 @@ public class Item {
 	public void setUnitOfQuantity(Item.UnitOfQuantity unit){
 		this.currentUnit = unit;
 	}
-/*
-	public void initializeMemberNumber(){
-		memberNumber = 0;
-	}
- */
+
 	public int getId() {
 		return id;
 	}
@@ -74,6 +71,14 @@ public class Item {
 		this.toEdit = editPart;
 	}
 	
+	public String getExternalPartNumber() {
+		return externalPartNumber;
+	}
+
+	public void setExternalPartNumber(String externalPartNumber) {
+		this.externalPartNumber = externalPartNumber;
+	}
+
 	public boolean canEditPart(){
 		return this.toEdit;
 	}
@@ -130,7 +135,9 @@ public class Item {
 				((!this.vendor.isEmpty()) 
 						? "Vendor: " + this.vendor + ", " : "")  
 				+ "Quantity: " + this.quantity
-				+ " " + this.currentUnit;
+				+ " " + this.currentUnit +
+			((!this.externalPartNumber.isEmpty()) 
+					? ", External Part Number: " + this.externalPartNumber: "");
 	}
 
 	public enum UnitOfQuantity{
