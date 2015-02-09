@@ -25,6 +25,8 @@ public class PartsDetailView extends JFrame {
 	 */
 	private static final long serialVersionUID = 4881822137172571826L;
 
+	private JTextField id;
+	
 	/** Alphanumeric and symbols. Max length is 20. 
 	 */
 	private JTextField partNumber;
@@ -42,6 +44,8 @@ public class PartsDetailView extends JFrame {
 	private JTextField partQuantity;
 	
 	private JComboBox<UnitOfQuantity> unitOfQuantity;
+
+	private JLabel idLabel = new JLabel("Id: ");
 	
 	private JLabel partNumberLabel = new JLabel("Part Number: ");
 	
@@ -68,6 +72,9 @@ public class PartsDetailView extends JFrame {
 		JPanel labelsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
 		JPanel fieldsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
 		
+		this.id = new JTextField(10);
+		id.setEditable(false);
+		
 		this.partNumber = new JTextField(10);
 		
 		this.partName = new JTextField(10);
@@ -81,6 +88,9 @@ public class PartsDetailView extends JFrame {
 		
 		this.unitOfQuantity = 
 				new JComboBox<UnitOfQuantity>(UnitOfQuantity.values());
+
+		labelsPanel.add(this.idLabel);
+		fieldsPanel.add(this.id);
 		
 		labelsPanel.add(this.partNumberLabel);
 		fieldsPanel.add(this.partNumber);
@@ -137,6 +147,7 @@ public class PartsDetailView extends JFrame {
 	}
 	
 	public void refreshObserver(){
+		this.id.setText(Integer.toString(this.item.getId()));
 		this.partNumber.setText(this.item.getPartNumber());
 		this.partName.setText(this.item.getPartName());
 		this.vendor.setText(this.item.getVendor());

@@ -98,6 +98,15 @@ public class TestModel {
 		assertTrue(i.getInventory().contains(o));
 	}
 
-	
+	@Test
+	public void checkIncrimentingId() {
+		/* main creates 4 items so new items will start at id=5 */
+		Item i = new Item("1", "partNameGoesHere", "vendorNameGoesHere", 10,
+				UnitOfQuantity.PIECES);
+		assertEquals(5, i.getId());
+		Item j = new Item("2", "partName", "vendorName", 5,
+				UnitOfQuantity.PIECES);
+		assertEquals(6, j.getId());
+	}
 	
 }

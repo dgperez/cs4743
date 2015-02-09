@@ -1,6 +1,8 @@
 package main.model;
 
 public class Item {
+	private static int memberNumber = 1;
+	private int id;
 	private String partNumber;
 	private String partName;
 	private String vendor;
@@ -12,6 +14,7 @@ public class Item {
 	public Item(String partNumber, String partName, String vendor,
 			int quantity, UnitOfQuantity unit) {
 		super();
+		id = memberNumber++;
 		this.partNumber = partNumber;
 		this.partName = partName;
 		this.vendor = vendor;
@@ -25,6 +28,14 @@ public class Item {
 	
 	public void setUnitOfQuantity(Item.UnitOfQuantity unit){
 		this.currentUnit = unit;
+	}
+/*
+	public void initializeMemberNumber(){
+		memberNumber = 0;
+	}
+ */
+	public int getId() {
+		return id;
 	}
 
 	public int getQuantity() {
@@ -114,7 +125,7 @@ public class Item {
 
 	@Override
 	public String toString(){
-		return "Part Name: " + this.partName + ", " +
+		return "Id: " + this.id + ", Part Name: " + this.partName + ", " +
 				"Part#: " + this.partNumber + ", " +
 				((!this.vendor.isEmpty()) 
 						? "Vendor: " + this.vendor + ", " : "")  
