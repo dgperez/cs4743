@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 import main.controller.PartsDetailController;
 import main.model.Item;
+import main.model.Item.Location;
 import main.model.Item.UnitOfQuantity;
 
 public class PartsDetailView extends JFrame {
@@ -44,6 +45,8 @@ public class PartsDetailView extends JFrame {
 	private JTextField partQuantity;
 	
 	private JComboBox<UnitOfQuantity> unitOfQuantity;
+	
+	private JComboBox<Location> location;
 
 	private JLabel idLabel = new JLabel("Id: ");
 	
@@ -56,6 +59,8 @@ public class PartsDetailView extends JFrame {
 	private JLabel partQuantityLabel = new JLabel("Quantity: ");
 	
 	private JLabel partUnitOfQuantity = new JLabel("Unit Of Quantity");
+	
+	private JLabel locationLabel = new JLabel("Location: ");
 	
 	private Item item;
 	
@@ -88,6 +93,8 @@ public class PartsDetailView extends JFrame {
 		
 		this.unitOfQuantity = 
 				new JComboBox<UnitOfQuantity>(UnitOfQuantity.values());
+		
+		this.location = new JComboBox<Location>(Location.values());
 
 		labelsPanel.add(this.idLabel);
 		fieldsPanel.add(this.id);
@@ -106,6 +113,9 @@ public class PartsDetailView extends JFrame {
 		
 		labelsPanel.add(this.partUnitOfQuantity);
 		fieldsPanel.add(this.unitOfQuantity);
+		
+		labelsPanel.add(this.locationLabel);
+		fieldsPanel.add(this.location);
 		
 		this.controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
 		
@@ -142,7 +152,8 @@ public class PartsDetailView extends JFrame {
 				this.getPartName(),
 				this.getVendor(),
 				this.getQuantity(),
-				this.getUnitOfQuantity());
+				this.getUnitOfQuantity(),
+				this.getPartLocation());
 				
 	}
 	
@@ -152,6 +163,8 @@ public class PartsDetailView extends JFrame {
 		this.partName.setText(this.item.getPartName());
 		this.vendor.setText(this.item.getVendor());
 		this.partQuantity.setText(Integer.toString(this.item.getQuantity()));
+		this.unitOfQuantity.setSelectedItem(this.item.getUnitOfQuantity());
+		this.location.setSelectedItem(this.item.getLocation());
 	}
 	
 	public void registerListener(PartsDetailController listener){
@@ -186,6 +199,10 @@ public class PartsDetailView extends JFrame {
 	
 	public UnitOfQuantity getUnitOfQuantity(){
 		return (UnitOfQuantity)this.unitOfQuantity.getSelectedItem();
+	}
+	
+	public Location getPartLocation(){
+		return (Location)this.location.getSelectedItem();
 	}
 	
 	public boolean containsItem(Item item){

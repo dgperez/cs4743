@@ -11,8 +11,10 @@ public class Item {
 		
 	private UnitOfQuantity currentUnit;
 	
+	private Location location;
+	
 	public Item(String partNumber, String partName, String vendor,
-			int quantity, UnitOfQuantity unit) {
+			int quantity, UnitOfQuantity unit, Location location) {
 		super();
 		id = memberNumber++;
 		this.partNumber = partNumber;
@@ -20,6 +22,15 @@ public class Item {
 		this.vendor = vendor;
 		this.quantity = quantity;
 		this.currentUnit = unit;
+		this.location = location;
+	}
+	
+	public Item.Location getLocation(){
+		return this.location;
+	}
+	
+	public void setLocation(Location location){
+		this.location = location;
 	}
 	
 	public Item.UnitOfQuantity getUnitOfQuantity(){
@@ -34,6 +45,7 @@ public class Item {
 		memberNumber = 0;
 	}
  */
+	
 	public int getId() {
 		return id;
 	}
@@ -130,7 +142,8 @@ public class Item {
 				((!this.vendor.isEmpty()) 
 						? "Vendor: " + this.vendor + ", " : "")  
 				+ "Quantity: " + this.quantity
-				+ " " + this.currentUnit;
+				+ " " + this.currentUnit
+				+ ", Location: " + this.location;
 	}
 
 	public enum UnitOfQuantity{
@@ -156,6 +169,33 @@ public class Item {
 		@Override
 		public String toString(){
 			return this.unit;
+		}
+	}
+	
+	public enum Location {
+		UNKNOWN("Unknown"),
+		FACILITY_1_WAREHOUSE_1("Facility 1 Warehouse 1"),
+		FACILITY_1_WAREHOUSE_2("Facility 1 Warehouse 2"),
+		FACILITY_2("Facility 2");
+		
+		private final String location;
+		
+		Location(String location){
+			this.location = location;
+		}
+		
+		public static String[] getLocationValues(){
+			Location[] locations = Location.values();
+			String[] tempArray = new String[locations.length];
+			for(int i = 0; i < locations.length; i++){
+				tempArray[i] = locations[i].toString();
+			}
+			return tempArray;
+		}
+		
+		@Override
+		public String toString(){
+			return this.location;
 		}
 	}
 }

@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import main.model.Inventory;
 import main.model.Item;
+import main.model.Item.Location;
 import main.model.Item.UnitOfQuantity;
 import main.view.PartsDetailView;
 
@@ -84,6 +85,9 @@ public class PartsDetailController implements ActionListener {
 		}
 		if(item.getUnitOfQuantity().equals(UnitOfQuantity.UNKNOWN)){
 			message += "Quantity cannot be 'Unknown'.\n";
+		}
+		if(item.getLocation().equals(Location.UNKNOWN)){
+			message += "Location cannot be 'Unknown'.\n";
 		}
 		if(!valid){
 			System.out.println(message);
