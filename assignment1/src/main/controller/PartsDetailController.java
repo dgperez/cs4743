@@ -84,9 +84,11 @@ public class PartsDetailController implements ActionListener {
 			message += "Initial quantity must be greater than zero.\n";
 		}
 		if(item.getUnitOfQuantity().equals(UnitOfQuantity.UNKNOWN)){
+			valid = false;
 			message += "Quantity cannot be 'Unknown'.\n";
 		}
 		if(item.getLocation().equals(Location.UNKNOWN)){
+			valid = false;
 			message += "Location cannot be 'Unknown'.\n";
 		}
 		if(!valid){

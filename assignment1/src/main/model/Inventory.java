@@ -23,7 +23,8 @@ public class Inventory {
 	
  	/**
  	 * Adds an item to the inventory if its part number is not in the list.
- 	 * @throws Exception - only if the item's part number already exists in the inventory
+ 	 * @throws Exception - only if the item's part number already 
+ 	 * exists in the inventory
  	 */
 	public void addItem(Item item, List<Item> inventory) throws Exception {
 		boolean partExists = false;
@@ -31,16 +32,20 @@ public class Inventory {
 			if(i.getPartName().equals(item.getPartName())) {
 				partExists = true;
 				if(!i.canEditPart()){
-					throw new Exception("Part number already exists in the list.");
+					throw new Exception("Part number already " +
+							"exists in the list.");
 				} else {
 					i.setPartNumber(item.getPartNumber());
 					i.setPartName(item.getPartName());
 					i.setVendor(item.getVendor());
 					i.setQuantity(item.getQuantity());
+					i.setUnitOfQuantity(item.getUnitOfQuantity());
+					i.setLocation(item.getLocation());
 				}
 			}
 		}
 		if(!partExists){
+			item.incrementId();
 			inventory.add(item);
 		}
 		this.updateView();
@@ -83,7 +88,8 @@ public class Inventory {
 	}
 	
 	private void closeOpenObservers(Item item){
-		ArrayList<PartsDetailView> itemsToRemove = new ArrayList<PartsDetailView>();
+		ArrayList<PartsDetailView> itemsToRemove = 
+				new ArrayList<PartsDetailView>();
 		for(PartsDetailView partsDetailView : this.observers){
 			if(partsDetailView.containsItem(item)){
 				itemsToRemove.add(partsDetailView);
