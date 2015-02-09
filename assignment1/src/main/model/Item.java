@@ -16,7 +16,6 @@ public class Item {
 	public Item(String partNumber, String partName, String vendor,
 			int quantity, UnitOfQuantity unit, Location location) {
 		super();
-		//id = memberNumber++;
 		this.partNumber = partNumber;
 		this.partName = partName;
 		this.vendor = vendor;
@@ -42,7 +41,7 @@ public class Item {
 	}
 
 	public void incrementId(){
-		this.id = this.memberNumber++;
+		this.id = Item.memberNumber++;
 	}
 	
 	public int getId() {
