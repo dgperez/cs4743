@@ -20,16 +20,16 @@ public class Cabinetron {
 
 		Item demo1 = 
 				new Item("0001", "Part1", "Vendor1", 2, UnitOfQuantity.PIECES, 
-						Location.FACILITY_1_WAREHOUSE_1);
+						Location.FACILITY_1_WAREHOUSE_1, "");
 		Item demo2 = 
 				new Item("0003", "Part3", "Vendor2", 3, UnitOfQuantity.PIECES, 
-						Location.FACILITY_1_WAREHOUSE_2);
+						Location.FACILITY_1_WAREHOUSE_2, "");
 		Item demo3 = 
 				new Item("0014", "Part19", "Vendor4", 5, 
-						UnitOfQuantity.LINEAR_FEET, Location.FACILITY_2);
+						UnitOfQuantity.LINEAR_FEET, Location.FACILITY_2, "");
 		Item demo4 = 
 				new Item("0099", "Eva01", "NERV", 1, UnitOfQuantity.PIECES,
-						Location.FACILITY_1_WAREHOUSE_1);
+						Location.FACILITY_1_WAREHOUSE_1, "");
 		
 		try {
 			inventoryList.addItem(demo1, inventoryList.getInventory());

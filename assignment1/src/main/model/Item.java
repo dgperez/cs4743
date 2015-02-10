@@ -8,20 +8,22 @@ public class Item {
 	private String vendor;
 	private int quantity;
 	private boolean toEdit = false;
+	private String externalPartNumber;
 		
 	private UnitOfQuantity currentUnit;
-	
+
 	private Location location;
 	
 	public Item(String partNumber, String partName, String vendor,
-			int quantity, UnitOfQuantity unit, Location location) {
-		super();
+			int quantity, UnitOfQuantity unit, Location location, 
+			String externalPartNumber) {
 		this.partNumber = partNumber;
 		this.partName = partName;
 		this.vendor = vendor;
 		this.quantity = quantity;
 		this.currentUnit = unit;
 		this.location = location;
+		this.setExternalPartNumber(externalPartNumber);
 	}
 	
 	public Item.Location getLocation(){
@@ -84,6 +86,14 @@ public class Item {
 		this.toEdit = editPart;
 	}
 	
+	public String getExternalPartNumber() {
+		return externalPartNumber;
+	}
+
+	public void setExternalPartNumber(String externalPartNumber) {
+		this.externalPartNumber = externalPartNumber;
+	}
+
 	public boolean canEditPart(){
 		return this.toEdit;
 	}
@@ -141,7 +151,9 @@ public class Item {
 						? "Vendor: " + this.vendor + ", " : "")  
 				+ "Quantity: " + this.quantity
 				+ " " + this.currentUnit
-				+ ", Location: " + this.location;
+				+ ", Location: " + this.location +
+			((!this.externalPartNumber.isEmpty()) 
+					? ", External Part Number: " + this.externalPartNumber: "");
 	}
 
 	public enum UnitOfQuantity{

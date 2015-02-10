@@ -91,6 +91,11 @@ public class PartsDetailController implements ActionListener {
 			valid = false;
 			message += "Location cannot be 'Unknown'.\n";
 		}
+		if(!item.getExternalPartNumber().isEmpty() && 
+				item.getExternalPartNumber().length() > 50){
+			valid = false;
+			message += "External Part Number must be between 0 and 50 characters long.\n";
+		}
 		if(!valid){
 			System.out.println(message);
 			JOptionPane.showMessageDialog(null, 

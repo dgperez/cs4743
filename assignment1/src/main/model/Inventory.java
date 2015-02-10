@@ -11,6 +11,8 @@ public class Inventory {
 	
 	private InventoryListView view;
 	
+	private boolean viewCreated = false;
+	
 	private ArrayList<PartsDetailView> observers = new ArrayList<PartsDetailView>();
 	
  	public List<Item> getInventory(){
@@ -41,6 +43,7 @@ public class Inventory {
 					i.setQuantity(item.getQuantity());
 					i.setUnitOfQuantity(item.getUnitOfQuantity());
 					i.setLocation(item.getLocation());
+					i.setExternalPartNumber(item.getExternalPartNumber());
 				}
 			}
 		}
@@ -75,6 +78,7 @@ public class Inventory {
 	
 	public void registerView(InventoryListView inventoryListView){
 		this.view = inventoryListView;
+		this.viewCreated = true;
 	}
 	
 	public void registerObservers(PartsDetailView partsDetailView){
@@ -104,7 +108,9 @@ public class Inventory {
 	}
 	
 	public void updateView(){
-		this.view.refreshList(this);
+		if(viewCreated) {
+			this.view.refreshList(this);
+		}
 		this.updateObservers();
 	}
 }
