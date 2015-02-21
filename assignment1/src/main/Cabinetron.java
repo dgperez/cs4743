@@ -1,5 +1,8 @@
 package main;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import main.controller.InventoryListController;
 import main.dao.ConnectionGateway;
 import main.model.Inventory;
@@ -48,7 +51,15 @@ public class Cabinetron {
 		
 		// Testing
 		ConnectionGateway tempGateway = new ConnectionGateway();
-		System.out.println(tempGateway.getConnection());
+		Connection tempConn = tempGateway.getConnection();
+		try {
+			System.out.println(tempConn.isValid(10));
+			tempGateway.closeConnection(tempConn);
+			System.out.println(tempConn.isValid(10));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

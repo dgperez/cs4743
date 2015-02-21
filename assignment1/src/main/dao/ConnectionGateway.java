@@ -78,4 +78,15 @@ public class ConnectionGateway {
 		}
 		return conn;
 	}
+	
+	public void closeConnection(Connection conn){
+		try {
+			if(conn.isValid(10)){
+				conn.close();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
