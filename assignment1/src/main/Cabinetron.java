@@ -1,6 +1,7 @@
 package main;
 
 import main.controller.InventoryListController;
+import main.dao.ConnectionGateway;
 import main.model.Inventory;
 import main.model.Item;
 import main.model.Item.Location;
@@ -44,6 +45,10 @@ public class Cabinetron {
 		InventoryListController controller = new InventoryListController(test1, inventoryList);
 		
 		test1.registerListener(controller);
+		
+		// Testing
+		ConnectionGateway tempGateway = new ConnectionGateway();
+		System.out.println(tempGateway.getConnection());
 	}
 
 }

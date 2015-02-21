@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `inventory`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `inventory` (
   `pid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `part_id` int(10) unsigned NOT NULL,
+  `parts_id` int(10) unsigned NOT NULL,
   `quantity` int(10) unsigned NOT NULL,
   `locations_id` int(10) unsigned NOT NULL,
   `unit_of_quantities_id` int(10) unsigned DEFAULT NULL,
@@ -32,8 +32,8 @@ CREATE TABLE `inventory` (
   UNIQUE KEY `pid_UNIQUE` (`pid`),
   KEY `unit_of_quantities_fkey1_idx` (`unit_of_quantities_id`),
   KEY `locations_id_fkey1_idx` (`locations_id`),
-  KEY `part_id_fkey1_idx` (`part_id`),
-  CONSTRAINT `part_id_fkey1` FOREIGN KEY (`part_id`) REFERENCES `parts` (`pid`) ON UPDATE NO ACTION,
+  KEY `part_id_fkey1_idx` (`parts_id`),
+  CONSTRAINT `part_id_fkey1` FOREIGN KEY (`parts_id`) REFERENCES `parts` (`pid`) ON UPDATE NO ACTION,
   CONSTRAINT `locations_id_fkey1` FOREIGN KEY (`locations_id`) REFERENCES `locations` (`pid`) ON UPDATE NO ACTION,
   CONSTRAINT `unit_of_quantities_fkey1` FOREIGN KEY (`unit_of_quantities_id`) REFERENCES `unit_of_quantities` (`pid`) ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -163,4 +163,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-16 18:52:29
+-- Dump completed on 2015-02-21 14:27:29
