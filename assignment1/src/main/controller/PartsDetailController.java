@@ -9,13 +9,14 @@ import main.model.Inventory;
 import main.model.Item;
 import main.model.Item.Location;
 import main.model.Item.UnitOfQuantity;
+import main.model.Part;
 import main.view.PartsDetailView;
 
 public class PartsDetailController implements ActionListener {
 
 	private PartsDetailView view;
 	
-	private Item item;
+	private Part part;
 	
 	private Inventory inventory;
 	
@@ -24,10 +25,10 @@ public class PartsDetailController implements ActionListener {
 	private boolean editPart = false;
 	
 	public PartsDetailController(PartsDetailView view
-			, Item item
+			, Part item
 			, Inventory inventory) {
 		this.view = view;
-		this.item = item;
+		this.part = item;
 		this.inventory = inventory;
 		view.showPartsDetailView();
 	}
@@ -38,11 +39,11 @@ public class PartsDetailController implements ActionListener {
 			try{
 				Item tempItem = this.view.getItem();
 				tempItem.setEditPart(editPart);
-				if(this.item == null){
-					this.item = tempItem;
-					this.view.setItem(this.item);
+				if(this.part == null){
+					this.part = tempItem;
+					this.view.setItem(this.part);
 				}
-				this.item.setEditPart(editPart);
+				this.part.setEditPart(editPart);
 				if(this.validateSavedItem(tempItem)){
 					this.inventory.addItem(tempItem, 
 							this.inventory.getInventory());

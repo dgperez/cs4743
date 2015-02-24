@@ -1,42 +1,31 @@
 package main.model;
 
 public class Part {
-	private static int memberNumber = 1;
 	private int id;
 	private String partNumber;
 	private String partName;
 	private String vendor;
-	private int quantity;
 	private boolean toEdit = false;
 	private String externalPartNumber;
 		
-	private UnitOfQuantity currentUnit;
+	private String currentUnit;
 	
-	public Part(String partNumber, String partName, String vendor,
-			int quantity, UnitOfQuantity unit, 
-			String externalPartNumber) {
+	public Part(int id, String partNumber, String partName, String vendor,
+			String unitOfQuantity, String externalPartNumber) {
+		this.id = id;
 		this.partNumber = partNumber;
 		this.partName = partName;
 		this.vendor = vendor;
-		this.quantity = quantity;
-		this.currentUnit = unit;
+		this.currentUnit = unitOfQuantity;
 		this.setExternalPartNumber(externalPartNumber);
 	}
 	
-	public Part.UnitOfQuantity getUnitOfQuantity(){
+	public String getUnitOfQuantity(){
 		return this.currentUnit;
 	}
 	
 	public int getId() {
 		return id;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
 	}
 
 	public String getPartNumber() {
@@ -85,35 +74,8 @@ public class Part {
 				"Part#: " + this.partNumber + ", " +
 				((!this.vendor.isEmpty()) 
 						? "Vendor: " + this.vendor + ", " : "")  
-				+ "Quantity: " + this.quantity
 				+ " " + this.currentUnit
 				+ ((!this.externalPartNumber.isEmpty()) 
 					? ", External Part Number: " + this.externalPartNumber: "");
-	}
-
-	public enum UnitOfQuantity{
-		UNKNOWN("Unknown"),
-		LINEAR_FEET("Linear Feet"),
-		PIECES("Pieces");
-		
-		private final String unit;
-		
-		UnitOfQuantity(String unit){
-			this.unit = unit;
-		}
-		
-		public static String[] getUnitValues(){
-			UnitOfQuantity[] units = UnitOfQuantity.values();
-			String[] tempArray = new String[units.length];
-			for(int i = 0; i < units.length; i++){
-				tempArray[i] = units[i].toString();
-			}
-			return tempArray;
-		}
-		
-		@Override
-		public String toString(){
-			return this.unit;
-		}
 	}
 }

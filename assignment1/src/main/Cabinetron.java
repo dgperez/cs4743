@@ -7,8 +7,6 @@ import main.controller.InventoryListController;
 import main.dao.ConnectionGateway;
 import main.model.Inventory;
 import main.model.Item;
-import main.model.Item.Location;
-import main.model.Item.UnitOfQuantity;
 import main.view.InventoryListView;
 
 public class Cabinetron {
@@ -17,7 +15,8 @@ public class Cabinetron {
 	 * 
 	 * */
 	public static void main(String[] args){
-		Inventory inventoryList = new Inventory();
+		
+		/*Inventory inventoryList = new Inventory();
 		inventoryList.createInventory();
 		InventoryListView test1 = new InventoryListView(inventoryList);
 		inventoryList.registerView(test1);
@@ -47,7 +46,7 @@ public class Cabinetron {
 		
 		InventoryListController controller = new InventoryListController(test1, inventoryList);
 		
-		test1.registerListener(controller);
+		test1.registerListener(controller);*/
 		
 		// Testing
 		ConnectionGateway tempGateway = new ConnectionGateway();

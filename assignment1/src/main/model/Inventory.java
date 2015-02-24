@@ -13,14 +13,15 @@ public class Inventory {
 	
 	private boolean viewCreated = false;
 	
-	private ArrayList<PartsDetailView> observers = new ArrayList<PartsDetailView>();
+	private ArrayList<PartsDetailView> observers = 
+			new ArrayList<PartsDetailView>();
 	
  	public List<Item> getInventory(){
- 		return inventory;
+ 		return this.inventory;
  	}
  	
  	public void createInventory() {
- 		inventory = new ArrayList<Item>();
+ 		this.inventory = new ArrayList<Item>();
  	}
 	
  	/**
