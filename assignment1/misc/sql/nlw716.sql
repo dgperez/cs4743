@@ -16,6 +16,23 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Temporary view structure for view `all_parts`
+--
+
+DROP TABLE IF EXISTS `all_parts`;
+/*!50001 DROP VIEW IF EXISTS `all_parts`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `all_parts` AS SELECT 
+ 1 AS `pid`,
+ 1 AS `part_number`,
+ 1 AS `part_name`,
+ 1 AS `vendor_name`,
+ 1 AS `extern_part_number`,
+ 1 AS `quantity_name`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `inventory`
 --
 
@@ -27,15 +44,12 @@ CREATE TABLE `inventory` (
   `parts_id` int(10) unsigned NOT NULL,
   `quantity` int(10) unsigned NOT NULL,
   `locations_id` int(10) unsigned NOT NULL,
-  `unit_of_quantities_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`pid`),
   UNIQUE KEY `pid_UNIQUE` (`pid`),
-  KEY `unit_of_quantities_fkey1_idx` (`unit_of_quantities_id`),
   KEY `locations_id_fkey1_idx` (`locations_id`),
   KEY `part_id_fkey1_idx` (`parts_id`),
-  CONSTRAINT `part_id_fkey1` FOREIGN KEY (`parts_id`) REFERENCES `parts` (`pid`) ON UPDATE NO ACTION,
   CONSTRAINT `locations_id_fkey1` FOREIGN KEY (`locations_id`) REFERENCES `locations` (`pid`) ON UPDATE NO ACTION,
-  CONSTRAINT `unit_of_quantities_fkey1` FOREIGN KEY (`unit_of_quantities_id`) REFERENCES `unit_of_quantities` (`pid`) ON UPDATE NO ACTION
+  CONSTRAINT `part_id_fkey1` FOREIGN KEY (`parts_id`) REFERENCES `parts` (`pid`) ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -86,12 +100,15 @@ CREATE TABLE `parts` (
   `part_name` varchar(255) NOT NULL,
   `vendor_id` int(10) unsigned DEFAULT NULL,
   `extern_part_number` varchar(63) NOT NULL,
+  `unit_of_quantities_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`pid`),
   UNIQUE KEY `pid_UNIQUE` (`pid`),
-  UNIQUE KEY `part_name_UNIQUE` (`part_name`),
+  UNIQUE KEY `part_number_UNIQUE` (`part_number`),
   KEY `vendor_id_fk1_idx` (`vendor_id`),
+  KEY `unit_of_quantities_fk1_idx` (`unit_of_quantities_id`),
+  CONSTRAINT `unit_of_quantities_fk1` FOREIGN KEY (`unit_of_quantities_id`) REFERENCES `unit_of_quantities` (`pid`) ON UPDATE NO ACTION,
   CONSTRAINT `vendor_id_fk1` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`pid`) ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,6 +117,7 @@ CREATE TABLE `parts` (
 
 LOCK TABLES `parts` WRITE;
 /*!40000 ALTER TABLE `parts` DISABLE KEYS */;
+INSERT INTO `parts` VALUES (2,'EVA001','Eva Unit 1',1,'EVO1',1),(3,'EVA002','Eva Unit 2',1,'EVO2',1),(4,'EVA003','Eva Unit 3',1,'EVO3',1);
 /*!40000 ALTER TABLE `parts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,7 +160,7 @@ CREATE TABLE `vendors` (
   PRIMARY KEY (`pid`),
   UNIQUE KEY `pid_UNIQUE` (`pid`),
   UNIQUE KEY `vendor_name_UNIQUE` (`vendor_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,8 +169,27 @@ CREATE TABLE `vendors` (
 
 LOCK TABLES `vendors` WRITE;
 /*!40000 ALTER TABLE `vendors` DISABLE KEYS */;
+INSERT INTO `vendors` VALUES (1,'NERV1'),(2,'NERV2'),(3,'NERV3');
 /*!40000 ALTER TABLE `vendors` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Final view structure for view `all_parts`
+--
+
+/*!50001 DROP VIEW IF EXISTS `all_parts`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`nlw716`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `all_parts` AS select `prt`.`pid` AS `pid`,`prt`.`part_number` AS `part_number`,`prt`.`part_name` AS `part_name`,`ven`.`vendor_name` AS `vendor_name`,`prt`.`extern_part_number` AS `extern_part_number`,`uoq`.`quantity_name` AS `quantity_name` from ((`parts` `prt` join `vendors` `ven` on((`ven`.`pid` = `prt`.`vendor_id`))) join `unit_of_quantities` `uoq` on((`uoq`.`pid` = `prt`.`unit_of_quantities_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -163,4 +200,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-21 14:27:29
+-- Dump completed on 2015-02-24 12:42:38
