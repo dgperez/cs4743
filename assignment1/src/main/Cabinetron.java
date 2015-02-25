@@ -60,10 +60,12 @@ public class Cabinetron {
 			TypeDao typeDao = new TypeDao(connGateway);
 			
 			UnitsOfQuantity unitsOfQuantity = new UnitsOfQuantity();
+			unitsOfQuantity.resetUnitsOfQuantity(typeDao.getTypeList(3));
 			
 			System.out.println(unitsOfQuantity.getUnitsOfQuantity());
 			
 			Locations locations = new Locations();
+			locations.resetLocations(typeDao.getTypeList(1));
 			
 			System.out.println(locations.getLocations());
 			
@@ -73,6 +75,7 @@ public class Cabinetron {
 			
 			ItemDao itemDao = new ItemDao(connGateway);
 			System.out.println(itemDao.getItems());
+			
 			
 			
 		} catch (Exception e) {

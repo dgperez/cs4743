@@ -28,4 +28,8 @@ public class Locations {
 				new String[Locations.locations.size()]);
 	}
 
+	public void resetLocations(HashMap<Integer, String> locations){
+		Locations.locations.clear();
+		Locations.locations.putAll(locations);
+	}
 }

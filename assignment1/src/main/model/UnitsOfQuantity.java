@@ -26,5 +26,10 @@ public class UnitsOfQuantity {
 		return UnitsOfQuantity.unitsOfQuantity.values().toArray(
 				new String[UnitsOfQuantity.unitsOfQuantity.size()]);
 	}
+	
+	public void resetUnitsOfQuantity(HashMap<Integer, String> unitsOfQuantity){
+		UnitsOfQuantity.unitsOfQuantity.clear();
+		UnitsOfQuantity.unitsOfQuantity.putAll(unitsOfQuantity);
+	}
 
 }

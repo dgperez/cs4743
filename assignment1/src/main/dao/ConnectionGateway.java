@@ -77,10 +77,6 @@ public class ConnectionGateway {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(String.format("Connection closed. " +
-				"before: %d, after: %d", 
-				ConnectionGateway.openConnections, 
-				ConnectionGateway.openConnections++));
 		return conn;
 	}
 	
@@ -93,9 +89,5 @@ public class ConnectionGateway {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(String.format("Connection closed. " +
-				"before: %d, after: %d", 
-				ConnectionGateway.openConnections, 
-				ConnectionGateway.openConnections--));
 	}
 }
