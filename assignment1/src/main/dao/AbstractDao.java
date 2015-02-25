@@ -100,7 +100,7 @@ public abstract class AbstractDao {
 		return tempEntry;
 	}
 	
-	private String[] getTypeTableValues(int typeTable){
+	protected String[] getTypeTableValues(int typeTable){
 		String tableName = "";
 		String columnName = "";
 		switch(typeTable){

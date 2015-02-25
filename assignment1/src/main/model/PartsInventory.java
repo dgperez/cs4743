@@ -54,6 +54,10 @@ public class PartsInventory {
 		return null;
 	}
 	
+	public ArrayList<Part> getAllParts(){
+		return this.allParts;
+	}
+	
 	public boolean validatePartNumber(String partNumber){
 		for(Part part: this.allParts){
 			if(part.getPartNumber().equals(partNumber)){
