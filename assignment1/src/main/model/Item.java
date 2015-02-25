@@ -48,9 +48,4 @@ public class Item {
 	public boolean canEditPart(){
 		return this.toEdit;
 	}
-
-	@Override
-	public String toString(){
-		return null;
-	}
 }

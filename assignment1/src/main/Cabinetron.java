@@ -5,8 +5,13 @@ import java.sql.SQLException;
 
 import main.controller.InventoryListController;
 import main.dao.ConnectionGateway;
+import main.dao.ItemDao;
+import main.dao.PartDao;
+import main.dao.TypeDao;
 import main.model.Inventory;
 import main.model.Item;
+import main.model.Locations;
+import main.model.UnitsOfQuantity;
 import main.view.InventoryListView;
 
 public class Cabinetron {
@@ -49,13 +54,29 @@ public class Cabinetron {
 		test1.registerListener(controller);*/
 		
 		// Testing
-		ConnectionGateway tempGateway = new ConnectionGateway();
-		Connection tempConn = tempGateway.getConnection();
 		try {
-			System.out.println(tempConn.isValid(10));
-			tempGateway.closeConnection(tempConn);
-			System.out.println(tempConn.isValid(10));
-		} catch (SQLException e) {
+			ConnectionGateway connGateway = new ConnectionGateway();
+			TypeDao typeDao = new TypeDao(connGateway);
+			
+			UnitsOfQuantity unitsOfQuantity = new UnitsOfQuantity();
+			unitsOfQuantity.setQuantities(typeDao.getTypeList(3));
+			
+			System.out.println(unitsOfQuantity.getUnitsOfQuantity());
+			
+			Locations locations = new Locations();
+			locations.setLocations(typeDao.getTypeList(1));
+			
+			System.out.println(locations.getLocations());
+			
+			PartDao partDao = new PartDao(connGateway);
+			System.out.println(partDao.getParts());
+			System.out.println(partDao.getPart(2));
+			
+			ItemDao itemDao = new ItemDao(connGateway);
+			System.out.println(itemDao.getItems());
+			
+			
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

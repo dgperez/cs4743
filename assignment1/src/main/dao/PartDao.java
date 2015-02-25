@@ -86,8 +86,8 @@ public class PartDao extends AbstractDao {
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(selectParts);
 		ResultSet rs = prepStmt.executeQuery();
-		prepStmt.close();
-		this.connGateway.closeConnection(conn);
+		//prepStmt.close();
+		//this.connGateway.closeConnection(conn);
 		ArrayList<Part> parts = new ArrayList<Part>();
 		while(rs.next()){
 			int id = rs.getInt(1);
@@ -96,12 +96,14 @@ public class PartDao extends AbstractDao {
 			Entry<Integer, String> vendor = this.selectType(2, rs.getInt(4));
 			String externPartNumber = rs.getString(5);
 			Entry<Integer, String> unitOfQuantity = 
-					this.selectType(3, rs.getInt(5));
+					this.selectType(3, rs.getInt(6));
 			Part tempPart = new Part(id, partNumber, partName, 
 					vendor, unitOfQuantity, externPartNumber);
 			parts.add(tempPart);
 		}
 		rs.close();
+		prepStmt.close();
+		this.connGateway.closeConnection(conn);
 		return parts;
 	}
 	
@@ -113,8 +115,6 @@ public class PartDao extends AbstractDao {
 		PreparedStatement prepStmt = conn.prepareStatement(selectParts);
 		prepStmt.setInt(1, pid);
 		ResultSet rs = prepStmt.executeQuery();
-		this.connGateway.closeConnection(conn);
-		prepStmt.close();
 		rs.next();
 		int id = rs.getInt(1);
 		String partNumber = rs.getString(2);
@@ -122,10 +122,12 @@ public class PartDao extends AbstractDao {
 		Entry<Integer, String> vendor = this.selectType(2, rs.getInt(4));
 		String externPartNumber = rs.getString(5);
 		Entry<Integer, String> unitOfQuantity = 
-				this.selectType(3, rs.getInt(5));
+				this.selectType(3, rs.getInt(6));
 		Part tempPart = new Part(id, partNumber, partName, 
 				vendor, unitOfQuantity, externPartNumber);
 		rs.close();
+		prepStmt.close();
+		this.connGateway.closeConnection(conn);
 		return tempPart;
 	}
 	

@@ -66,15 +66,13 @@ public class ItemDao extends AbstractDao {
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(selectSql);
 		ResultSet rs = prepStmt.executeQuery();
-		prepStmt.close();
-		this.connGateway.closeConnection(conn);
 		ArrayList<Item> items = new ArrayList<Item>();
-		PartDao partDao = new PartDao(this.connGateway);
 		while(rs.next()){
 			int id = rs.getInt(1);
 			int partId = rs.getInt(2);
 			int quantity = rs.getInt(3);
 			int locationId = rs.getInt(4);
+			PartDao partDao = new PartDao(this.connGateway);
 			Part part = partDao.getPart(partId);
 			Entry<Integer, String> locationEntry = 
 					this.selectType(1, locationId);
@@ -82,6 +80,8 @@ public class ItemDao extends AbstractDao {
 			items.add(tempItem);
 		}
 		rs.close();
+		prepStmt.close();
+		this.connGateway.closeConnection(conn);
 		return items;
 	}
 	

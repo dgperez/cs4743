@@ -79,7 +79,6 @@ public abstract class AbstractDao {
 		PreparedStatement prepStmt = conn.prepareStatement(selectEntry);
 		prepStmt.setInt(1, pid);
 		ResultSet rs = prepStmt.executeQuery();
-		prepStmt.close();
 		String value = "";
 		if(rs.next()){
 			value = rs.getString(1);
@@ -91,7 +90,7 @@ public abstract class AbstractDao {
 			throw new SQLException(
 					String.format("Could not select from %s.", tableName));
 		}
-		
+		prepStmt.close();
 		HashMap<Integer, String> temp = new HashMap<Integer, String>();
 		temp.put(pid, value);
 		

@@ -27,13 +27,13 @@ public class TypeDao extends AbstractDao {
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(selectSql);
 		ResultSet rs = prepStmt.executeQuery();
-		prepStmt.close();
 		HashMap<Integer, String> map = new HashMap<Integer, String>();
 		while(rs.next()){
 			int pid = rs.getInt(1);
 			String value = rs.getString(2);
 			map.put(pid, value);
 		}
+		prepStmt.close();
 		this.connGateway.closeConnection(conn);
 		return map;
 	}
