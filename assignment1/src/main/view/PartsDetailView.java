@@ -16,8 +16,8 @@ import javax.swing.JTextField;
 
 import main.controller.PartsDetailController;
 import main.model.Item;
-import main.model.Item.Location;
-import main.model.Item.UnitOfQuantity;
+import main.model.Part;
+import main.model.UnitsOfQuantity;
 
 public class PartsDetailView extends JFrame {
 
@@ -48,9 +48,7 @@ public class PartsDetailView extends JFrame {
 	 */
 	private JTextField externalPartNumber;
 	
-	private JComboBox<UnitOfQuantity> unitOfQuantity;
-	
-	private JComboBox<Location> location;
+	private JComboBox<String> unitOfQuantity;
 
 	private JLabel idLabel = new JLabel("Id: ");
 	
@@ -60,15 +58,11 @@ public class PartsDetailView extends JFrame {
 	
 	private JLabel vendorLabel = new JLabel("Vendor: ");
 	
-	private JLabel partQuantityLabel = new JLabel("Quantity: ");
-	
 	private JLabel partUnitOfQuantity = new JLabel("Unit Of Quantity");
-	
-	private JLabel locationLabel = new JLabel("Location: ");
 
 	private JLabel externalPartNumberLabel = new JLabel("External Part Number: ");
 	
-	private Item item;
+	private Part part;
 	
 	private JPanel controls;
 	
@@ -76,8 +70,10 @@ public class PartsDetailView extends JFrame {
 	
 	private JButton savePart;
 	
-	public PartsDetailView() {
-		
+	private UnitsOfQuantity unitsOfQuantityTypes;
+	
+	public PartsDetailView(UnitsOfQuantity unitsOfQuantityTypes) {
+		this.unitsOfQuantityTypes = unitsOfQuantityTypes;
 		this.inputs = new JPanel(new BorderLayout(5, 5));
 		
 		JPanel labelsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
@@ -100,9 +96,8 @@ public class PartsDetailView extends JFrame {
 		this.inputs.add(fieldsPanel, BorderLayout.CENTER);
 		
 		this.unitOfQuantity = 
-				new JComboBox<UnitOfQuantity>(UnitOfQuantity.values());
-		
-		this.location = new JComboBox<Location>(Location.values());
+				new JComboBox<String>(
+						this.unitsOfQuantityTypes.getUnitsOfQuantity());
 
 		labelsPanel.add(this.idLabel);
 		fieldsPanel.add(this.id);
@@ -116,14 +111,8 @@ public class PartsDetailView extends JFrame {
 		labelsPanel.add(this.vendorLabel);
 		fieldsPanel.add(this.vendor);
 		
-		labelsPanel.add(this.partQuantityLabel);
-		fieldsPanel.add(this.partQuantity);
-		
 		labelsPanel.add(this.partUnitOfQuantity);
 		fieldsPanel.add(this.unitOfQuantity);
-		
-		labelsPanel.add(this.locationLabel);
-		fieldsPanel.add(this.location);
 
 		labelsPanel.add(this.externalPartNumberLabel);
 		fieldsPanel.add(this.externalPartNumber);
@@ -131,7 +120,7 @@ public class PartsDetailView extends JFrame {
 		this.controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
 		
 		this.savePart = new JButton("Save Part");
-		this.savePart.setActionCommand("save");
+		this.savePart.setActionCommand("savePart");
 		
 		this.controls.add(this.savePart);
 	
@@ -153,12 +142,14 @@ public class PartsDetailView extends JFrame {
 		this.setVisible(true);
 	}
 	
-	public void setItem(Item item){
-		this.item = item;
+	public void setItem(Part part){
+		this.part = part;
 		this.refreshObserver();
 	}
 	
-	public Item getItem(){
+	/*
+	public Part getPart(){
+		return new Part()
 		return new Item(this.getPartNumber(),
 				this.getPartName(),
 				this.getVendor(),
@@ -167,16 +158,15 @@ public class PartsDetailView extends JFrame {
 				this.getPartLocation(),
 				this.getExternalPartNumber());
 	}
+	*/
 	
 	public void refreshObserver(){
-		this.id.setText(Integer.toString(this.item.getId()));
-		this.partNumber.setText(this.item.getPartNumber());
-		this.partName.setText(this.item.getPartName());
-		this.vendor.setText(this.item.getVendor());
-		this.partQuantity.setText(Integer.toString(this.item.getQuantity()));
-		this.unitOfQuantity.setSelectedItem(this.item.getUnitOfQuantity());
-		this.location.setSelectedItem(this.item.getLocation());
-		this.externalPartNumber.setText(this.item.getExternalPartNumber());
+		this.id.setText(Integer.toString(this.part.getId()));
+		this.partNumber.setText(this.part.getPartNumber());
+		this.partName.setText(this.part.getPartName());
+		this.vendor.setText(this.part.getVendor().getValue());
+		this.unitOfQuantity.setSelectedItem(this.part.getUnitOfQuantity());
+		this.externalPartNumber.setText(this.part.getExternalPartNumber());
 	}
 	
 	public void registerListener(PartsDetailController listener){
@@ -209,19 +199,15 @@ public class PartsDetailView extends JFrame {
 				? Integer.parseInt(temp) : -1;
 	}
 	
-	public UnitOfQuantity getUnitOfQuantity(){
-		return (UnitOfQuantity)this.unitOfQuantity.getSelectedItem();
-	}
-	
-	public Location getPartLocation(){
-		return (Location)this.location.getSelectedItem();
+	public String getUnitOfQuantity(){
+		return (String)this.unitOfQuantity.getSelectedItem();
 	}
 	
 	public String getExternalPartNumber(){
 		return this.externalPartNumber.getText();
 	}
 	
-	public boolean containsItem(Item item){
-		return (this.item == item);
+	public boolean containsItem(Part part){
+		return (this.part == part);
 	}
 }

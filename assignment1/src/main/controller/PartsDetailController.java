@@ -37,7 +37,7 @@ public class PartsDetailController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("save")){
 			try{
-				Item tempItem = this.view.getItem();
+				Item tempItem = this.view.getPart();
 				tempItem.setEditPart(editPart);
 				if(this.part == null){
 					this.part = tempItem;

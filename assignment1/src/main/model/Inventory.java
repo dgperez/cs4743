@@ -96,6 +96,16 @@ public class Inventory {
 		}
 	}
 	
+	public boolean validateItem(Item item){
+		for(Item i : this.inventory){
+			if(i.getPart().equals(item.getPart()) &&
+					i.getLocation().equals(item.getLocation())){
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	private void closeOpenObservers(Item item){
 		ArrayList<PartsDetailView> itemsToRemove = 
 				new ArrayList<PartsDetailView>();
