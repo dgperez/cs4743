@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import main.model.Inventory;
 import main.model.Item;
+import main.model.Locations;
 import main.view.InventoryListView;
 import main.view.ItemDetailView;
 import main.view.PartsDetailView;
@@ -19,9 +20,12 @@ public class InventoryListController implements MouseListener, ActionListener {
 	private InventoryListView listView;
 	
 	private Inventory inventory;
+	
+	private Locations locations;
 
 	public InventoryListController(InventoryListView listView, 
-			Inventory inventory) {
+			Inventory inventory, Locations locations) {
+		this.locations = locations;
 		this.listView = listView;
 		this.inventory = inventory;
 	}
@@ -32,7 +36,7 @@ public class InventoryListController implements MouseListener, ActionListener {
 			if(e.getSource() instanceof JList){
 				JList<Object> list = (JList<Object>)e.getSource();
 				Item tempItem = (Item)list.getSelectedValue();
-				ItemDetailView view = new ItemDetailView();
+				ItemDetailView view = new ItemDetailView(this.locations);
 				this.inventory.registerObservers(view);
 				view.setItem(tempItem);
 				ItemDetailController itemController = 
@@ -59,7 +63,7 @@ public class InventoryListController implements MouseListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if("add".equals(e.getActionCommand())){
-			ItemDetailView view = new ItemDetailView();
+			ItemDetailView view = new ItemDetailView(this.locations);
 			ItemDetailController itemController = 
 					new ItemDetailController(view, 
 							null, this.inventory);

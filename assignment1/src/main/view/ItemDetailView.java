@@ -55,7 +55,8 @@ public class ItemDetailView extends JFrame {
 
 	private Item item;
 
-	public ItemDetailView() {
+	public ItemDetailView(Locations locations) {
+		this.locations = locations;
 		this.inputs = new JPanel(new BorderLayout(5,5));
 
 		JPanel labelsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
