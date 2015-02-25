@@ -1,8 +1,10 @@
 package main.model;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import main.dao.ConnectionGateway;
+import main.dao.PartDao;
 
 public class PartsInventory {
 
@@ -10,9 +12,17 @@ public class PartsInventory {
 	
 	private ConnectionGateway connGateway;
 	
+	private PartDao partDao;
+	
 	public PartsInventory(ConnectionGateway connGateway) {
 		this.allParts = new ArrayList<Part>();
 		this.connGateway = connGateway;
+		this.partDao = new PartDao(this.connGateway);
+	}
+	
+	public void loadParts() throws SQLException{
+		ArrayList<Part> parts = this.partDao.getParts();
+		this.addAllParts(parts);
 	}
 
 	public void addPart(Part part){
