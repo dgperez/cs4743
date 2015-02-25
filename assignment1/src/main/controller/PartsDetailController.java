@@ -8,11 +8,7 @@ import javax.swing.JOptionPane;
 import main.model.Inventory;
 import main.model.Item;
 import main.model.Part;
-<<<<<<< HEAD
 import main.model.PartsInventory;
-=======
-import main.model.UnitsOfQuantity;
->>>>>>> a3_views
 import main.view.PartsDetailView;
 
 public class PartsDetailController implements ActionListener {
@@ -22,6 +18,12 @@ public class PartsDetailController implements ActionListener {
 	private Part part;
 	
 	private PartsInventory partsInventory;
+
+	private Inventory inventory;
+
+	private boolean newPart = false;
+
+	private boolean editPart = false;
 	
 	public PartsDetailController(PartsDetailView view, Part part
 			, PartsInventory partsInventory) {
@@ -34,15 +36,6 @@ public class PartsDetailController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("savePart")){
-<<<<<<< HEAD
-			
-		} else if (e.getActionCommand().equals("addPart")){
-			
-		} else if (e.getActionCommand().equals("deletePart")){
-			
-		}
-	}
-=======
 			Item tempItem = (Item)e.getSource();
 			if(validateSavedItem(tempItem)){
 				try {
@@ -51,6 +44,10 @@ public class PartsDetailController implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Error: " + e1.getMessage());
 				}
 			}
+		} else if (e.getActionCommand().equals("addPart")){
+			
+		} else if (e.getActionCommand().equals("deletePart")){
+			
 		}
 	}
 	
@@ -72,11 +69,11 @@ public class PartsDetailController implements ActionListener {
 			valid = false;
 			message += "Vendor must be between 0 and 255 characters long.\n";
 		}
-		if(item.getQuantity() < 0 && !this.newItem){
+		if(item.getQuantity() < 0 && !this.newPart ){
 			valid = false;
 			message += "Quantity must be at least zero.\n";
 		}
-		if(item.getQuantity() <= 0 && this.newItem){
+		if(item.getQuantity() <= 0 && this.newPart){
 			valid = false;
 			message += "Initial quantity must be greater than zero.\n";
 		}
@@ -102,12 +99,11 @@ public class PartsDetailController implements ActionListener {
 		return valid;
 	}
 
-	public void itemIsNew(){
-		this.newItem = true;
+	public void partIsNew(){
+		this.newPart = true;
 	}
 	
 	public void editPart(){
-		this.editPart = true;
+		this.editPart  = true;
 	}
->>>>>>> a3_views
 }
