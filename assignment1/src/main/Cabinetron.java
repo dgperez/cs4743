@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import main.controller.InventoryListController;
+import main.controller.PartsListController;
 import main.dao.ConnectionGateway;
 import main.dao.ItemDao;
 import main.dao.PartDao;
@@ -11,8 +12,11 @@ import main.dao.TypeDao;
 import main.model.Inventory;
 import main.model.Item;
 import main.model.Locations;
+import main.model.Part;
+import main.model.PartsInventory;
 import main.model.UnitsOfQuantity;
 import main.view.InventoryListView;
+import main.view.PartsListView;
 
 public class Cabinetron {
 
@@ -62,21 +66,35 @@ public class Cabinetron {
 			UnitsOfQuantity unitsOfQuantity = new UnitsOfQuantity();
 			unitsOfQuantity.resetUnitsOfQuantity(typeDao.getTypeList(3));
 			
-			System.out.println(unitsOfQuantity.getUnitsOfQuantity());
-			
 			Locations locations = new Locations();
 			locations.resetLocations(typeDao.getTypeList(1));
 			
-			System.out.println(locations.getLocations());
+			PartsInventory partsInventory = new PartsInventory(connGateway);
+			partsInventory.loadParts();
 			
-			PartDao partDao = new PartDao(connGateway);
-			System.out.println(partDao.getParts());
-			System.out.println(partDao.getPart(2));
+			for(Part part : partsInventory.getAllParts()){
+				System.out.println(part);
+			}
 			
-			ItemDao itemDao = new ItemDao(connGateway);
-			System.out.println(itemDao.getItems());
+			Inventory inventory = new Inventory(connGateway);
+			inventory.loadInventory();
 			
+			for(Item item : inventory.getInventory()){
+				System.out.println(item);
+			}
 			
+			InventoryListView inventoryListView = 
+					new InventoryListView(inventory);
+			
+			PartsListView partsListView = 
+					new PartsListView(partsInventory);
+			
+			InventoryListController inventoryListController = 
+					new InventoryListController(inventoryListView, inventory, 
+							locations);
+			
+			PartsListController partsListController = 
+					new PartsListController(partsInventory);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
