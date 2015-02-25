@@ -1,5 +1,7 @@
 package main.model;
 
+import java.util.Map.Entry;
+
 public class Item {
 	private int id;
 	private int quantity;
@@ -7,19 +9,19 @@ public class Item {
 	
 	private Part part;
 
-	private String location;
+	private Entry<Integer, String> location;
 	
-	public Item(Part part, int quantity, String location) {
+	public Item(Part part, int quantity, Entry<Integer, String> location) {
 		this.part = part;
 		this.quantity = quantity;
 		this.location = location;
 	}
 	
-	public String getLocation(){
+	public Entry<Integer, String> getLocation(){
 		return this.location;
 	}
 	
-	public void setLocation(String location){
+	public void setLocation(Entry<Integer, String> location){
 		this.location = location;
 	}
 	

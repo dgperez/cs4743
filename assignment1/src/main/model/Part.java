@@ -1,17 +1,19 @@
 package main.model;
 
+import java.util.Map.Entry;
+
 public class Part {
 	private int id;
 	private String partNumber;
 	private String partName;
-	private String vendor;
+	private Entry<Integer, String> vendor;
 	private boolean toEdit = false;
 	private String externalPartNumber;
 		
-	private String currentUnit;
+	private Entry<Integer, String> currentUnit;
 	
-	public Part(int id, String partNumber, String partName, String vendor,
-			String unitOfQuantity, String externalPartNumber) {
+	public Part(int id, String partNumber, String partName, Entry<Integer, String> vendor,
+			Entry<Integer, String> unitOfQuantity, String externalPartNumber) {
 		this.id = id;
 		this.partNumber = partNumber;
 		this.partName = partName;
@@ -20,7 +22,7 @@ public class Part {
 		this.setExternalPartNumber(externalPartNumber);
 	}
 	
-	public String getUnitOfQuantity(){
+	public Entry<Integer, String> getUnitOfQuantity(){
 		return this.currentUnit;
 	}
 	
@@ -44,11 +46,11 @@ public class Part {
 		this.partName = partName;
 	}
 
-	public String getVendor() {
+	public Entry<Integer, String> getVendor() {
 		return vendor;
 	}
 	
-	public void setVendor(String vendor) {
+	public void setVendor(Entry<Integer, String> vendor) {
 		this.vendor = vendor;
 	}
 	
@@ -72,8 +74,8 @@ public class Part {
 	public String toString(){
 		return "Id: " + this.id + ", Part Name: " + this.partName + ", " +
 				"Part#: " + this.partNumber + ", " +
-				((!this.vendor.isEmpty()) 
-						? "Vendor: " + this.vendor + ", " : "")  
+				((this.vendor != null) 
+						? "Vendor: " + this.vendor.getValue() + ", " : "")  
 				+ " " + this.currentUnit
 				+ ((!this.externalPartNumber.isEmpty()) 
 					? ", External Part Number: " + this.externalPartNumber: "");

@@ -3,6 +3,8 @@ package main.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.dao.ConnectionGateway;
+import main.dao.PartDao;
 import main.view.InventoryListView;
 import main.view.PartsDetailView;
 
@@ -16,14 +18,28 @@ public class Inventory {
 	private ArrayList<PartsDetailView> observers = 
 			new ArrayList<PartsDetailView>();
 	
+	private ConnectionGateway connGateway;
+	
+	public Inventory(ConnectionGateway connGateway){
+		this.connGateway = connGateway;
+		this.inventory = new ArrayList<Item>();
+	}
+	
  	public List<Item> getInventory(){
  		return this.inventory;
  	}
- 	
- 	public void createInventory() {
- 		this.inventory = new ArrayList<Item>();
- 	}
 	
+ 	public void addItem(Item item) throws Exception{
+ 		for(Item i : this.inventory){
+ 			if(i.equals(item)){
+ 				throw new Exception("Part number already " +
+						"exists in the list.");
+ 			}
+ 		}
+ 		this.inventory.add(item);
+ 		this.updateView();
+ 	}
+ 	
  	/**
  	 * Adds an item to the inventory if its part number is not in the list.
  	 * @throws Exception - only if the item's part number already 
@@ -53,6 +69,10 @@ public class Inventory {
 			inventory.add(item);
 		}
 		this.updateView();
+	}
+	
+	public void editItem(Item item){
+		
 	}
 	
 	/**
