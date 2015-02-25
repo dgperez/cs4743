@@ -128,4 +128,19 @@ public class PartDao extends AbstractDao {
 		rs.close();
 		return tempPart;
 	}
+	
+	public void deletePart(Part part) throws SQLException{
+		String deleteSql = "delete from `parts` where `pid` = ?;";
+		Connection conn = this.connGateway.getConnection();
+		PreparedStatement prepStmt = conn.prepareStatement(deleteSql);
+		prepStmt.setInt(1, part.getId());
+		boolean execute = prepStmt.execute();
+		prepStmt.close();
+		this.connGateway.closeConnection(conn);
+		if(!execute){
+			throw new SQLException(
+					String.format("Could not delete part with id: %d", 
+							part.getId()));
+		}
+	}
 }

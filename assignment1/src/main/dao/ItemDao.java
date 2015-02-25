@@ -84,5 +84,20 @@ public class ItemDao extends AbstractDao {
 		rs.close();
 		return items;
 	}
+	
+	public void deleteItem(Item item) throws SQLException{
+		String deleteSql = "delete from `inventory` where `pid` = ?;";
+		Connection conn = this.connGateway.getConnection();
+		PreparedStatement prepStmt = conn.prepareStatement(deleteSql);
+		prepStmt.setInt(1, item.getId());
+		boolean execute = prepStmt.execute();
+		prepStmt.close();
+		this.connGateway.closeConnection(conn);
+		if(!execute){
+			throw new SQLException(
+					String.format("Could not delete item with id: %d", 
+							item.getId()));
+		}
+	}
 
 }

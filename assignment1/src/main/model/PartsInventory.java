@@ -22,7 +22,7 @@ public class PartsInventory {
 	
 	public void loadParts() throws SQLException{
 		ArrayList<Part> parts = this.partDao.getParts();
-		this.addAllParts(parts);
+		this.replaceAllParts(parts);
 	}
 
 	public void addPart(Part part){
@@ -31,7 +31,7 @@ public class PartsInventory {
 		}
 	}
 	
-	public void addAllParts(ArrayList<Part> parts){
+	public void replaceAllParts(ArrayList<Part> parts){
 		this.allParts.clear();
 		this.allParts = parts;
 	}
@@ -61,6 +61,11 @@ public class PartsInventory {
 			}
 		}
 		return true;
+	}
+	
+	public void removePart(Part part) throws SQLException{
+		this.allParts.remove(part);
+		this.partDao.deletePart(part);
 	}
 	
 }
