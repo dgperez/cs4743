@@ -15,8 +15,8 @@ public class Cabinetron {
 	 * 
 	 * */
 	public static void main(String[] args){
-		
-		/*Inventory inventoryList = new Inventory();
+		/*		
+		Inventory inventoryList = new Inventory();
 		inventoryList.createInventory();
 		InventoryListView test1 = new InventoryListView(inventoryList);
 		inventoryList.registerView(test1);
@@ -46,7 +46,8 @@ public class Cabinetron {
 		
 		InventoryListController controller = new InventoryListController(test1, inventoryList);
 		
-		test1.registerListener(controller);*/
+		test1.registerListener(controller);
+		*/
 		
 		// Testing
 		ConnectionGateway tempGateway = new ConnectionGateway();
@@ -58,6 +59,7 @@ public class Cabinetron {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+
 		}
 	}
 

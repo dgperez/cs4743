@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import main.model.Inventory;
 import main.model.Item;
 import main.view.InventoryListView;
+import main.view.ItemDetailView;
 import main.view.PartsDetailView;
 
 public class InventoryListController implements MouseListener, ActionListener {
@@ -31,14 +32,14 @@ public class InventoryListController implements MouseListener, ActionListener {
 			if(e.getSource() instanceof JList){
 				JList<Object> list = (JList<Object>)e.getSource();
 				Item tempItem = (Item)list.getSelectedValue();
-				PartsDetailView view = new PartsDetailView();
+				ItemDetailView view = new ItemDetailView();
 				this.inventory.registerObservers(view);
 				view.setItem(tempItem);
-				PartsDetailController partController = 
-						new PartsDetailController(view, 
+				ItemDetailController itemController = 
+						new ItemDetailController(view, 
 								tempItem, this.inventory);
-				partController.editPart();
-				view.registerListener(partController);
+				itemController.editItem();
+				view.registerListener(itemController);
 			}
 		}
 	}
@@ -58,13 +59,13 @@ public class InventoryListController implements MouseListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if("add".equals(e.getActionCommand())){
-			PartsDetailView view = new PartsDetailView();
-			PartsDetailController partController = 
-					new PartsDetailController(view, 
+			ItemDetailView view = new ItemDetailView();
+			ItemDetailController itemController = 
+					new ItemDetailController(view, 
 							null, this.inventory);
 			this.inventory.registerObservers(view);
-			partController.itemIsNew();
-			view.registerListener(partController);
+			itemController.itemIsNew();
+			view.registerListener(itemController);
 		} else if ("delete".equals(e.getActionCommand())){
 			Object temp = this.listView.getSelectedListItem();
 			if(temp != null){
