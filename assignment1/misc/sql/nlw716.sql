@@ -46,6 +46,7 @@ CREATE TABLE `inventory` (
   `locations_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`pid`),
   UNIQUE KEY `pid_UNIQUE` (`pid`),
+  UNIQUE KEY `part_locations_unique1` (`parts_id`,`locations_id`),
   KEY `locations_id_fkey1_idx` (`locations_id`),
   KEY `part_id_fkey1_idx` (`parts_id`),
   CONSTRAINT `locations_id_fkey1` FOREIGN KEY (`locations_id`) REFERENCES `locations` (`pid`) ON UPDATE NO ACTION,
@@ -200,4 +201,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-24 12:42:38
+-- Dump completed on 2015-02-24 22:23:01
