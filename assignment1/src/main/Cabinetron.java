@@ -96,6 +96,11 @@ public class Cabinetron {
 			PartsListController partsListController = 
 					new PartsListController(partsInventory);
 			
+			inventoryListView.registerListener(inventoryListController);
+			partsListView.registerListener(partsListController);
+			
+			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

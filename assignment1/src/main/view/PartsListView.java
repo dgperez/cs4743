@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import main.controller.InventoryListController;
+import main.controller.PartsListController;
 import main.model.Inventory;
 import main.model.PartsInventory;
 
@@ -73,7 +74,7 @@ public class PartsListView extends JFrame{
 	 * MousePanel.
 	 * @param listener
 	 */
-	public void registerListener(InventoryListController listener) {
+	public void registerListener(PartsListController listener) {
 		// add listener for JList double click events
 		this.partList.addMouseListener(listener);
 		
