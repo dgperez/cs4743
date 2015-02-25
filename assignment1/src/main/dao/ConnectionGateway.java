@@ -33,6 +33,13 @@ public class ConnectionGateway {
 	
 	private void initProperties(){
 		this.connectionParams = new Properties();
+		this.connectionParams.put("db.user", "nlw716");
+		this.connectionParams.put("db.password", "i56q7uR6Vl51qQ4tLbOE");
+		this.connectionParams.put("db.hostname", "devcloud.fulgentcorp.com");
+		this.connectionParams.put("db.port", "3306");
+		this.connectionParams.put("db.default_schema", "nlw716");
+/*		
+		this.connectionParams = new Properties();
 		if(System.getProperty("os.name").contains("Mac OS X")){
 			ConnectionGateway.propertyFilePath = 
 					ConnectionGateway.macSqlConnPropPath;
@@ -51,7 +58,7 @@ public class ConnectionGateway {
 		} catch (IOException ioex){
 			ioex.printStackTrace();
 		}
-	}
+*/	}
 	
 	private String getConnectionString(){
 		String temp = 
