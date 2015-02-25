@@ -5,23 +5,17 @@ import java.util.Map.Entry;
 
 public class Locations {
 
-	private HashMap<Integer, String> locations;
+	private static HashMap<Integer, String> locations = new HashMap<Integer, String>();
 	
-	public Locations() {
-		this.locations = new HashMap<Integer, String>();
-	}
-	
-	public void addLocation(int id, String location){
-		this.locations.put(id, location);
-	}
-	
-	public void setLocations(HashMap<Integer, String> quantities){
-		this.locations.clear();
-		this.locations = quantities;
+	static {
+		locations.put(0, "Unknown");
+		locations.put(1, "Facility 1 Warehouse 1");
+		locations.put(2, "Facility 1 Warehouse 2");
+		locations.put(3, "Facility 2");
 	}
 	
 	public int getIdForLocation(String quantity){
-		for(Entry<Integer, String> id : this.locations.entrySet()){
+		for(Entry<Integer, String> id : Locations.locations.entrySet()){
 			if(id.getValue().equals(quantity)){
 				return id.getKey();
 			}
@@ -30,8 +24,8 @@ public class Locations {
 	}
 	
 	public String[] getLocations(){
-		return this.locations.values().toArray(
-				new String[this.locations.size()]);
+		return Locations.locations.values().toArray(
+				new String[Locations.locations.size()]);
 	}
 
 }
