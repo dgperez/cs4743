@@ -6,9 +6,8 @@ import java.util.List;
 
 import main.dao.ConnectionGateway;
 import main.dao.ItemDao;
-import main.dao.PartDao;
 import main.view.InventoryListView;
-import main.view.PartsDetailView;
+import main.view.ItemDetailView;
 
 public class Inventory {
 	private List<Item> inventory;
@@ -17,8 +16,8 @@ public class Inventory {
 	
 	private boolean viewCreated = false;
 	
-	private ArrayList<PartsDetailView> observers = 
-			new ArrayList<PartsDetailView>();
+	private ArrayList<ItemDetailView> observers = 
+			new ArrayList<ItemDetailView>();
 	
 	private ConnectionGateway connGateway;
 	
@@ -86,20 +85,21 @@ public class Inventory {
 		this.viewCreated = true;
 	}
 	
-	public void registerObservers(PartsDetailView partsDetailView){
-		this.observers.add(partsDetailView);
+	public void registerObservers(ItemDetailView itemDetailView){
+		this.observers.add(itemDetailView);
 	}
 	
 	private void updateObservers(){
-		for(PartsDetailView partsDetailView : this.observers){
-			partsDetailView.refreshObserver();
+		for(ItemDetailView itemDetailView : this.observers){
+			itemDetailView.refreshObserver();
 		}
 	}
 	
 	public boolean validateItem(Item item){
 		for(Item i : this.inventory){
 			if(i.getPart().equals(item.getPart()) &&
-					i.getLocation().equals(item.getLocation())){
+					i.getLocation().getValue().equals(
+							item.getLocation().getValue())){
 				return false;
 			}
 		}
@@ -107,17 +107,17 @@ public class Inventory {
 	}
 	
 	private void closeOpenObservers(Item item){
-		ArrayList<PartsDetailView> itemsToRemove = 
-				new ArrayList<PartsDetailView>();
-		for(PartsDetailView partsDetailView : this.observers){
-			if(partsDetailView.containsItem(item)){
-				itemsToRemove.add(partsDetailView);
+		ArrayList<ItemDetailView> itemsToRemove = 
+				new ArrayList<ItemDetailView>();
+		for(ItemDetailView itemDetailView : this.observers){
+			if(itemDetailView.containsItem(item)){
+				itemsToRemove.add(itemDetailView);
 			}
 		}
 		
 		this.observers.removeAll(itemsToRemove);
 		
-		for(PartsDetailView removedViews : itemsToRemove){
+		for(ItemDetailView removedViews : itemsToRemove){
 			removedViews.dispose();
 		}
 	}

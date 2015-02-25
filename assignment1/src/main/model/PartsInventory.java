@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import main.dao.ConnectionGateway;
 import main.dao.PartDao;
+import main.view.PartsDetailView;
 
 public class PartsInventory {
 
@@ -13,6 +14,9 @@ public class PartsInventory {
 	private ConnectionGateway connGateway;
 	
 	private PartDao partDao;
+	
+	private ArrayList<PartsDetailView> observers = 
+			new ArrayList<PartsDetailView>();
 	
 	public PartsInventory(ConnectionGateway connGateway) {
 		this.allParts = new ArrayList<Part>();
