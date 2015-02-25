@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import main.controller.PartsDetailController;
-import main.model.Item;
 import main.model.Part;
 import main.model.UnitsOfQuantity;
 
@@ -72,8 +71,7 @@ public class PartsDetailView extends JFrame {
 	
 	private UnitsOfQuantity unitsOfQuantityTypes;
 	
-	public PartsDetailView(UnitsOfQuantity unitsOfQuantityTypes) {
-		this.unitsOfQuantityTypes = unitsOfQuantityTypes;
+	public PartsDetailView() {
 		this.inputs = new JPanel(new BorderLayout(5, 5));
 		
 		JPanel labelsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
@@ -97,7 +95,7 @@ public class PartsDetailView extends JFrame {
 		
 		this.unitOfQuantity = 
 				new JComboBox<String>(
-						this.unitsOfQuantityTypes.getUnitsOfQuantity());
+						unitsOfQuantityTypes.getUnitsOfQuantity());
 
 		labelsPanel.add(this.idLabel);
 		fieldsPanel.add(this.id);

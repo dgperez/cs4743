@@ -2,6 +2,7 @@ package main.model;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import main.dao.ConnectionGateway;
 import main.dao.PartDao;
@@ -62,6 +63,10 @@ public class PartsInventory {
 		return this.allParts;
 	}
 	
+	public String[] getAllPartsToString(){
+		return Arrays.asList(allParts).toArray(new String[allParts.size()]);
+	}
+	
 	public boolean validatePartNumber(String partNumber){
 		for(Part part: this.allParts){
 			if(part.getPartNumber().equals(partNumber)){
@@ -72,8 +77,12 @@ public class PartsInventory {
 	}
 	
 	public void removePart(Part part) throws SQLException{
+		try{
+			this.partDao.deletePart(part);
+		} catch(SQLException e){
+			throw e;
+		}
 		this.allParts.remove(part);
-		this.partDao.deletePart(part);
 	}
 	
 	public boolean validateSavedPart(Part part) throws Exception{
