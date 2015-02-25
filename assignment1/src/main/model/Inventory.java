@@ -95,15 +95,27 @@ public class Inventory {
 		}
 	}
 	
-	public boolean validateItem(Item item){
+	public boolean validateItem(Item item) throws Exception{
+		String message = "";
+		boolean valid = true;
+		if(item.getLocation().getValue().equals("Unknown")){
+			message += "Location cannot be unknown.\n";
+			valid = false;
+		}
 		for(Item i : this.inventory){
 			if(i.getPart().equals(item.getPart()) &&
 					i.getLocation().getValue().equals(
 							item.getLocation().getValue())){
-				return false;
+				message += "No two parts can have the same " +
+						"Location and Part Number.\n";
+				valid = false;
+				break;
 			}
 		}
-		return true;
+		if(!valid){
+			throw new Exception(message);
+		}
+		return valid;
 	}
 	
 	private void closeOpenObservers(Item item){

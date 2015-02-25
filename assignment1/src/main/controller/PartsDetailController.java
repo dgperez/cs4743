@@ -7,8 +7,6 @@ import javax.swing.JOptionPane;
 
 import main.model.Inventory;
 import main.model.Item;
-import main.model.Item.Location;
-import main.model.Item.UnitOfQuantity;
 import main.model.Part;
 import main.view.PartsDetailView;
 
@@ -35,26 +33,8 @@ public class PartsDetailController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getActionCommand().equals("save")){
-			try{
-				Item tempItem = this.view.getPart();
-				tempItem.setEditPart(editPart);
-				if(this.part == null){
-					this.part = tempItem;
-					this.view.setItem(this.part);
-				}
-				this.part.setEditPart(editPart);
-				if(this.validateSavedItem(tempItem)){
-					this.inventory.addItem(tempItem, 
-							this.inventory.getInventory());
-					this.view.refreshObserver();
-					this.newItem = false;
-				}
-			} catch(Exception ex){
-				JOptionPane.showMessageDialog(null, 
-						"A part already exists with that part name.", 
-						"Part Exists", JOptionPane.ERROR_MESSAGE);
-			}
+		if(e.getActionCommand().equals("savePart")){
+			
 		}
 	}
 	

@@ -76,4 +76,37 @@ public class PartsInventory {
 		this.partDao.deletePart(part);
 	}
 	
+	public boolean validateSavedPart(Part part) throws Exception{
+		boolean valid = true;
+		String message = "";
+		if(part.getPartNumber().length() <= 0 
+				|| part.getPartNumber().length() > 20){
+			valid = false;
+			message += "Part Number must be between 0 and 20 characters long.\n";
+		}
+		if(part.getPartName().length() <= 0 
+				|| part.getPartName().length() > 255){
+			valid = false;
+			message += "Part Name must be between 0 and 255 characters long.\n";
+		}
+		if(part.getVendor().getValue().length() > 255){
+			valid = false;
+			message += "Vendor must be between 0 and 255 characters long.\n";
+		}
+		if(part.getUnitOfQuantity().getValue().equals("Unknown")){
+			valid = false;
+			message += "Quantity cannot be 'Unknown'.\n";
+		}
+		if(!part.getExternalPartNumber().isEmpty() && 
+				part.getExternalPartNumber().length() > 50){
+			valid = false;
+			message += "External Part Number must be between 0 and 50 characters long.\n";
+		}
+		if(!valid){
+			//System.out.println(message);
+			throw new Exception(message);
+		}
+		return valid;
+	}
+	
 }
