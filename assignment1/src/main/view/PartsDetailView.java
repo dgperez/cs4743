@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.Map.Entry;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -71,7 +72,8 @@ public class PartsDetailView extends JFrame {
 	
 	private UnitsOfQuantity unitsOfQuantityTypes;
 	
-	public PartsDetailView() {
+	public PartsDetailView(UnitsOfQuantity unitsOfQuantityTypes) {
+		this.unitsOfQuantityTypes = unitsOfQuantityTypes;
 		this.inputs = new JPanel(new BorderLayout(5, 5));
 		
 		JPanel labelsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
@@ -95,7 +97,7 @@ public class PartsDetailView extends JFrame {
 		
 		this.unitOfQuantity = 
 				new JComboBox<String>(
-						unitsOfQuantityTypes.getUnitsOfQuantity());
+						this.unitsOfQuantityTypes.getUnitsOfQuantity());
 
 		labelsPanel.add(this.idLabel);
 		fieldsPanel.add(this.id);
@@ -140,23 +142,16 @@ public class PartsDetailView extends JFrame {
 		this.setVisible(true);
 	}
 	
-	public void setItem(Part part){
+	public void setPart(Part part){
 		this.part = part;
 		this.refreshObserver();
 	}
 	
-	/*
 	public Part getPart(){
-		return new Part()
-		return new Item(this.getPartNumber(),
-				this.getPartName(),
-				this.getVendor(),
-				this.getQuantity(),
-				this.getUnitOfQuantity(),
-				this.getPartLocation(),
-				this.getExternalPartNumber());
+		//return new Part()
+		//Part part = new Part(this.getId(), this.getPartNumber(), this.getPartName(), this.getVendor())
+		return null;
 	}
-	*/
 	
 	public void refreshObserver(){
 		this.id.setText(Integer.toString(this.part.getId()));
@@ -178,6 +173,10 @@ public class PartsDetailView extends JFrame {
 			}
 		}
 	}
+	
+	public int getId(){
+		return Integer.parseInt(this.id.getText());
+	}
 
 	public String getPartNumber(){
 		return this.partNumber.getText();
@@ -191,14 +190,9 @@ public class PartsDetailView extends JFrame {
 		return this.vendor.getText();
 	}
 	
-	public int getQuantity(){
-		String temp = this.partQuantity.getText();
-		return (temp != null && temp.matches("^[0-9]+$")) 
-				? Integer.parseInt(temp) : -1;
-	}
-	
-	public String getUnitOfQuantity(){
-		return (String)this.unitOfQuantity.getSelectedItem();
+	public Entry<Integer, String> getUnitOfQuantity(){
+		String quantity = (String)this.unitOfQuantity.getSelectedItem();
+		return this.unitsOfQuantityTypes.getEntryForQuantity(quantity);
 	}
 	
 	public String getExternalPartNumber(){

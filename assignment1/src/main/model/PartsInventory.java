@@ -117,7 +117,6 @@ public class PartsInventory {
 			message += "External Part Number must be between 0 and 50 characters long.\n";
 		}
 		if(!valid){
-			//System.out.println(message);
 			throw new Exception(message);
 		}
 		return valid;

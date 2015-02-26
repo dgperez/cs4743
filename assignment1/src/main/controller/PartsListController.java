@@ -9,14 +9,20 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 import main.model.Item;
+import main.model.Part;
 import main.model.PartsInventory;
+import main.model.UnitsOfQuantity;
 import main.view.PartsDetailView;
 
 public class PartsListController implements MouseListener, ActionListener{
 
 	private PartsInventory partsInventory;
 	
-	public PartsListController(PartsInventory partsInventory) {
+	private UnitsOfQuantity unitsOfQuantityTypes;
+	
+	public PartsListController(PartsInventory partsInventory, 
+			UnitsOfQuantity unitsOfQuantityTypes) {
+		this.unitsOfQuantityTypes = unitsOfQuantityTypes;
 		this.partsInventory = partsInventory;
 	}
 
@@ -34,7 +40,15 @@ public class PartsListController implements MouseListener, ActionListener{
 		if(e.getClickCount() == 2){
 			if(e.getSource() instanceof JList){
 				JList<Object> list = (JList<Object>)e.getSource();
-				
+				Part part = (Part)list.getSelectedValue();
+				PartsDetailView partDetailView = new PartsDetailView(
+						this.unitsOfQuantityTypes);
+				partDetailView.setPart(part);
+				PartsDetailController partsDetailController = 
+						new PartsDetailController(partDetailView, 
+								this.partsInventory);
+				partsDetailController.editPart();
+				partDetailView.registerListener(partsDetailController);
 			}
 		}
 		

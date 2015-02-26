@@ -7,19 +7,13 @@ public class UnitsOfQuantity {
 	
 	private static HashMap<Integer, String> unitsOfQuantity = new HashMap<Integer, String>();
 	
-	static {
-		unitsOfQuantity.put(0, "Unknown");
-		unitsOfQuantity.put(1, "Linear Feet");
-		unitsOfQuantity.put(2, "Pieces");
-	}
-	
-	public int getIdForQuantity(String quantity){
+	public Entry<Integer, String> getEntryForQuantity(String quantity){
 		for(Entry<Integer, String> id : UnitsOfQuantity.unitsOfQuantity.entrySet()){
 			if(id.getValue().equals(quantity)){
-				return id.getKey();
+				return id;
 			}
 		}
-		return -1;
+		return null;
 	}
 	
 	public String[] getUnitsOfQuantity(){

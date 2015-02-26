@@ -53,7 +53,7 @@ public class Cabinetron {
 							locations);
 			
 			PartsListController partsListController = 
-					new PartsListController(partsInventory);
+					new PartsListController(partsInventory, unitsOfQuantity);
 			
 			inventoryListView.registerListener(inventoryListController);
 			partsListView.registerListener(partsListController);
