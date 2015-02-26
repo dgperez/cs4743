@@ -29,24 +29,13 @@ public class Inventory {
 		this.itemDao = new ItemDao(this.connGateway);
 	}
 	
-	public void loadInventory() throws Exception{
+	public void loadInitialInventory() throws Exception{
 		ArrayList<Item> items = this.itemDao.getItems();
-		this.replaceAllItems(items);
+		this.inventory = items;
 	}
 	
  	public List<Item> getInventory(){
  		return this.inventory;
- 	}
- 	
- 	public void replaceAllItems(ArrayList<Item> items) throws Exception{
- 		for(Item item : this.inventory){
- 			this.removeItem(item, this.inventory);
- 		}
- 		this.inventory.clear();
- 		for(Item item : items){
- 			this.addItem(item);
- 		}
- 		this.inventory = items;
  	}
 	
  	public void addItem(Item item) throws Exception{
@@ -61,8 +50,13 @@ public class Inventory {
  		this.updateView();
  	}
 	
-	public void editItem(Item item){
-		
+	public void editItem(Item item) throws SQLException{
+		for(Item i : this.inventory){
+			if(i.getId() == item.getId()){
+				i = item;
+			}
+		}
+		this.itemDao.editItem(item);
 	}
 	
 	/**

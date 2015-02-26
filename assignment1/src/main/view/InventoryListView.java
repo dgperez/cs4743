@@ -18,9 +18,6 @@ import main.model.Inventory;
 
 public class InventoryListView extends JFrame{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -354701430566371345L;
 
 	private JList<Object> list;

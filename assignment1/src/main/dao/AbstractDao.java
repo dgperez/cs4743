@@ -28,17 +28,13 @@ public abstract class AbstractDao {
 		
 		Connection conn = this.connGateway.getConnection();
 		String selectLocation = "select `pid` from `"+tableName+"` where" +
-				" `"+columnName+"` = '?';";
+				" `"+columnName+"` = ?;";
 		PreparedStatement prepStmt = 
 				conn.prepareStatement(selectLocation);
 		prepStmt.setNString(1, value);
 		ResultSet rs = prepStmt.executeQuery();
-		prepStmt.close();
-		prepStmt = null;
 		rs.next();
 		int id = rs.getInt(1);
-		rs.close();
-		rs = null;
 		if(0 == id){
 			String insertLocation = "insert into `"+tableName+"` " +
 					"(`"+columnName+"`) VALUES ('?');";
@@ -60,6 +56,8 @@ public abstract class AbstractDao {
 				throw new SQLException("Failed to insert new location.");
 			}
 		}
+		rs.close();
+		prepStmt.close();
 		return id;
 	}
 	

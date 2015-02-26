@@ -40,7 +40,7 @@ public class Cabinetron {
 			partsInventory.loadParts();
 			
 			Inventory inventory = new Inventory(connGateway);
-			inventory.loadInventory();
+			inventory.loadInitialInventory();
 			
 			InventoryListView inventoryListView = 
 					new InventoryListView(inventory);
