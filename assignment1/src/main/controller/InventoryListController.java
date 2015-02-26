@@ -4,10 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
+import main.dao.ConnectionGateway;
+import main.dao.ItemDao;
 import main.model.Inventory;
 import main.model.Item;
 import main.model.Locations;
@@ -74,8 +77,16 @@ public class InventoryListController implements MouseListener, ActionListener {
 			Object temp = this.listView.getSelectedListItem();
 			if(temp != null){
 				Item tempItem = (Item)temp;
+				ConnectionGateway connGateway = new ConnectionGateway();
+				ItemDao itemDao = new ItemDao(connGateway);
 				this.inventory.removeItem(tempItem, 
 						this.inventory.getInventory());
+				try {
+					itemDao.deleteItem(tempItem);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			} else {
 				JOptionPane.showMessageDialog(null, 
 						"Select an item in the list to delete.", 
