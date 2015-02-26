@@ -39,13 +39,10 @@ public class PartsDetailController implements ActionListener {
 					this.partsInventory.addPart(part);
 				}
 			} catch (Exception e1) {
+				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, "Error: " + 
 						e1.getMessage());
 			}
-		} else if (e.getActionCommand().equals("addPart")){
-			
-		} else if (e.getActionCommand().equals("deletePart")){
-			
 		}
 	}
 

@@ -30,9 +30,9 @@ public class PartsInventory {
 		this.replaceAllParts(parts);
 	}
 
-	public void addPart(Part part){
+	public void addPart(Part part) throws SQLException{
 		if(!this.allParts.contains(part)){
-			this.allParts.add(part);
+			this.allParts.add(this.partDao.addPart(part));
 		}
 	}
 	
@@ -115,6 +115,10 @@ public class PartsInventory {
 				part.getExternalPartNumber().length() > 50){
 			valid = false;
 			message += "External Part Number must be between 0 and 50 characters long.\n";
+		}
+		if(!this.validatePartNumber(part.getPartNumber())){
+			valid = false;
+			message += "A part with that number already exists.";
 		}
 		if(!valid){
 			throw new Exception(message);
