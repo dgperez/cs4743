@@ -13,10 +13,12 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.sql.SQLException;
+
 import main.controller.ItemDetailController;
+import main.dao.ConnectionGateway;
 import main.model.Item;
 import main.model.Locations;
-
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import main.model.PartsInventory;
 
@@ -61,7 +63,16 @@ public class ItemDetailView extends JFrame {
 
 		JPanel labelsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
 		JPanel fieldsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
-
+		
+		ConnectionGateway connGateway = new ConnectionGateway();
+		this.partInventory = new PartsInventory(connGateway);
+		try {
+			this.partInventory.loadParts();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		this.id = new JTextField(10);
 		this.parts = new JComboBox<String>(
 				partInventory.getAllPartsToString());
@@ -110,7 +121,10 @@ public class ItemDetailView extends JFrame {
 	}
 
 	public boolean containsItem(Item item){
-		throw new NotImplementedException();
+		if(partInventory.getPartBy_PartNumber(item.getPart().getPartNumber()) != null){
+			return true;
+		}
+		return false;
 	}
 
 	public void setItem(Item tempItem) {
@@ -119,10 +133,12 @@ public class ItemDetailView extends JFrame {
 	}
 
 	public void refreshObserver(){
-		this.id.setText(Integer.toString(this.item.getId()));
-		this.parts.setSelectedItem(this.item.getPart());
-		this.quantity.setText(Integer.toString(this.item.getQuantity()));
-		this.location.setSelectedItem(this.item.getLocation());
+		if(this.item != null){
+			this.id.setText(Integer.toString(this.item.getId()));
+			this.parts.setSelectedItem(this.item.getPart());
+			this.quantity.setText(Integer.toString(this.item.getQuantity()));
+			this.location.setSelectedItem(this.item.getLocation());
+		}
 	}
 
 
