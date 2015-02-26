@@ -169,6 +169,6 @@ public class ItemDetailView extends JFrame {
 	}
 	
 	public int getLocationIndex(){
-		return this.location.getSelectedIndex();
+		return this.location.getSelectedIndex() + 1;
 	}
 }
