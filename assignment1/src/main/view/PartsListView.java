@@ -93,8 +93,7 @@ public class PartsListView extends JFrame{
 	}
 	
 	public Object getSelectedListItem(){
-		//return this.partsList.getSelectedValue();
-		return null;
+		return this.partList.getSelectedValue();
 	}
 	
 }

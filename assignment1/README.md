@@ -14,4 +14,10 @@ All changes from Assignment 2 to this directory take place after the tag "assign
 
 Given a series of Change Requests and storing the project in git (this project was always in git), each team member will complete a separate change request on their own branch. Team members will switch off ownership of the master repo to merge completed branches into the master branch.
 
+Assignment 3:
 
+In terms of database connectivity, a basic gateway class was created to handle and maintan connections. After that, Data Access Objects (Dao's) were created for each class, though some are a bit redundant and could be refactored. The AbstractDao class gave common functionality to extending classes, mainly the "get id or insert and then get id" functionality for certain type tables or the "get id for value out of type table" functionality.
+
+Once complete, the PartDao and the ItemDao handled the insertion, deletion and editing of existing Part objects or Item objects. The normalized database is Kyle Haley's fault and probably overkill for this assignment.
+
+Model objects make calls to the database via the Dao objects in the 'dao' package. The Dao objects generate the model objects from data in the database.
