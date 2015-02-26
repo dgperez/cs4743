@@ -29,7 +29,7 @@ public class Inventory {
 		this.itemDao = new ItemDao(this.connGateway);
 	}
 	
-	public void loadInventory() throws SQLException{
+	public void loadInventory() throws Exception{
 		ArrayList<Item> items = this.itemDao.getItems();
 		this.replaceAllItems(items);
 	}
@@ -38,8 +38,14 @@ public class Inventory {
  		return this.inventory;
  	}
  	
- 	public void replaceAllItems(ArrayList<Item> items){
+ 	public void replaceAllItems(ArrayList<Item> items) throws Exception{
+ 		for(Item item : this.inventory){
+ 			this.removeItem(item, this.inventory);
+ 		}
  		this.inventory.clear();
+ 		for(Item item : items){
+ 			this.addItem(item);
+ 		}
  		this.inventory = items;
  	}
 	
@@ -51,6 +57,7 @@ public class Inventory {
  			}
  		}
  		this.inventory.add(item);
+ 		this.itemDao.addItem(item);
  		this.updateView();
  	}
 	
@@ -62,9 +69,11 @@ public class Inventory {
 	 * Removes item from the inventory list.
 	 * @param item - List<Item> to be removed from the inventory.
 	 * @param inventory
+	 * @throws SQLException 
 	 */
-	public void removeItem(Item item, List<Item> inventory) {
+	public void removeItem(Item item, List<Item> inventory) throws SQLException {
 		inventory.remove(item);
+		this.itemDao.deleteItem(item);
 		this.updateView();
 		this.closeOpenObservers(item);
 	}
@@ -73,9 +82,11 @@ public class Inventory {
 	 * Removes item located at index from the inventory list.
 	 * @param index - index of item to be removed from the inventory list
 	 * @param inventory 
+	 * @throws SQLException 
 	 */
-	public void removeItem(int index, List<Item> inventory) {
+	public void removeItem(int index, List<Item> inventory) throws SQLException {
 		Item temp = inventory.remove(index);
+		this.itemDao.deleteItem(temp);
 		this.updateView();
 		this.closeOpenObservers(temp);
 	}

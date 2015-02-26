@@ -79,9 +79,9 @@ public class InventoryListController implements MouseListener, ActionListener {
 				Item tempItem = (Item)temp;
 				ConnectionGateway connGateway = new ConnectionGateway();
 				ItemDao itemDao = new ItemDao(connGateway);
-				this.inventory.removeItem(tempItem, 
-						this.inventory.getInventory());
 				try {
+					this.inventory.removeItem(tempItem, 
+							this.inventory.getInventory());
 					itemDao.deleteItem(tempItem);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
