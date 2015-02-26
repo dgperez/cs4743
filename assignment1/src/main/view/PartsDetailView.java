@@ -157,7 +157,7 @@ public class PartsDetailView extends JFrame {
 		this.id.setText(Integer.toString(this.part.getId()));
 		this.partNumber.setText(this.part.getPartNumber());
 		this.partName.setText(this.part.getPartName());
-		this.vendor.setText(this.part.getVendor().getValue());
+		this.vendor.setText(this.part.getVendor());
 		this.unitOfQuantity.setSelectedItem(this.part.getUnitOfQuantity());
 		this.externalPartNumber.setText(this.part.getExternalPartNumber());
 	}

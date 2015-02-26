@@ -58,7 +58,7 @@ public class ItemDetailController implements ActionListener {
 			valid = false;
 			message += "Part Name must be between 0 and 255 characters long.\n";
 		}
-		if(item.getPart().getVendor().getValue().length() > 255){
+		if(item.getPart().getVendor().length() > 255){
 			valid = false;
 			message += "Vendor must be between 0 and 255 characters long.\n";
 		}

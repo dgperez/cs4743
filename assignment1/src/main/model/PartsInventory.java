@@ -103,7 +103,7 @@ public class PartsInventory {
 			valid = false;
 			message += "Part Name must be between 0 and 255 characters long.\n";
 		}
-		if(part.getVendor().getValue().length() > 255){
+		if(part.getVendor().length() > 255){
 			valid = false;
 			message += "Vendor must be between 0 and 255 characters long.\n";
 		}
