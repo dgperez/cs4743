@@ -17,7 +17,7 @@ public class PartDao extends AbstractDao {
 
 	public void addPart(Part part) throws SQLException {
 		int vendorId = this.insertOrUpdate_TypeTable(2, 
-				part.getVendor().getValue());
+				part.getVendor());
 		int unitOfQuantityId = this.insertOrUpdate_TypeTable(3, 
 				part.getUnitOfQuantity().getValue());
 		if(0 == unitOfQuantityId || 
@@ -51,7 +51,7 @@ public class PartDao extends AbstractDao {
 	
 	public void editPart(Part part) throws SQLException{
 		int vendorId = this.insertOrUpdate_TypeTable(2, 
-				part.getVendor().getValue());
+				part.getVendor());
 		int unitOfQuantityId = this.insertOrUpdate_TypeTable(3, 
 				part.getUnitOfQuantity().getValue());
 		
@@ -98,7 +98,7 @@ public class PartDao extends AbstractDao {
 			Entry<Integer, String> unitOfQuantity = 
 					this.selectType(3, rs.getInt(6));
 			Part tempPart = new Part(id, partNumber, partName, 
-					vendor, unitOfQuantity, externPartNumber);
+					vendor.getValue(), unitOfQuantity, externPartNumber);
 			parts.add(tempPart);
 		}
 		rs.close();
@@ -124,7 +124,7 @@ public class PartDao extends AbstractDao {
 		Entry<Integer, String> unitOfQuantity = 
 				this.selectType(3, rs.getInt(6));
 		Part tempPart = new Part(id, partNumber, partName, 
-				vendor, unitOfQuantity, externPartNumber);
+				vendor.getValue(), unitOfQuantity, externPartNumber);
 		rs.close();
 		prepStmt.close();
 		this.connGateway.closeConnection(conn);

@@ -6,13 +6,13 @@ public class Part {
 	private int id;
 	private String partNumber;
 	private String partName;
-	private Entry<Integer, String> vendor;
+	private String vendor;
 	private boolean toEdit = false;
 	private String externalPartNumber;
 		
 	private Entry<Integer, String> currentUnit;
 	
-	public Part(int id, String partNumber, String partName, Entry<Integer, String> vendor,
+	public Part(int id, String partNumber, String partName, String vendor,
 			Entry<Integer, String> unitOfQuantity, String externalPartNumber) {
 		this.id = id;
 		this.partNumber = partNumber;
@@ -46,11 +46,11 @@ public class Part {
 		this.partName = partName;
 	}
 
-	public Entry<Integer, String> getVendor() {
+	public String getVendor() {
 		return vendor;
 	}
 	
-	public void setVendor(Entry<Integer, String> vendor) {
+	public void setVendor(String vendor) {
 		this.vendor = vendor;
 	}
 	
@@ -75,7 +75,7 @@ public class Part {
 		return "Id: " + this.id + ", Part Name: " + this.partName + ", " +
 				"Part#: " + this.partNumber + ", " +
 				((this.vendor != null) 
-						? "Vendor: " + this.vendor.getValue() + ", " : "")  
+						? "Vendor: " + this.vendor + ", " : "")  
 				+ " " + this.currentUnit.getValue()
 				+ ((!this.externalPartNumber.isEmpty()) 
 					? ", External Part Number: " + this.externalPartNumber: "");

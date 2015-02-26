@@ -92,7 +92,7 @@ public class PartsListView extends JFrame{
 		this.partList.repaint();
 	}
 	
-	public Object getSelectedListItem(){
+	public Object getSelectedListPart(){
 		return this.partList.getSelectedValue();
 	}
 	
