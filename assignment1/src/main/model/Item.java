@@ -11,7 +11,8 @@ public class Item {
 
 	private Entry<Integer, String> location;
 	
-	public Item(int id, Part part, int quantity, Entry<Integer, String> location) {
+	public Item(int id, Part part, int quantity, 
+			Entry<Integer, String> location) {
 		this.id = id;
 		this.part = part;
 		this.quantity = quantity;
