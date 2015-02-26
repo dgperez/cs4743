@@ -47,6 +47,7 @@ public class InventoryListController implements MouseListener, ActionListener {
 								tempItem, this.inventory);
 				itemController.editItem();
 				view.registerListener(itemController);
+				view.setVisible(true);
 			}
 		}
 	}
@@ -73,6 +74,7 @@ public class InventoryListController implements MouseListener, ActionListener {
 			this.inventory.registerObservers(view);
 			itemController.itemIsNew();
 			view.registerListener(itemController);
+			view.setVisible(true);
 		} else if ("delete".equals(e.getActionCommand())){
 			Object temp = this.listView.getSelectedListItem();
 			if(temp != null){

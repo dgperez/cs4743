@@ -85,6 +85,7 @@ public class ItemDetailView extends JFrame {
 
 		labelsPanel.add(this.idLabel);
 		fieldsPanel.add(id);
+		id.setEditable(false);
 
 		labelsPanel.add(this.partLabel);
 		fieldsPanel.add(this.parts);
@@ -97,7 +98,7 @@ public class ItemDetailView extends JFrame {
 
 		this.controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
 
-		this.saveItem = new JButton("Save Item;");
+		this.saveItem = new JButton("Save Item");
 		this.saveItem.setActionCommand("saveItem");
 
 		this.controls.add(this.saveItem);
@@ -152,5 +153,22 @@ public class ItemDetailView extends JFrame {
 			}
 		}
 	}
+		
+	public int getPartIndex(){
+		return this.parts.getSelectedIndex();
+	}
 	
+	public int getQuantity(){
+		int i = -1;
+		try{
+			i = Integer.parseInt(this.quantity.getText());
+		} catch(NumberFormatException e){
+			e.printStackTrace();
+		}
+		return i;
+	}
+	
+	public int getLocationIndex(){
+		return this.location.getSelectedIndex();
+	}
 }

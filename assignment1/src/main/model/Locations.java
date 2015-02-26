@@ -1,5 +1,6 @@
 package main.model;
 
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -31,5 +32,13 @@ public class Locations {
 	public void resetLocations(HashMap<Integer, String> locations){
 		Locations.locations.clear();
 		Locations.locations.putAll(locations);
+	}
+	
+	public Entry<Integer, String> getLocationById(int id){
+		if(locations.containsKey(id)){
+			Entry<Integer, String> entry = new AbstractMap.SimpleEntry<Integer, String>(id, locations.get(id));
+			return entry;
+		}
+		return null;
 	}
 }
