@@ -33,12 +33,15 @@ public abstract class AbstractDao {
 				conn.prepareStatement(selectLocation);
 		prepStmt.setNString(1, value);
 		ResultSet rs = prepStmt.executeQuery();
-		rs.next();
-		int id = rs.getInt(1);
+		boolean isEmpty = rs.next();
+		int id = 0;
+		if(isEmpty){
+			id = rs.getInt(1);
+		}
 		if(0 == id){
-			String insertLocation = "insert into `"+tableName+"` " +
-					"(`"+columnName+"`) VALUES ('?');";
-			prepStmt = conn.prepareStatement(insertLocation);
+			String insertSql = "insert into `"+tableName+"` " +
+					"(`"+columnName+"`) VALUES (?);";
+			prepStmt = conn.prepareStatement(insertSql);
 			prepStmt.setNString(1, value);
 			if(prepStmt.execute()){
 				String getLastInsertId = "select last_insert_id();";
@@ -53,7 +56,9 @@ public abstract class AbstractDao {
 			} else {
 				prepStmt.close();
 				connGateway.closeConnection(conn);
-				throw new SQLException("Failed to insert new location.");
+				throw new SQLException(String.format("Failed to insert. " +
+						"table: %s, column: %s, value: %s", tableName, 
+						columnName, insertSql));
 			}
 		}
 		rs.close();

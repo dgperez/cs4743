@@ -21,9 +21,6 @@ import main.model.UnitsOfQuantity;
 
 public class PartsDetailView extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4881822137172571826L;
 
 	private JTextField id;
@@ -39,10 +36,6 @@ public class PartsDetailView extends JFrame {
 	/** Alphanumeric and symbols. Max length is 255. 
 	 */
 	private JTextField vendor;
-	
-	/** Unsigned integer, initial entry must be greater than 0.
-	 * */
-	private JTextField partQuantity;
 
 	/** Alphanumeric and symbols. Max length is 50. 
 	 */
@@ -72,8 +65,11 @@ public class PartsDetailView extends JFrame {
 	
 	private UnitsOfQuantity unitsOfQuantityTypes;
 	
-	public PartsDetailView(UnitsOfQuantity unitsOfQuantityTypes) {
+	private boolean newPart = false;
+	
+	public PartsDetailView(UnitsOfQuantity unitsOfQuantityTypes, boolean newPart) {
 		this.unitsOfQuantityTypes = unitsOfQuantityTypes;
+		this.newPart = newPart;
 		this.inputs = new JPanel(new BorderLayout(5, 5));
 		
 		JPanel labelsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
@@ -88,8 +84,6 @@ public class PartsDetailView extends JFrame {
 		
 		this.vendor = new JTextField(10);
 		
-		this.partQuantity = new JTextField(10);
-		
 		this.externalPartNumber = new JTextField(10);
 		
 		this.inputs.add(labelsPanel, BorderLayout.WEST);
@@ -98,9 +92,10 @@ public class PartsDetailView extends JFrame {
 		this.unitOfQuantity = 
 				new JComboBox<String>(
 						this.unitsOfQuantityTypes.getUnitsOfQuantity());
-
-		labelsPanel.add(this.idLabel);
-		fieldsPanel.add(this.id);
+		if(!this.newPart){
+			labelsPanel.add(this.idLabel);
+			fieldsPanel.add(this.id);
+		}
 		
 		labelsPanel.add(this.partNumberLabel);
 		fieldsPanel.add(this.partNumber);
@@ -148,22 +143,28 @@ public class PartsDetailView extends JFrame {
 	}
 	
 	public Part getPart(){
-		//return new Part()
-		//Part part = new Part(this.getId(), this.getPartNumber(), this.getPartName(), this.getVendor())
-		return null;
+		return new Part((!this.newPart) ? this.getId() : -1, 
+				this.getPartNumber(), 
+				this.getPartName(), 
+				this.getVendor(), 
+				this.getUnitOfQuantity(), 
+				this.getExternalPartNumber());
 	}
 	
 	public void refreshObserver(){
-		this.id.setText(Integer.toString(this.part.getId()));
-		this.partNumber.setText(this.part.getPartNumber());
-		this.partName.setText(this.part.getPartName());
-		this.vendor.setText(this.part.getVendor());
-		this.unitOfQuantity.setSelectedItem(this.part.getUnitOfQuantity());
-		this.externalPartNumber.setText(this.part.getExternalPartNumber());
+		if(!this.newPart){
+			this.id.setText(Integer.toString(this.part.getId()));
+			this.partNumber.setText(this.part.getPartNumber());
+			this.partName.setText(this.part.getPartName());
+			this.vendor.setText(this.part.getVendor());
+			this.unitOfQuantity.setSelectedItem(this.part.getUnitOfQuantity());
+			this.externalPartNumber.setText(this.part.getExternalPartNumber());
+		} else {
+			this.unitOfQuantity.setSelectedItem(1);
+		}
 	}
 	
 	public void registerListener(PartsDetailController listener){
-		
 		// add listener for buttons
 		Component[] components = this.controls.getComponents();
 		for (Component component : components) {

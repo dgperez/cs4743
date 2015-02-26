@@ -15,7 +15,7 @@ public class PartDao extends AbstractDao {
 		super(connGateway);
 	}
 
-	public void addPart(Part part) throws SQLException {
+	public Part addPart(Part part) throws SQLException {
 		int vendorId = this.insertOrUpdate_TypeTable(2, 
 				part.getVendor());
 		int unitOfQuantityId = this.insertOrUpdate_TypeTable(3, 
@@ -43,10 +43,19 @@ public class PartDao extends AbstractDao {
 		
 		boolean execute = prepStmt.execute();
 		prepStmt.close();
-		this.connGateway.closeConnection(tempConn);
 		if(!execute){
 			throw new SQLException("Could not add new part.");
 		}
+		String getIdSql = "select last_insert_id();";
+		prepStmt = tempConn.prepareStatement(getIdSql);
+		ResultSet rs = prepStmt.executeQuery();
+		rs.next();
+		int partId = rs.getInt(1);
+		rs.close();
+		prepStmt.close();
+		this.connGateway.closeConnection(tempConn);
+		Part newPart = this.getPart(partId);
+		return newPart;
 	}
 	
 	public void editPart(Part part) throws SQLException{
