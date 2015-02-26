@@ -64,7 +64,12 @@ public class PartsInventory {
 	}
 	
 	public String[] getAllPartsToString(){
-		return Arrays.asList(allParts).toArray(new String[allParts.size()]);
+		String[] temp = new String[allParts.size()];
+		int i = 0;
+		for(Part p: allParts){
+			temp[i++] = p.toString();
+		}
+		return temp;
 	}
 	
 	public boolean validatePartNumber(String partNumber){
