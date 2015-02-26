@@ -12,6 +12,7 @@ public class Item {
 	private Entry<Integer, String> location;
 	
 	public Item(int id, Part part, int quantity, Entry<Integer, String> location) {
+		this.id = id;
 		this.part = part;
 		this.quantity = quantity;
 		this.location = location;
@@ -26,11 +27,11 @@ public class Item {
 	}
 	
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public int getQuantity() {
-		return quantity;
+		return this.quantity;
 	}
 
 	public void setQuantity(int quantity) {
@@ -47,5 +48,13 @@ public class Item {
 
 	public boolean canEditPart(){
 		return this.toEdit;
+	}
+	
+	@Override
+	public String toString(){
+		return "id: " + this.getId() + ", " +
+				"part#: " + this.getPart().getPartNumber() + ", " +
+				"quantity: " + this.quantity + ", " +
+				"location: " + this.getLocation().getValue();
 	}
 }

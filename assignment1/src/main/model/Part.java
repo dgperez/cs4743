@@ -76,7 +76,7 @@ public class Part {
 				"Part#: " + this.partNumber + ", " +
 				((this.vendor != null) 
 						? "Vendor: " + this.vendor.getValue() + ", " : "")  
-				+ " " + this.currentUnit
+				+ " " + this.currentUnit.getValue()
 				+ ((!this.externalPartNumber.isEmpty()) 
 					? ", External Part Number: " + this.externalPartNumber: "");
 	}

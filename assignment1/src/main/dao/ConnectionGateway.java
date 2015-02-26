@@ -38,7 +38,7 @@ public class ConnectionGateway {
 		this.connectionParams.put("db.hostname", "devcloud.fulgentcorp.com");
 		this.connectionParams.put("db.port", "3306");
 		this.connectionParams.put("db.default_schema", "nlw716");
-/*		
+		
 		this.connectionParams = new Properties();
 		if(System.getProperty("os.name").contains("Mac OS X")){
 			ConnectionGateway.propertyFilePath = 
@@ -58,7 +58,7 @@ public class ConnectionGateway {
 		} catch (IOException ioex){
 			ioex.printStackTrace();
 		}
-*/	}
+	}
 	
 	private String getConnectionString(){
 		String temp = 
