@@ -20,8 +20,7 @@ public class ConnectionGateway {
 			"/Users/kylehaley/dev/school/courses/cs/cs4743/" +
 			"assignment1/misc/properties/db.properties";
 	
-	private static String windowsSqlConnPropPath = "windows absolute path" +
-			"to misc/properties/db.properties here";
+	private static String windowsSqlConnPropPath = "F:\\git\\cs4743\\assignment1\\misc\\properties\\db.properties";
 	
 	private static String propertyFilePath;
 	
@@ -32,8 +31,6 @@ public class ConnectionGateway {
 	}
 	
 	private void initProperties(){
-		
-		
 		this.connectionParams = new Properties();
 		if(System.getProperty("os.name").contains("Mac OS X")){
 			ConnectionGateway.propertyFilePath = 

@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -81,6 +82,7 @@ public class ItemDetailView extends JFrame {
 		this.quantity = new JTextField(10);
 		this.location = new JComboBox<String>(
 				locations.getLocations());
+		this.location.removeItem("Unknown");
 
 		this.inputs.add(labelsPanel, BorderLayout.WEST);
 		this.inputs.add(fieldsPanel, BorderLayout.EAST);
@@ -173,6 +175,11 @@ public class ItemDetailView extends JFrame {
 	
 	public Entry<Integer, String> getLoc(){
 		String location = (String)this.location.getSelectedItem();
+		if(locations.getLocationById(this.locations.getEntryForLocation(location).getKey()).equals("Unknown")){
+			JOptionPane.showMessageDialog(null, 
+					"Location can not be Unknown.", 
+					"No Location Selected.", JOptionPane.ERROR_MESSAGE);
+		}
 		return this.locations.getEntryForLocation(location);
 	}
 }

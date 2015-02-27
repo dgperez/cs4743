@@ -67,7 +67,6 @@ public class ItemDetailController implements ActionListener {
 					try {
 						inventory.editItem(item);
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				} else {
@@ -79,7 +78,6 @@ public class ItemDetailController implements ActionListener {
 					try {
 						inventory.addItem(item);
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
@@ -89,12 +87,10 @@ public class ItemDetailController implements ActionListener {
 	}
 
 	public void editItem() {
-		// TODO Auto-generated method stub
 		editItem = true;
 	}
 
 	public void itemIsNew() {
-		// TODO Auto-generated method stub
 		newItem = true;
 	}
 

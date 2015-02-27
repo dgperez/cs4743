@@ -49,6 +49,7 @@ public class ItemDao extends AbstractDao {
 		prepStmt.setInt(1, item.getPart().getId());
 		prepStmt.setInt(2, item.getQuantity());
 		prepStmt.setInt(3, locationId);
+		prepStmt.setInt(4, item.getId());
 		
 		boolean execute = prepStmt.execute();
 		prepStmt.close();
