@@ -17,11 +17,7 @@ public class PartsDetailController implements ActionListener {
 	
 	private PartsInventory partsInventory;
 
-	private Inventory inventory;
-
 	private boolean newPart = false;
-
-	private boolean editPart = false;
 	
 	public PartsDetailController(PartsDetailView view, 
 			PartsInventory partsInventory) {
@@ -33,12 +29,18 @@ public class PartsDetailController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("savePart")){
-			Item tempItem = e.getSource();
-			if(validateSavedItem(tempItem)){
-				try {
-					this.inventory.addItem(tempItem);
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Error: " + e1.getMessage());
+			Part part = this.view.getPart();
+			try {
+				if(this.partsInventory.validateSavedPart(part)){
+					if(this.newPart){
+						this.view.setPart(this.partsInventory.addPart(part));
+						this.newPart = false;
+						this.view.setNew(this.newPart);
+					} else {
+						this.view.setPart(part);
+						this.partsInventory.editPart(part);
+					}
+					this.partsInventory.updateView();
 				}
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -50,9 +52,5 @@ public class PartsDetailController implements ActionListener {
 
 	public void partIsNew(){
 		this.newPart = true;
-	}
-	
-	public void editPart(){
-		this.editPart  = true;
 	}
 }

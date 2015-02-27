@@ -31,7 +31,7 @@ public class PartDao extends AbstractDao {
 		String insertPart = "insert into `parts` " +
 				"(`part_number`,`part_name`,`vendor_id`," +
 				"`extern_part_number`,`unit_of_quantities_id`) " +
-				"VALUES ('?', '?', ?, '?', ?);";
+				"VALUES (?, ?, ?, ?, ?);";
 		
 		PreparedStatement prepStmt = tempConn.prepareStatement(insertPart);
 		
@@ -41,11 +41,9 @@ public class PartDao extends AbstractDao {
 		prepStmt.setNString(4, part.getExternalPartNumber());
 		prepStmt.setInt(5, unitOfQuantityId);
 		
-		boolean execute = prepStmt.execute();
+		prepStmt.execute();
 		prepStmt.close();
-		if(!execute){
-			throw new SQLException("Could not add new part.");
-		}
+		
 		String getIdSql = "select last_insert_id();";
 		prepStmt = tempConn.prepareStatement(getIdSql);
 		ResultSet rs = prepStmt.executeQuery();
@@ -64,10 +62,10 @@ public class PartDao extends AbstractDao {
 		int unitOfQuantityId = this.insertOrUpdate_TypeTable(3, 
 				part.getUnitOfQuantity().getValue());
 		
-		String updatePart = "update `parts` set `part_number` = '?'," +
-				" `part_name` = '?'," +
+		String updatePart = "update `parts` set `part_number` = ?," +
+				" `part_name` = ?," +
 				" `vendor_id` = ?," +
-				" `extern_part_number` = '?'," +
+				" `extern_part_number` = ?," +
 				" `unit_of_quantities_id` = ?" +
 				" where `pid` = ?;";
 		Connection conn = this.connGateway.getConnection();
@@ -78,14 +76,9 @@ public class PartDao extends AbstractDao {
 		prepStmt.setNString(4, part.getPartNumber());
 		prepStmt.setInt(5, unitOfQuantityId);
 		prepStmt.setInt(6, part.getId());
-		boolean executeFailure = prepStmt.execute();
+		prepStmt.execute();
 		prepStmt.close();
 		this.connGateway.closeConnection(conn);
-		if(!executeFailure){
-			throw new SQLException(
-					String.format("Could not edit part with id: %d", 
-							part.getId()));
-		}
 	}
 	
 	public ArrayList<Part> getParts() throws SQLException{
@@ -145,13 +138,8 @@ public class PartDao extends AbstractDao {
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(deleteSql);
 		prepStmt.setInt(1, part.getId());
-		boolean execute = prepStmt.execute();
+		prepStmt.execute();
 		prepStmt.close();
 		this.connGateway.closeConnection(conn);
-		if(!execute){
-			throw new SQLException(
-					String.format("Could not delete part with id: %d", 
-							part.getId()));
-		}
 	}
 }

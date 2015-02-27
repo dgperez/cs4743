@@ -35,13 +35,14 @@ public class PartsListController implements MouseListener, ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if("addPart".equals(e.getActionCommand())){
-			PartsDetailView partDetailView = new PartsDetailView(
+			PartsDetailView partsDetailView = new PartsDetailView(
 					this.unitsOfQuantityTypes, true);
 			PartsDetailController partsDetailController = 
-					new PartsDetailController(partDetailView, 
+					new PartsDetailController(partsDetailView, 
 							this.partsInventory);
 			partsDetailController.partIsNew();
-			partDetailView.registerListener(partsDetailController);
+			partsDetailView.registerListener(partsDetailController);
+			this.partsInventory.registerObservers(partsDetailView);
 		} else if ("deletePart".equals(e.getActionCommand())){
 			 Part part = (Part)this.partsListView.getSelectedListPart();
 			 try {
@@ -58,14 +59,14 @@ public class PartsListController implements MouseListener, ActionListener{
 			if(e.getSource() instanceof JList){
 				JList<Object> list = (JList<Object>)e.getSource();
 				Part part = (Part)list.getSelectedValue();
-				PartsDetailView partDetailView = new PartsDetailView(
+				PartsDetailView partsDetailView = new PartsDetailView(
 						this.unitsOfQuantityTypes, false);
-				partDetailView.setPart(part);
+				partsDetailView.setPart(part);
 				PartsDetailController partsDetailController = 
-						new PartsDetailController(partDetailView, 
+						new PartsDetailController(partsDetailView, 
 								this.partsInventory);
-				partsDetailController.editPart();
-				partDetailView.registerListener(partsDetailController);
+				partsDetailView.registerListener(partsDetailController);
+				this.partsInventory.registerObservers(partsDetailView);
 			}
 		}
 		

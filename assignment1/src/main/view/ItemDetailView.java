@@ -25,7 +25,7 @@ import main.model.Part;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import main.model.PartsInventory;
 
-public class ItemDetailView extends JFrame {
+public class ItemDetailView extends JFrame implements IObserver {
 
 	/**
 	 * 
