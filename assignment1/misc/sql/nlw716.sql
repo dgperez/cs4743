@@ -51,7 +51,7 @@ CREATE TABLE `inventory` (
   KEY `part_id_fkey1_idx` (`parts_id`),
   CONSTRAINT `locations_id_fkey1` FOREIGN KEY (`locations_id`) REFERENCES `locations` (`pid`) ON UPDATE NO ACTION,
   CONSTRAINT `part_id_fkey1` FOREIGN KEY (`parts_id`) REFERENCES `parts` (`pid`) ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,6 +60,7 @@ CREATE TABLE `inventory` (
 
 LOCK TABLES `inventory` WRITE;
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
+INSERT INTO `inventory` VALUES (3,4,15,3),(6,3,156,3),(7,3,1,1),(10,5,11,3),(12,2,1,3);
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,7 +110,7 @@ CREATE TABLE `parts` (
   KEY `unit_of_quantities_fk1_idx` (`unit_of_quantities_id`),
   CONSTRAINT `unit_of_quantities_fk1` FOREIGN KEY (`unit_of_quantities_id`) REFERENCES `unit_of_quantities` (`pid`) ON UPDATE NO ACTION,
   CONSTRAINT `vendor_id_fk1` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`pid`) ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,7 +119,7 @@ CREATE TABLE `parts` (
 
 LOCK TABLES `parts` WRITE;
 /*!40000 ALTER TABLE `parts` DISABLE KEYS */;
-INSERT INTO `parts` VALUES (2,'EVA001','Eva Unit 1',1,'EVO1',1),(3,'EVA002','Eva Unit 2',1,'EVO2',1),(4,'EVA003','Eva Unit 3',1,'EVO3',1);
+INSERT INTO `parts` VALUES (2,'EVA001','Eva Unit 1',1,'EVO1',3),(3,'EVA002','Eva Unit 2',1,'EVO2',3),(4,'EVA003','Eva Unit 3',1,'EVO3',3),(5,'adsfasdfasdfasfa','asdfasdf',4,'asdfasdf',3),(9,'asdfasdfasdf','asdfasdf',8,'asdfasdfsdf',3),(13,'testingagainnew','testingnew',9,'testingagainnew',3),(17,'adasdfasdfasdfsa','asdfasdfasdfasdfas',10,'asdfasdfasdfasdf',2);
 /*!40000 ALTER TABLE `parts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +145,7 @@ CREATE TABLE `unit_of_quantities` (
 
 LOCK TABLES `unit_of_quantities` WRITE;
 /*!40000 ALTER TABLE `unit_of_quantities` DISABLE KEYS */;
-INSERT INTO `unit_of_quantities` VALUES (1,'Linear Feet'),(2,'Pieces'),(3,'Unknown');
+INSERT INTO `unit_of_quantities` VALUES (3,'Linear Feet'),(2,'Pieces'),(1,'Unknown');
 /*!40000 ALTER TABLE `unit_of_quantities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,7 +162,7 @@ CREATE TABLE `vendors` (
   PRIMARY KEY (`pid`),
   UNIQUE KEY `pid_UNIQUE` (`pid`),
   UNIQUE KEY `vendor_name_UNIQUE` (`vendor_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -170,7 +171,7 @@ CREATE TABLE `vendors` (
 
 LOCK TABLES `vendors` WRITE;
 /*!40000 ALTER TABLE `vendors` DISABLE KEYS */;
-INSERT INTO `vendors` VALUES (1,'NERV1'),(2,'NERV2'),(3,'NERV3');
+INSERT INTO `vendors` VALUES (5,'adsfasdf'),(4,'asdfasdfasdf'),(8,'asdfasdfasdfasdf'),(10,'asdfasdfasdfasdfasdf'),(7,'asdfasdfsdfdsfds'),(1,'NERV1'),(2,'NERV2'),(3,'NERV3'),(6,'statements'),(12,'syncingshitup'),(11,'syncingtest'),(9,'testingnew');
 /*!40000 ALTER TABLE `vendors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,4 +202,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-24 22:23:01
+-- Dump completed on 2015-02-26 20:11:22
