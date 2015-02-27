@@ -33,9 +33,8 @@ public abstract class AbstractDao {
 				conn.prepareStatement(selectLocation);
 		prepStmt.setNString(1, value);
 		ResultSet rs = prepStmt.executeQuery();
-		boolean isEmpty = rs.next();
 		int id = 0;
-		if(isEmpty){
+		if(rs.next()){
 			id = rs.getInt(1);
 		}
 		if(0 == id){
@@ -43,26 +42,18 @@ public abstract class AbstractDao {
 					"(`"+columnName+"`) VALUES (?);";
 			prepStmt = conn.prepareStatement(insertSql);
 			prepStmt.setNString(1, value);
-			if(prepStmt.execute()){
-				String getLastInsertId = "select last_insert_id();";
-				prepStmt.close();
-				prepStmt = conn.prepareStatement(getLastInsertId);
-				rs = prepStmt.executeQuery();
-				prepStmt.close();
-				rs.next();
-				id = rs.getInt(1);
-				rs.close();
-				connGateway.closeConnection(conn);
-			} else {
-				prepStmt.close();
-				connGateway.closeConnection(conn);
-				throw new SQLException(String.format("Failed to insert. " +
-						"table: %s, column: %s, value: %s", tableName, 
-						columnName, insertSql));
-			}
+			prepStmt.execute();
+			prepStmt.close();
+			prepStmt = conn.prepareStatement(selectLocation);
+			prepStmt.setNString(1, value);
+			rs = prepStmt.executeQuery();
+			rs.next();
+			id = rs.getInt(1);
+			rs.close();
 		}
 		rs.close();
 		prepStmt.close();
+		connGateway.closeConnection(conn);
 		return id;
 	}
 	

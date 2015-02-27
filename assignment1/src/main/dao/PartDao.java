@@ -31,7 +31,7 @@ public class PartDao extends AbstractDao {
 		String insertPart = "insert into `parts` " +
 				"(`part_number`,`part_name`,`vendor_id`," +
 				"`extern_part_number`,`unit_of_quantities_id`) " +
-				"VALUES ('?', '?', ?, '?', ?);";
+				"VALUES (?, ?, ?, ?, ?);";
 		
 		PreparedStatement prepStmt = tempConn.prepareStatement(insertPart);
 		
@@ -41,11 +41,9 @@ public class PartDao extends AbstractDao {
 		prepStmt.setNString(4, part.getExternalPartNumber());
 		prepStmt.setInt(5, unitOfQuantityId);
 		
-		boolean execute = prepStmt.execute();
+		prepStmt.execute();
 		prepStmt.close();
-		if(!execute){
-			throw new SQLException("Could not add new part.");
-		}
+		
 		String getIdSql = "select last_insert_id();";
 		prepStmt = tempConn.prepareStatement(getIdSql);
 		ResultSet rs = prepStmt.executeQuery();
