@@ -2,29 +2,20 @@ package main.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import main.dao.ConnectionGateway;
 import main.model.Inventory;
 import main.model.Item;
-import main.model.Locations;
-import main.model.PartsInventory;
 import main.view.ItemDetailView;
 
 public class ItemDetailController implements ActionListener {
 	
 	private ItemDetailView view;
 	
-	private Item item;
-	
 	private Inventory inventory;
 	
 	private boolean newItem = false;
-	
-	private boolean editItem = false;
 	
 	public ItemDetailController(ItemDetailView view
 			, Inventory inventory) {
@@ -55,10 +46,6 @@ public class ItemDetailController implements ActionListener {
 			}
 		}
 		
-	}
-	
-	public void setItem(Item item){
-		this.item = item;
 	}
 
 	public void itemIsNew() {

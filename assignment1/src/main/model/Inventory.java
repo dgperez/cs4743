@@ -107,7 +107,8 @@ public class Inventory {
 		for(Item i : this.inventory){
 			if(i.getPart().equals(item.getPart()) &&
 					i.getLocation().getValue().equals(
-							item.getLocation().getValue())){
+							item.getLocation().getValue())
+							&& i.getId() != item.getId()){
 				message += "No two parts can have the same " +
 						"Location and Part Number.\n";
 				valid = false;
@@ -150,5 +151,15 @@ public class Inventory {
 			this.view.refreshList(this);
 		}
 		this.updateObservers();
+	}
+	
+	public void updateParts(PartsInventory partsInventory){
+		for(Part p : partsInventory.getAllParts()){
+			for(Item i : this.inventory){
+				if(i.getPart().getId() == p.getId()){
+					i.setPart(partsInventory.getPartBy_Id(p.getId()));
+				}
+			}
+		}
 	}
 }

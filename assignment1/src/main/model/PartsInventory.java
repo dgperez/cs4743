@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import main.dao.ConnectionGateway;
 import main.dao.PartDao;
+import main.view.InventoryListView;
 import main.view.PartsDetailView;
 import main.view.PartsListView;
 
@@ -16,14 +17,20 @@ public class PartsInventory {
 	
 	private PartDao partDao;
 	
-	private PartsListView partsListView; 
+	private PartsListView partsListView;
+	
+	private InventoryListView inventoryListView;
 	
 	private ArrayList<PartsDetailView> observers = 
 			new ArrayList<PartsDetailView>();
 	
 	private boolean viewRegistered;
 	
-	public PartsInventory(ConnectionGateway connGateway) {
+	private boolean inventoryViewRegistered;
+	
+	private Inventory inventory;
+	
+	public PartsInventory(ConnectionGateway connGateway, Inventory inventory) {
 		this.allParts = new ArrayList<Part>();
 		this.connGateway = connGateway;
 		this.partDao = new PartDao(this.connGateway);
@@ -54,6 +61,7 @@ public class PartsInventory {
 				p.setUnitOfQuantity(part.getUnitOfQuantity());
 			}
 		}
+		this.updateView();
 	}
 	
 	public void replaceAllParts(ArrayList<Part> parts){
@@ -83,9 +91,10 @@ public class PartsInventory {
 		return this.allParts;
 	}
 	
-	public boolean validatePartNumber(String partNumber){
-		for(Part part: this.allParts){
-			if(part.getPartNumber().equals(partNumber)){
+	public boolean validatePartNumber(Part part){
+		for(Part p: this.allParts){
+			if(p.getPartNumber().equals(part.getPartNumber()) 
+					&& p.getId() != part.getId()){
 				return false;
 			}
 		}
@@ -125,7 +134,7 @@ public class PartsInventory {
 			valid = false;
 			message += "External Part Number must be between 0 and 50 characters long.\n";
 		}
-		if(!this.validatePartNumber(part.getPartNumber())){
+		if(!this.validatePartNumber(part)){
 			valid = false;
 			message += "A part with that number already exists.";
 		}
@@ -140,6 +149,11 @@ public class PartsInventory {
 		this.viewRegistered = true;
 	}
 	
+	public void registerInventoryView(InventoryListView inventoryListView){
+		this.inventoryListView = inventoryListView;
+		this.inventoryViewRegistered = true;
+	}
+	
 	public void registerObservers(PartsDetailView partsDetailView){
 		this.observers.add(partsDetailView);
 	}
@@ -147,6 +161,10 @@ public class PartsInventory {
 	public void updateView(){
 		if(this.viewRegistered) {
 			this.partsListView.refreshList(this);
+		}
+		if(this.inventoryViewRegistered){
+			this.inventory.updateParts(this);
+			this.inventoryListView.refreshList(this.inventory);
 		}
 		this.updateObservers();
 	}

@@ -52,6 +52,7 @@ public class InventoryListController implements MouseListener, ActionListener {
 				ItemDetailController itemController = 
 						new ItemDetailController(view, this.inventory);
 				view.registerListener(itemController);
+				this.inventory.registerObservers(view);
 				view.setVisible(true);
 			}
 		}

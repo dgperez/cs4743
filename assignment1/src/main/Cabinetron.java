@@ -36,11 +36,12 @@ public class Cabinetron {
 			Locations locations = new Locations();
 			locations.resetLocations(typeDao.getTypeList(1));
 			
-			PartsInventory partsInventory = new PartsInventory(connGateway);
-			partsInventory.loadParts();
-			
 			Inventory inventory = new Inventory(connGateway);
 			inventory.loadInitialInventory();
+			
+			PartsInventory partsInventory = new PartsInventory(connGateway, 
+					inventory);
+			partsInventory.loadParts();
 			
 			InventoryListView inventoryListView = 
 					new InventoryListView(inventory);

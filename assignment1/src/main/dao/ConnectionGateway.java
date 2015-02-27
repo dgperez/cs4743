@@ -20,7 +20,8 @@ public class ConnectionGateway {
 			"/Users/kylehaley/dev/school/courses/cs/cs4743/" +
 			"assignment1/misc/properties/db.properties";
 	
-	private static String windowsSqlConnPropPath = "F:\\git\\cs4743\\assignment1\\misc\\properties\\db.properties";
+	private static String windowsSqlConnPropPath = 
+			"F:\\git\\cs4743\\assignment1\\misc\\properties\\db.properties";
 	
 	private static String propertyFilePath;
 	
@@ -48,7 +49,8 @@ public class ConnectionGateway {
 			this.connectionParams = new Properties();
 			this.connectionParams.put("db.user", "nlw716");
 			this.connectionParams.put("db.password", "i56q7uR6Vl51qQ4tLbOE");
-			this.connectionParams.put("db.hostname", "devcloud.fulgentcorp.com");
+			this.connectionParams.put("db.hostname", 
+					"devcloud.fulgentcorp.com");
 			this.connectionParams.put("db.port", "3306");
 			this.connectionParams.put("db.default_schema", "nlw716");
 		}

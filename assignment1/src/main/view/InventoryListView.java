@@ -90,7 +90,7 @@ public class InventoryListView extends JFrame {
 	}
 	
 	public void refreshList(Inventory inventory){
-		this.list.setListData(this.inventory.getInventory().toArray());
+		this.list.setListData(inventory.getInventory().toArray());
 		this.list.repaint();
 	}
 	

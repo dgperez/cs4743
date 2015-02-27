@@ -134,11 +134,13 @@ public class ItemDetailView extends JFrame {
 	}
 
 	public void refreshObserver(){
-		if(this.item != null){
+		if(!this.isNewItem){
 			this.id.setText(Integer.toString(this.item.getId()));
 			this.parts.setSelectedItem(this.item.getPart());
 			this.quantity.setText(Integer.toString(this.item.getQuantity()));
 			this.location.setSelectedItem(this.item.getLocation());
+		} else {
+			this.parts.setSelectedIndex(0);
 		}
 	}
 

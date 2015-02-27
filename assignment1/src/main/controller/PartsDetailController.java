@@ -38,7 +38,6 @@ public class PartsDetailController implements ActionListener {
 						this.view.setPart(part);
 						this.partsInventory.editPart(part);
 					}
-					this.partsInventory.updateView();
 				}
 			} catch (Exception e1) {
 				e1.printStackTrace();
