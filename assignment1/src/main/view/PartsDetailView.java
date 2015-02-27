@@ -19,7 +19,7 @@ import main.controller.PartsDetailController;
 import main.model.Part;
 import main.model.UnitsOfQuantity;
 
-public class PartsDetailView extends JFrame {
+public class PartsDetailView extends JFrame implements IObserver {
 
 	private static final long serialVersionUID = 4881822137172571826L;
 
