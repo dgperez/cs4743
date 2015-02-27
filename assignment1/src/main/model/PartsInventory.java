@@ -8,7 +8,7 @@ import main.dao.ConnectionGateway;
 import main.dao.PartDao;
 import main.view.PartsDetailView;
 
-public class PartsInventory {
+public class PartsInventory implements IModel {
 
 	private ArrayList<Part> allParts;
 	
