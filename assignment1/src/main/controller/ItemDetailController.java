@@ -2,6 +2,7 @@ package main.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
@@ -81,6 +82,8 @@ public class ItemDetailController implements ActionListener {
 						e1.printStackTrace();
 					}
 				}
+				view.refreshObserver();
+				view.dispatchEvent(new WindowEvent(view, WindowEvent.WINDOW_CLOSING));
 			}
 		}
 		
