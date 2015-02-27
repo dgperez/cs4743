@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import main.dao.ConnectionGateway;
 import main.dao.PartDao;
-import main.view.InventoryListView;
 import main.view.PartsDetailView;
 import main.view.PartsListView;
 
@@ -19,14 +18,10 @@ public class PartsInventory {
 	
 	private PartsListView partsListView;
 	
-	private InventoryListView inventoryListView;
-	
 	private ArrayList<PartsDetailView> observers = 
 			new ArrayList<PartsDetailView>();
 	
 	private boolean viewRegistered;
-	
-	private boolean inventoryViewRegistered;
 	
 	private Inventory inventory;
 	
@@ -34,6 +29,7 @@ public class PartsInventory {
 		this.allParts = new ArrayList<Part>();
 		this.connGateway = connGateway;
 		this.partDao = new PartDao(this.connGateway);
+		this.inventory = inventory;
 	}
 	
 	public void loadParts() throws SQLException{
@@ -149,11 +145,6 @@ public class PartsInventory {
 		this.viewRegistered = true;
 	}
 	
-	public void registerInventoryView(InventoryListView inventoryListView){
-		this.inventoryListView = inventoryListView;
-		this.inventoryViewRegistered = true;
-	}
-	
 	public void registerObservers(PartsDetailView partsDetailView){
 		this.observers.add(partsDetailView);
 	}
@@ -162,10 +153,8 @@ public class PartsInventory {
 		if(this.viewRegistered) {
 			this.partsListView.refreshList(this);
 		}
-		if(this.inventoryViewRegistered){
-			this.inventory.updateParts(this);
-			this.inventoryListView.refreshList(this.inventory);
-		}
+		this.inventory.updateParts(this);
+		this.inventory.updateView();
 		this.updateObservers();
 	}
 	
