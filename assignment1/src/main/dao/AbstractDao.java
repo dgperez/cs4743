@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 
 public abstract class AbstractDao {
 
-	public ConnectionGateway connGateway;
+	protected ConnectionGateway connGateway;
 	
 	public AbstractDao(ConnectionGateway connGateway) {
 		this.connGateway = connGateway;
