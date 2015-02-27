@@ -16,7 +16,6 @@ import main.model.Item;
 import main.model.Locations;
 import main.view.InventoryListView;
 import main.view.ItemDetailView;
-import main.view.PartsDetailView;
 
 public class InventoryListController implements MouseListener, ActionListener {
 	

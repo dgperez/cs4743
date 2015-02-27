@@ -19,7 +19,6 @@ import main.controller.ItemDetailController;
 import main.dao.ConnectionGateway;
 import main.model.Item;
 import main.model.Locations;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import main.model.PartsInventory;
 
 public class ItemDetailView extends JFrame {
@@ -78,7 +77,7 @@ public class ItemDetailView extends JFrame {
 				partInventory.getAllPartsToString());
 		this.quantity = new JTextField(10);
 		this.location = new JComboBox<String>(
-				locations.getLocations());
+				this.locations.getLocations());
 
 		this.inputs.add(labelsPanel, BorderLayout.WEST);
 		this.inputs.add(fieldsPanel, BorderLayout.EAST);

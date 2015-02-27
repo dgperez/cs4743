@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
-import main.model.Item;
 import main.model.Part;
 import main.model.PartsInventory;
 import main.model.UnitsOfQuantity;
@@ -64,6 +63,7 @@ public class PartsListController implements MouseListener, ActionListener{
 	public void mouseClicked(MouseEvent e) {
 		if(e.getClickCount() == 2){
 			if(e.getSource() instanceof JList){
+				@SuppressWarnings("unchecked")
 				JList<Object> list = (JList<Object>)e.getSource();
 				Part part = (Part)list.getSelectedValue();
 				PartsDetailView partsDetailView = new PartsDetailView(

@@ -5,8 +5,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import main.model.Inventory;
-import main.model.Item;
 import main.model.Part;
 import main.model.PartsInventory;
 import main.view.PartsDetailView;

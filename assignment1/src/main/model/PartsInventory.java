@@ -2,11 +2,9 @@ package main.model;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import main.dao.ConnectionGateway;
 import main.dao.PartDao;
-import main.view.ItemDetailView;
 import main.view.PartsDetailView;
 import main.view.PartsListView;
 

@@ -14,11 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import main.controller.PartsListController;
-import main.model.Inventory;
-import main.model.Part;
 import main.model.PartsInventory;
 
 public class PartsListView extends JFrame {
+
+	private static final long serialVersionUID = -8259808780632385309L;
 
 	private JList<Object> partList;
 	
