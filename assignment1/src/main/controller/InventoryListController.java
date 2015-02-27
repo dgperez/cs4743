@@ -14,6 +14,7 @@ import main.dao.ItemDao;
 import main.model.Inventory;
 import main.model.Item;
 import main.model.Locations;
+import main.model.PartsInventory;
 import main.view.InventoryListView;
 import main.view.ItemDetailView;
 
@@ -24,12 +25,16 @@ public class InventoryListController implements MouseListener, ActionListener {
 	private Inventory inventory;
 	
 	private Locations locations;
+	
+	private PartsInventory partsInventory;
 
 	public InventoryListController(InventoryListView listView, 
-			Inventory inventory, Locations locations) {
+			Inventory inventory, Locations locations, 
+			PartsInventory partsInventory) {
 		this.locations = locations;
 		this.listView = listView;
 		this.inventory = inventory;
+		this.partsInventory = partsInventory;
 	}
 
 	@Override
@@ -39,13 +44,13 @@ public class InventoryListController implements MouseListener, ActionListener {
 				@SuppressWarnings("unchecked")
 				JList<Object> list = (JList<Object>)e.getSource();
 				Item tempItem = (Item)list.getSelectedValue();
-				ItemDetailView view = new ItemDetailView(this.locations);
+				ItemDetailView view = new 
+						ItemDetailView(this.locations, this.partsInventory, 
+								false);
 				this.inventory.registerObservers(view);
 				view.setItem(tempItem);
 				ItemDetailController itemController = 
-						new ItemDetailController(view, 
-								tempItem, this.inventory);
-				itemController.editItem();
+						new ItemDetailController(view, this.inventory);
 				view.registerListener(itemController);
 				view.setVisible(true);
 			}
@@ -67,14 +72,14 @@ public class InventoryListController implements MouseListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if("add".equals(e.getActionCommand())){
-			ItemDetailView view = new ItemDetailView(this.locations);
+			ItemDetailView view = new ItemDetailView(this.locations, 
+					this.partsInventory, true);
 			ItemDetailController itemController = 
-					new ItemDetailController(view, 
-							null, this.inventory);
+					new ItemDetailController(view, this.inventory);
 			this.inventory.registerObservers(view);
 			itemController.itemIsNew();
 			view.registerListener(itemController);
-			view.setVisible(true);
+			view.showItemDetailView();
 		} else if ("delete".equals(e.getActionCommand())){
 			Object temp = this.listView.getSelectedListItem();
 			if(temp != null){

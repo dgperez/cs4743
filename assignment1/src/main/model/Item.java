@@ -43,6 +43,10 @@ public class Item {
 		return this.part;
 	}
 	
+	public void setPart(Part part){
+		this.part = part;
+	}
+	
 	public void setEditPart(boolean editPart){
 		this.toEdit = editPart;
 	}

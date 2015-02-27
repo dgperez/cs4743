@@ -50,7 +50,7 @@ public class Cabinetron {
 			
 			InventoryListController inventoryListController = 
 					new InventoryListController(inventoryListView, inventory, 
-							locations);
+							locations, partsInventory);
 			
 			PartsListController partsListController = 
 					new PartsListController(partsInventory, unitsOfQuantity,

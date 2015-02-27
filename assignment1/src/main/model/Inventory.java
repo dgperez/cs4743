@@ -38,25 +38,22 @@ public class Inventory {
  		return this.inventory;
  	}
 	
- 	public void addItem(Item item) throws Exception{
- 		for(Item i : this.inventory){
- 			if(i.equals(item)){
- 				throw new Exception("Part number already " +
-						"exists in the list.");
- 			}
- 		}
- 		this.inventory.add(item);
- 		this.itemDao.addItem(item);
+ 	public Item addItem(Item item) throws Exception{
+ 		Item temp = this.itemDao.addItem(item);
+ 		this.inventory.add(temp);
  		this.updateView();
+ 		return temp;
  	}
 	
 	public void editItem(Item item) throws SQLException{
+		this.itemDao.editItem(item);
 		for(Item i : this.inventory){
 			if(i.getId() == item.getId()){
-				i = item;
+				i.setQuantity(item.getQuantity());
+				i.setLocation(item.getLocation());
+				i.setPart(item.getPart());
 			}
 		}
-		this.itemDao.editItem(item);
 	}
 	
 	/**
@@ -116,6 +113,15 @@ public class Inventory {
 				valid = false;
 				break;
 			}
+		}
+		if(item.getLocation().getValue().equals("Unknown")){
+			valid = false;
+			message += "Location cannot be Unknown.\n";
+		}
+		if(item.getQuantity() < 0){
+			valid = false;
+			message += "Quantity cannot be less than zero " +
+					"and must be a number.\n";
 		}
 		if(!valid){
 			throw new Exception(message);

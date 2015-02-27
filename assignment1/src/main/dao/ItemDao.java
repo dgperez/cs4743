@@ -16,7 +16,7 @@ public class ItemDao extends AbstractDao {
 		super(connGateway);
 	}
 	
-	public void addItem(Item item) throws SQLException{
+	public Item addItem(Item item) throws SQLException{
 		String insertSql = "insert into `inventory` " +
 				"(`parts_id`,`quantity`,`locations_id`) VALUES " +
 				"(?, ?, ?);";
@@ -30,7 +30,17 @@ public class ItemDao extends AbstractDao {
 		prepStmt.setInt(3, locationId);
 		prepStmt.execute();
 		prepStmt.close();
+		
+		String getIdSql = "select last_insert_id();";
+		prepStmt = conn.prepareStatement(getIdSql);
+		ResultSet rs = prepStmt.executeQuery();
+		rs.next();
+		int itemId = rs.getInt(1);
+		rs.close();
+		prepStmt.close();
 		this.connGateway.closeConnection(conn);
+		Item tempItem = this.getItem(itemId);
+		return tempItem;
 	}
 	
 	public void editItem(Item item) throws SQLException{
@@ -76,6 +86,26 @@ public class ItemDao extends AbstractDao {
 		prepStmt.close();
 		this.connGateway.closeConnection(conn);
 		return items;
+	}
+	
+	public Item getItem(int pid) throws SQLException{
+		String selectParts = "select `pid`,`parts_id`,`quantity`," +
+				"`locations_id` from `inventory` where `pid` = ?;";
+		Connection conn = this.connGateway.getConnection();
+		PreparedStatement prepStmt = conn.prepareStatement(selectParts);
+		prepStmt.setInt(1, pid);
+		ResultSet rs = prepStmt.executeQuery();
+		rs.next();
+		int id = rs.getInt(1);
+		int partsId = rs.getInt(2);
+		int quantity = rs.getInt(3);
+		Entry<Integer, String> location = this.selectType(2, rs.getInt(4));
+		PartDao partDao = new PartDao(this.connGateway);
+		Item item = new Item(id, partDao.getPart(partsId), quantity, location);
+		rs.close();
+		prepStmt.close();
+		this.connGateway.closeConnection(conn);
+		return item;
 	}
 	
 	public void deleteItem(Item item) throws SQLException{

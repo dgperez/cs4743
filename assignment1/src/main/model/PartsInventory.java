@@ -83,15 +83,6 @@ public class PartsInventory {
 		return this.allParts;
 	}
 	
-	public String[] getAllPartsToString(){
-		String[] temp = new String[allParts.size()];
-		int i = 0;
-		for(Part p: allParts){
-			temp[i++] = p.toString();
-		}
-		return temp;
-	}
-	
 	public boolean validatePartNumber(String partNumber){
 		for(Part part: this.allParts){
 			if(part.getPartNumber().equals(partNumber)){

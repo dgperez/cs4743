@@ -15,6 +15,7 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import main.controller.ItemDetailController;
@@ -27,14 +28,11 @@ import main.model.PartsInventory;
 
 public class ItemDetailView extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -297591929291152377L;
 
 	private JTextField id;
 
-	private JComboBox<String> parts;
+	private JComboBox<Part> parts;
 
 	private PartsInventory partInventory;
 
@@ -59,50 +57,47 @@ public class ItemDetailView extends JFrame {
 	private JButton saveItem;
 
 	private Item item;
+	
+	private boolean isNewItem;
 
-	public ItemDetailView(Locations locations) {
+	public ItemDetailView(Locations locations, PartsInventory partsInventory, 
+			boolean isNewItem) {
 		this.locations = locations;
 		this.inputs = new JPanel(new BorderLayout(5,5));
+		this.isNewItem = isNewItem;
 
 		JPanel labelsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
 		JPanel fieldsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
 		
-		ConnectionGateway connGateway = new ConnectionGateway();
-		this.partInventory = new PartsInventory(connGateway);
-		try {
-			this.partInventory.loadParts();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.partInventory = partsInventory;
 		
 		this.id = new JTextField(10);
-		this.parts = new JComboBox<String>(
-				partInventory.getAllPartsToString());
+		this.parts = new JComboBox<Part>(
+				partInventory.getAllParts().toArray(
+						new Part[this.partInventory.getAllParts().size()]));
 		this.quantity = new JTextField(10);
-		this.location = new JComboBox<String>(
-<<<<<<< HEAD
-				this.locations.getLocations());
-=======
-				locations.getLocations());
-		this.location.removeItem("Unknown");
->>>>>>> e91a80229efbeb891867e0ba79d843b287dc321b
+		this.location = new JComboBox<String>(this.locations.getLocations());
 
 		this.inputs.add(labelsPanel, BorderLayout.WEST);
 		this.inputs.add(fieldsPanel, BorderLayout.EAST);
 
+		if(this.isNewItem){
+			this.idLabel.setVisible(false);
+			this.id.setVisible(false);
+		}
+		
 		labelsPanel.add(this.idLabel);
-		fieldsPanel.add(id);
-		id.setEditable(false);
+		fieldsPanel.add(this.id);
+		this.id.setEditable(false);
 
 		labelsPanel.add(this.partLabel);
 		fieldsPanel.add(this.parts);
 
-		labelsPanel.add(quantityLabel);
-		fieldsPanel.add(quantity);
+		labelsPanel.add(this.quantityLabel);
+		fieldsPanel.add(this.quantity);
 
-		labelsPanel.add(locationLabel);
-		fieldsPanel.add(location);
+		labelsPanel.add(this.locationLabel);
+		fieldsPanel.add(this.location);
 
 		this.controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
 
@@ -130,10 +125,7 @@ public class ItemDetailView extends JFrame {
 	}
 
 	public boolean containsItem(Item item){
-		if(partInventory.getPartBy_PartNumber(item.getPart().getPartNumber()) != null){
-			return true;
-		}
-		return false;
+		return this.item.getId() == item.getId();
 	}
 
 	public void setItem(Item tempItem) {
@@ -161,10 +153,21 @@ public class ItemDetailView extends JFrame {
 			}
 		}
 	}
+	
+	public Item getItem(){
+		return new Item((this.isNewItem) ? -1 : this.getId(), 
+				this.getPart(), 
+				this.getQuantity(), 
+				this.getLoc());
+	}
 		
+	public int getId(){
+		return Integer.parseInt(this.id.getText());
+	}
+	
 	public Part getPart(){
-		String part = (String)this.parts.getSelectedItem();
-		return this.partInventory.getPartFromString(part);
+		Part part = (Part)this.parts.getSelectedItem();
+		return part;
 	}
 	
 	public int getQuantity(){
@@ -179,11 +182,12 @@ public class ItemDetailView extends JFrame {
 	
 	public Entry<Integer, String> getLoc(){
 		String location = (String)this.location.getSelectedItem();
-		if(locations.getLocationById(this.locations.getEntryForLocation(location).getKey()).equals("Unknown")){
-			JOptionPane.showMessageDialog(null, 
-					"Location can not be Unknown.", 
-					"No Location Selected.", JOptionPane.ERROR_MESSAGE);
-		}
 		return this.locations.getEntryForLocation(location);
+	}
+	
+	public void setNewItem(boolean isNew){
+		this.isNewItem = isNew;
+		this.id.setVisible(!isNew);
+		this.idLabel.setVisible(!isNew);
 	}
 }

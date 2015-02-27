@@ -27,70 +27,38 @@ public class ItemDetailController implements ActionListener {
 	private boolean editItem = false;
 	
 	public ItemDetailController(ItemDetailView view
-			, Item tempItem
 			, Inventory inventory) {
 		this.view = view;
-		this.item = tempItem;
 		this.inventory = inventory;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("saveItem")){
-			boolean valid = true;
-			if(this.view.getPart() == null){
-				valid = false;
-				JOptionPane.showMessageDialog(null, 
-						"Select an Part.", 
-						"No Part Selected.", JOptionPane.ERROR_MESSAGE);
-			}
-			if(this.view.getQuantity() < 1){
-				valid = false;
-				JOptionPane.showMessageDialog(null, 
-						"Enter a Quantity greater than or equal to zero.", 
-						"Invalid Quantity.", JOptionPane.ERROR_MESSAGE);
-			}
-			if(this.view.getLoc() == null){
-				valid = false;
-				JOptionPane.showMessageDialog(null, 
-						"Select a Location.", 
-						"No Location Selected.", JOptionPane.ERROR_MESSAGE);
-			}
-			if(valid){
-				ConnectionGateway connGateway = new ConnectionGateway();
-				PartsInventory parts = new PartsInventory(connGateway);
-				parts.getAllParts();
-				Locations locations = new Locations();
-				locations.getLocations();
-				if(editItem){
-					this.item.setQuantity(this.view.getQuantity());
-					this.item.setLocation(this.view.getLoc());
-					try {
-						inventory.editItem(item);
-					} catch (SQLException e1) {
-						e1.printStackTrace();
+			Item item = this.view.getItem();
+			try {
+				if(this.inventory.validateItem(item)){
+					if(this.newItem){
+						this.view.setItem(inventory.addItem(item));
+						this.newItem = false;
+						this.view.setNewItem(this.newItem);
+					} else {
+						this.view.setItem(item);
+						this.inventory.editItem(item);
 					}
-				} else {
-					item = new Item(
-							-1, 
-							this.view.getPart(), 
-							this.view.getQuantity(), 
-							this.view.getLoc());
-					try {
-						inventory.addItem(item);
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
+					this.view.refreshObserver();
 				}
-				view.refreshObserver();
-				view.dispatchEvent(new WindowEvent(view, WindowEvent.WINDOW_CLOSING));
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "Error: " + 
+						e1.getMessage());
+				e1.printStackTrace();
 			}
 		}
 		
 	}
-
-	public void editItem() {
-		editItem = true;
+	
+	public void setItem(Item item){
+		this.item = item;
 	}
 
 	public void itemIsNew() {

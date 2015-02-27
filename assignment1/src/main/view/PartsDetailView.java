@@ -210,7 +210,7 @@ public class PartsDetailView extends JFrame {
 	
 	public void setNew(boolean isNew){
 		this.newPart = isNew;
-		this.idLabel.setVisible(true);
-		this.id.setVisible(true);
+		this.idLabel.setVisible(!isNew);
+		this.id.setVisible(!isNew);
 	}
 }
