@@ -37,7 +37,7 @@ public class ItemDetailController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("saveItem")){
 			boolean valid = true;
-			if(this.view.getPartIndex() < 0){
+			if(this.view.getPart() == null){
 				valid = false;
 				JOptionPane.showMessageDialog(null, 
 						"Select an Part.", 
@@ -49,7 +49,7 @@ public class ItemDetailController implements ActionListener {
 						"Enter a Quantity greater than or equal to zero.", 
 						"Invalid Quantity.", JOptionPane.ERROR_MESSAGE);
 			}
-			if(this.view.getLocationIndex() < 0){
+			if(this.view.getLoc() == null){
 				valid = false;
 				JOptionPane.showMessageDialog(null, 
 						"Select a Location.", 
@@ -61,14 +61,9 @@ public class ItemDetailController implements ActionListener {
 				parts.getAllParts();
 				Locations locations = new Locations();
 				locations.getLocations();
-				System.out.printf("PartIndex: %d\n", view.getPartIndex());
-				//System.out.printf("%f\n", parts.getPartBy_Id(this.view.getPartIndex()+2).toString());
-				System.out.printf("Quantity:  %d\n", view.getQuantity());
-				System.out.printf("Location:  %d\n", view.getLocationIndex());
 				if(editItem){
 					this.item.setQuantity(this.view.getQuantity());
-					this.item.setLocation(
-							locations.getLocationById(this.view.getLocationIndex()));
+					this.item.setLocation(this.view.getLoc());
 					try {
 						inventory.editItem(item);
 					} catch (SQLException e1) {
@@ -77,10 +72,10 @@ public class ItemDetailController implements ActionListener {
 					}
 				} else {
 					item = new Item(
-							12, 
-							parts.getPartBy_Id(this.view.getPartIndex()), 
+							-1, 
+							this.view.getPart(), 
 							this.view.getQuantity(), 
-							locations.getLocationById(this.view.getLocationIndex()));
+							this.view.getLoc());
 					try {
 						inventory.addItem(item);
 					} catch (Exception e1) {

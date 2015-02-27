@@ -24,6 +24,15 @@ public class Locations {
 		return -1;
 	}
 	
+	public Entry<Integer, String> getEntryForLocation(String location){
+		for(Entry<Integer, String> id : Locations.locations.entrySet()){
+			if(id.getValue().equals(location)){
+				return id;
+			}
+		}
+		return null;
+	}
+	
 	public String[] getLocations(){
 		return Locations.locations.values().toArray(
 				new String[Locations.locations.size()]);

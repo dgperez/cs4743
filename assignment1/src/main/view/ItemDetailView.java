@@ -14,11 +14,13 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.sql.SQLException;
+import java.util.Map.Entry;
 
 import main.controller.ItemDetailController;
 import main.dao.ConnectionGateway;
 import main.model.Item;
 import main.model.Locations;
+import main.model.Part;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import main.model.PartsInventory;
 
@@ -154,8 +156,9 @@ public class ItemDetailView extends JFrame {
 		}
 	}
 		
-	public int getPartIndex(){
-		return this.parts.getSelectedIndex();
+	public Part getPart(){
+		String part = (String)this.parts.getSelectedItem();
+		return this.partInventory.getPartFromString(part);
 	}
 	
 	public int getQuantity(){
@@ -168,7 +171,8 @@ public class ItemDetailView extends JFrame {
 		return i;
 	}
 	
-	public int getLocationIndex(){
-		return this.location.getSelectedIndex() + 1;
+	public Entry<Integer, String> getLoc(){
+		String location = (String)this.location.getSelectedItem();
+		return this.locations.getEntryForLocation(location);
 	}
 }

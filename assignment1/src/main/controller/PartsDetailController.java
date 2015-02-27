@@ -33,7 +33,7 @@ public class PartsDetailController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("savePart")){
-			Item tempItem = e.getSource();//so very broken
+			Item tempItem = e.getSource();
 			if(validateSavedItem(tempItem)){
 				try {
 					this.inventory.addItem(tempItem);
