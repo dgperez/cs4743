@@ -19,7 +19,7 @@ import main.controller.PartsDetailController;
 import main.model.Part;
 import main.model.UnitsOfQuantity;
 
-public class PartsDetailView extends JFrame implements IObserver {
+public class PartsDetailView extends JFrame {
 
 	private static final long serialVersionUID = 4881822137172571826L;
 
@@ -161,10 +161,10 @@ public class PartsDetailView extends JFrame implements IObserver {
 			this.partNumber.setText(this.part.getPartNumber());
 			this.partName.setText(this.part.getPartName());
 			this.vendor.setText(this.part.getVendor());
-			this.unitOfQuantity.setSelectedItem(this.part.getUnitOfQuantity());
+			this.unitOfQuantity.setSelectedIndex((this.part.getUnitOfQuantity().getKey() - 1));
 			this.externalPartNumber.setText(this.part.getExternalPartNumber());
 		} else {
-			this.unitOfQuantity.setSelectedItem(1);
+			this.unitOfQuantity.setSelectedIndex(0);
 		}
 	}
 	
