@@ -3,6 +3,7 @@ package main.model;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map.Entry;
 
 import main.dao.ConnectionGateway;
 import main.dao.PartDao;
@@ -126,4 +127,12 @@ public class PartsInventory {
 		return valid;
 	}
 	
+	public Part getPartFromString(String part){
+		for(Part tempPart : this.allParts){
+			if(tempPart.toString().equals(part)){
+				return tempPart;
+			}
+		}
+		return null;
+	}
 }

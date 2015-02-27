@@ -16,7 +16,6 @@ import main.model.Item;
 import main.model.Locations;
 import main.view.InventoryListView;
 import main.view.ItemDetailView;
-import main.view.PartsDetailView;
 
 public class InventoryListController implements MouseListener, ActionListener {
 	
@@ -37,6 +36,7 @@ public class InventoryListController implements MouseListener, ActionListener {
 	public void mouseClicked(MouseEvent e) {
 		if(e.getClickCount() == 2){
 			if(e.getSource() instanceof JList){
+				@SuppressWarnings("unchecked")
 				JList<Object> list = (JList<Object>)e.getSource();
 				Item tempItem = (Item)list.getSelectedValue();
 				ItemDetailView view = new ItemDetailView(this.locations);
@@ -47,6 +47,7 @@ public class InventoryListController implements MouseListener, ActionListener {
 								tempItem, this.inventory);
 				itemController.editItem();
 				view.registerListener(itemController);
+				view.setVisible(true);
 			}
 		}
 	}
@@ -73,6 +74,7 @@ public class InventoryListController implements MouseListener, ActionListener {
 			this.inventory.registerObservers(view);
 			itemController.itemIsNew();
 			view.registerListener(itemController);
+			view.setVisible(true);
 		} else if ("delete".equals(e.getActionCommand())){
 			Object temp = this.listView.getSelectedListItem();
 			if(temp != null){

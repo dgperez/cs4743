@@ -33,10 +33,12 @@ public class PartsDetailController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("savePart")){
-			Part part = this.view.getPart();
-			try {
-				if(this.partsInventory.validateSavedPart(part)){
-					this.partsInventory.addPart(part);
+			Item tempItem = e.getSource();
+			if(validateSavedItem(tempItem)){
+				try {
+					this.inventory.addItem(tempItem);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Error: " + e1.getMessage());
 				}
 			} catch (Exception e1) {
 				e1.printStackTrace();
