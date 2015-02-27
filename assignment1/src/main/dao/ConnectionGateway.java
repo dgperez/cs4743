@@ -44,8 +44,7 @@ public class ConnectionGateway {
 			ConnectionGateway.propertyFilePath = 
 					ConnectionGateway.macSqlConnPropPath;
 		} else {
-			ConnectionGateway.propertyFilePath = 
-					ConnectionGateway.windowsSqlConnPropPath;
+			
 		}
 		try {
 			FileInputStream file = new FileInputStream(
