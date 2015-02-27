@@ -85,15 +85,18 @@ public class InventoryListController implements MouseListener, ActionListener {
 			Object temp = this.listView.getSelectedListItem();
 			if(temp != null){
 				Item tempItem = (Item)temp;
-				ConnectionGateway connGateway = new ConnectionGateway();
-				ItemDao itemDao = new ItemDao(connGateway);
-				try {
-					this.inventory.removeItem(tempItem, 
-							this.inventory.getInventory());
-					itemDao.deleteItem(tempItem);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				if(tempItem.getQuantity() != 0){
+					JOptionPane.showMessageDialog(null, 
+							"Quantity must be zero to delete item.", 
+							"Quantity Greater Than Zero", JOptionPane.ERROR_MESSAGE);
+					return;
+				} else {
+					try {
+						this.inventory.removeItem(tempItem, 
+								this.inventory.getInventory());
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
 				}
 			} else {
 				JOptionPane.showMessageDialog(null, 

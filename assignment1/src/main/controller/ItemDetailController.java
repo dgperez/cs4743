@@ -2,6 +2,7 @@ package main.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JOptionPane;
 
@@ -44,6 +45,7 @@ public class ItemDetailController implements ActionListener {
 						e1.getMessage());
 				e1.printStackTrace();
 			}
+			this.view.dispatchEvent(new WindowEvent(this.view, WindowEvent.WINDOW_CLOSING));
 		}
 		
 	}
