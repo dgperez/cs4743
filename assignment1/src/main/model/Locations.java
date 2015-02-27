@@ -1,5 +1,6 @@
 package main.model;
 
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -23,6 +24,15 @@ public class Locations {
 		return -1;
 	}
 	
+	public Entry<Integer, String> getEntryForLocation(String location){
+		for(Entry<Integer, String> id : Locations.locations.entrySet()){
+			if(id.getValue().equals(location)){
+				return id;
+			}
+		}
+		return null;
+	}
+	
 	public String[] getLocations(){
 		return Locations.locations.values().toArray(
 				new String[Locations.locations.size()]);
@@ -31,5 +41,13 @@ public class Locations {
 	public void resetLocations(HashMap<Integer, String> locations){
 		Locations.locations.clear();
 		Locations.locations.putAll(locations);
+	}
+	
+	public Entry<Integer, String> getLocationById(int id){
+		if(locations.containsKey(id)){
+			Entry<Integer, String> entry = new AbstractMap.SimpleEntry<Integer, String>(id, locations.get(id));
+			return entry;
+		}
+		return null;
 	}
 }

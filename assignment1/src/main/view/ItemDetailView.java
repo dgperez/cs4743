@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -14,11 +15,14 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.sql.SQLException;
+import java.util.Map.Entry;
 
 import main.controller.ItemDetailController;
 import main.dao.ConnectionGateway;
 import main.model.Item;
 import main.model.Locations;
+import main.model.Part;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import main.model.PartsInventory;
 
 public class ItemDetailView extends JFrame {
@@ -77,13 +81,19 @@ public class ItemDetailView extends JFrame {
 				partInventory.getAllPartsToString());
 		this.quantity = new JTextField(10);
 		this.location = new JComboBox<String>(
+<<<<<<< HEAD
 				this.locations.getLocations());
+=======
+				locations.getLocations());
+		this.location.removeItem("Unknown");
+>>>>>>> e91a80229efbeb891867e0ba79d843b287dc321b
 
 		this.inputs.add(labelsPanel, BorderLayout.WEST);
 		this.inputs.add(fieldsPanel, BorderLayout.EAST);
 
 		labelsPanel.add(this.idLabel);
 		fieldsPanel.add(id);
+		id.setEditable(false);
 
 		labelsPanel.add(this.partLabel);
 		fieldsPanel.add(this.parts);
@@ -96,7 +106,7 @@ public class ItemDetailView extends JFrame {
 
 		this.controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
 
-		this.saveItem = new JButton("Save Item;");
+		this.saveItem = new JButton("Save Item");
 		this.saveItem.setActionCommand("saveItem");
 
 		this.controls.add(this.saveItem);
@@ -151,5 +161,29 @@ public class ItemDetailView extends JFrame {
 			}
 		}
 	}
+		
+	public Part getPart(){
+		String part = (String)this.parts.getSelectedItem();
+		return this.partInventory.getPartFromString(part);
+	}
 	
+	public int getQuantity(){
+		int i = -1;
+		try{
+			i = Integer.parseInt(this.quantity.getText());
+		} catch(NumberFormatException e){
+			e.printStackTrace();
+		}
+		return i;
+	}
+	
+	public Entry<Integer, String> getLoc(){
+		String location = (String)this.location.getSelectedItem();
+		if(locations.getLocationById(this.locations.getEntryForLocation(location).getKey()).equals("Unknown")){
+			JOptionPane.showMessageDialog(null, 
+					"Location can not be Unknown.", 
+					"No Location Selected.", JOptionPane.ERROR_MESSAGE);
+		}
+		return this.locations.getEntryForLocation(location);
+	}
 }
