@@ -9,7 +9,7 @@ import main.dao.ItemDao;
 import main.view.InventoryListView;
 import main.view.ItemDetailView;
 
-public class Inventory {
+public class Inventory implements IModel {
 	private List<Item> inventory;
 	
 	private InventoryListView view;

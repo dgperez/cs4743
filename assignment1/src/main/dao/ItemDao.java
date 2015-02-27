@@ -28,12 +28,9 @@ public class ItemDao extends AbstractDao {
 		prepStmt.setInt(1, item.getPart().getId());
 		prepStmt.setInt(2, item.getQuantity());
 		prepStmt.setInt(3, locationId);
-		boolean execute = prepStmt.execute();
+		prepStmt.execute();
 		prepStmt.close();
 		this.connGateway.closeConnection(conn);
-		if(!execute){
-			throw new SQLException("Could not add new item to inventory.");
-		}
 	}
 	
 	public void editItem(Item item) throws SQLException{
@@ -51,14 +48,9 @@ public class ItemDao extends AbstractDao {
 		prepStmt.setInt(3, locationId);
 		prepStmt.setInt(4, item.getId());
 		
-		boolean execute = prepStmt.execute();
+		prepStmt.execute();
 		prepStmt.close();
 		this.connGateway.closeConnection(conn);
-		if(!execute){
-			throw new SQLException(
-					String.format("Could not edit item with id: %d", 
-							item.getId()));
-		}
 	}
 	
 	public ArrayList<Item> getItems() throws SQLException{
@@ -91,14 +83,9 @@ public class ItemDao extends AbstractDao {
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(deleteSql);
 		prepStmt.setInt(1, item.getId());
-		boolean execute = prepStmt.execute();
+		prepStmt.execute();
 		prepStmt.close();
 		this.connGateway.closeConnection(conn);
-		if(!execute){
-			throw new SQLException(
-					String.format("Could not delete item with id: %d", 
-							item.getId()));
-		}
 	}
 
 }

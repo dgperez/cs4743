@@ -18,7 +18,7 @@ import main.model.Inventory;
 import main.model.Part;
 import main.model.PartsInventory;
 
-public class PartsListView extends JFrame{
+public class PartsListView extends JFrame implements IObserver {
 
 	private JList<Object> partList;
 	
@@ -88,8 +88,8 @@ public class PartsListView extends JFrame{
 		}
 	}
 	
-	public void refreshList(Inventory inventory){
-		this.partList.setListData(this.partsInventory.getAllParts().toArray());
+	public void refreshList(PartsInventory partsInventory){
+		this.partList.setListData(partsInventory.getAllParts().toArray());
 		this.partList.repaint();
 	}
 	

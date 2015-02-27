@@ -7,9 +7,11 @@ import java.util.Map.Entry;
 
 import main.dao.ConnectionGateway;
 import main.dao.PartDao;
+import main.view.ItemDetailView;
 import main.view.PartsDetailView;
+import main.view.PartsListView;
 
-public class PartsInventory {
+public class PartsInventory implements IModel {
 
 	private ArrayList<Part> allParts;
 	
@@ -17,8 +19,12 @@ public class PartsInventory {
 	
 	private PartDao partDao;
 	
+	private PartsListView partsListView; 
+	
 	private ArrayList<PartsDetailView> observers = 
 			new ArrayList<PartsDetailView>();
+	
+	private boolean viewRegistered;
 	
 	public PartsInventory(ConnectionGateway connGateway) {
 		this.allParts = new ArrayList<Part>();
@@ -31,9 +37,25 @@ public class PartsInventory {
 		this.replaceAllParts(parts);
 	}
 
-	public void addPart(Part part) throws SQLException{
+	public Part addPart(Part part) throws SQLException{
 		if(!this.allParts.contains(part)){
-			this.allParts.add(this.partDao.addPart(part));
+			Part tempPart = this.partDao.addPart(part);
+			this.allParts.add(tempPart);
+			return tempPart;
+		}
+		return null;
+	}
+	
+	public void editPart(Part part) throws SQLException{
+		this.partDao.editPart(part);
+		for(Part p : this.allParts){
+			if(p.getId() == part.getId()){
+				p.setExternalPartNumber(part.getExternalPartNumber());
+				p.setPartName(part.getPartName());
+				p.setPartNumber(part.getPartNumber());
+				p.setVendor(part.getVendor());
+				p.setUnitOfQuantity(part.getUnitOfQuantity());
+			}
 		}
 	}
 	
@@ -84,11 +106,13 @@ public class PartsInventory {
 	
 	public void removePart(Part part) throws SQLException{
 		try{
+			this.allParts.remove(part);
 			this.partDao.deletePart(part);
+			this.updateView();
+			this.closeOpenObservers(part);
 		} catch(SQLException e){
 			throw e;
 		}
-		this.allParts.remove(part);
 	}
 	
 	public boolean validateSavedPart(Part part) throws Exception{
@@ -127,12 +151,41 @@ public class PartsInventory {
 		return valid;
 	}
 	
-	public Part getPartFromString(String part){
-		for(Part tempPart : this.allParts){
-			if(tempPart.toString().equals(part)){
-				return tempPart;
+	public void registerView(PartsListView partsListView){
+		this.partsListView = partsListView;
+		this.viewRegistered = true;
+	}
+	
+	public void registerObservers(PartsDetailView partsDetailView){
+		this.observers.add(partsDetailView);
+	}
+	
+	public void updateView(){
+		if(this.viewRegistered) {
+			this.partsListView.refreshList(this);
+		}
+		this.updateObservers();
+	}
+	
+	private void updateObservers(){
+		for(PartsDetailView partsDetailView : this.observers){
+			partsDetailView.refreshObserver();
+		}
+	}
+	
+	private void closeOpenObservers(Part part){
+		ArrayList<PartsDetailView> itemsToRemove = 
+				new ArrayList<PartsDetailView>();
+		for(PartsDetailView partsDetailView : this.observers){
+			if(partsDetailView.containsItem(part)){
+				itemsToRemove.add(partsDetailView);
 			}
 		}
-		return null;
+		
+		this.observers.removeAll(itemsToRemove);
+		
+		for(PartsDetailView partsDetailView : itemsToRemove){
+			partsDetailView.dispose();
+		}
 	}
 }
