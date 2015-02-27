@@ -45,7 +45,8 @@ public class ItemDetailController implements ActionListener {
 						e1.getMessage());
 				e1.printStackTrace();
 			}
-			this.view.dispatchEvent(new WindowEvent(this.view, WindowEvent.WINDOW_CLOSING));
+			this.view.dispatchEvent(new WindowEvent(this.view, 
+					WindowEvent.WINDOW_CLOSING));
 		}
 		
 	}

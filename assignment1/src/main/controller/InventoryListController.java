@@ -88,7 +88,8 @@ public class InventoryListController implements MouseListener, ActionListener {
 				if(tempItem.getQuantity() != 0){
 					JOptionPane.showMessageDialog(null, 
 							"Quantity must be zero to delete item.", 
-							"Quantity Greater Than Zero", JOptionPane.ERROR_MESSAGE);
+							"Quantity Greater Than Zero", 
+							JOptionPane.ERROR_MESSAGE);
 					return;
 				} else {
 					try {
