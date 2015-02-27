@@ -26,6 +26,10 @@ public class Part {
 		return this.currentUnit;
 	}
 	
+	public void setUnitOfQuantity(Entry<Integer, String> unitOfQuantity){
+		this.currentUnit = unitOfQuantity;
+	}
+	
 	public int getId() {
 		return id;
 	}

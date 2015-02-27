@@ -92,10 +92,14 @@ public class PartsDetailView extends JFrame implements IObserver {
 		this.unitOfQuantity = 
 				new JComboBox<String>(
 						this.unitsOfQuantityTypes.getUnitsOfQuantity());
-		if(!this.newPart){
-			labelsPanel.add(this.idLabel);
-			fieldsPanel.add(this.id);
+		
+		if(this.newPart){
+			this.idLabel.setVisible(false);
+			this.id.setVisible(false);
 		}
+		
+		labelsPanel.add(this.idLabel);
+		fieldsPanel.add(this.id);
 		
 		labelsPanel.add(this.partNumberLabel);
 		fieldsPanel.add(this.partNumber);
@@ -201,6 +205,12 @@ public class PartsDetailView extends JFrame implements IObserver {
 	}
 	
 	public boolean containsItem(Part part){
-		return (this.part == part);
+		return this.part.getId() == part.getId();
+	}
+	
+	public void setNew(boolean isNew){
+		this.newPart = isNew;
+		this.idLabel.setVisible(true);
+		this.id.setVisible(true);
 	}
 }

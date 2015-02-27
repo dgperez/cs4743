@@ -59,7 +59,8 @@ public class Cabinetron {
 			inventoryListView.registerListener(inventoryListController);
 			partsListView.registerListener(partsListController);
 			
-			
+			inventory.registerView(inventoryListView);
+			partsInventory.registerView(partsListView);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

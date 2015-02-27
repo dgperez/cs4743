@@ -88,8 +88,8 @@ public class PartsListView extends JFrame implements IObserver {
 		}
 	}
 	
-	public void refreshList(Inventory inventory){
-		this.partList.setListData(this.partsInventory.getAllParts().toArray());
+	public void refreshList(PartsInventory partsInventory){
+		this.partList.setListData(partsInventory.getAllParts().toArray());
 		this.partList.repaint();
 	}
 	
