@@ -11,7 +11,7 @@ import main.view.ItemDetailView;
 import main.view.PartsDetailView;
 import main.view.PartsListView;
 
-public class PartsInventory implements IModel {
+public class PartsInventory {
 
 	private ArrayList<Part> allParts;
 	
@@ -104,15 +104,11 @@ public class PartsInventory implements IModel {
 		return true;
 	}
 	
-	public void removePart(Part part) throws SQLException{
-		try{
+	public void removePart(Part part) throws SQLException {
 			this.allParts.remove(part);
 			this.partDao.deletePart(part);
 			this.updateView();
 			this.closeOpenObservers(part);
-		} catch(SQLException e){
-			throw e;
-		}
 	}
 	
 	public boolean validateSavedPart(Part part) throws Exception{

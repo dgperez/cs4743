@@ -49,6 +49,13 @@ public class PartsListController implements MouseListener, ActionListener{
 				this.partsInventory.removePart(part);
 			} catch (SQLException e1) {
 				e1.printStackTrace();
+				String message = e1.getMessage();
+				if(message.contains("foreign key constraint")){
+					message = "An item in inventory references this part. " +
+							"It cannot be deleted until that item is deleted.";
+				}
+				JOptionPane.showMessageDialog(null, "Error: " + 
+						message);
 			}
 		}
 	}
@@ -69,7 +76,6 @@ public class PartsListController implements MouseListener, ActionListener{
 				this.partsInventory.registerObservers(partsDetailView);
 			}
 		}
-		
 	}
 
 	@Override

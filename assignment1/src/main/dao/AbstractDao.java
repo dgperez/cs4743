@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 
 public abstract class AbstractDao {
 
-	public ConnectionGateway connGateway;
+	protected ConnectionGateway connGateway;
 	
 	public AbstractDao(ConnectionGateway connGateway) {
 		this.connGateway = connGateway;
@@ -68,7 +68,7 @@ public abstract class AbstractDao {
 			return null;
 		}
 		String selectEntry = "select `"+columnName+"` from `"
-				+tableName+"` where `pid` = ?;";
+				+tableName+"` where `pid` = ? order by `pid` asc;";
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(selectEntry);
 		prepStmt.setInt(1, pid);

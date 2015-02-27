@@ -18,7 +18,7 @@ import main.model.Inventory;
 import main.model.Part;
 import main.model.PartsInventory;
 
-public class PartsListView extends JFrame implements IObserver {
+public class PartsListView extends JFrame {
 
 	private JList<Object> partList;
 	

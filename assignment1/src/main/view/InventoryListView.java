@@ -16,7 +16,7 @@ import javax.swing.JScrollPane;
 import main.controller.InventoryListController;
 import main.model.Inventory;
 
-public class InventoryListView extends JFrame implements IObserver {
+public class InventoryListView extends JFrame {
 	
 	private static final long serialVersionUID = -354701430566371345L;
 
