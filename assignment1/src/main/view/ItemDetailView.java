@@ -177,6 +177,7 @@ public class ItemDetailView extends JFrame {
 		try{
 			i = Integer.parseInt(this.quantity.getText());
 		} catch(NumberFormatException e){
+			i = -1;
 			e.printStackTrace();
 		}
 		return i;
