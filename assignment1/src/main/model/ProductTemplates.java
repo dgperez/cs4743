@@ -10,7 +10,7 @@ import main.dao.ProductTemplatePartsDao;
 import main.view.ProductTemplateDetailView;
 import main.view.ProductTemplatesView;
 
-public class Templates {
+public class ProductTemplates {
 
 	private ConnectionGateway connGateway;
 	
@@ -27,11 +27,17 @@ public class Templates {
 	private ArrayList<ProductTemplateDetailView> observers = 
 			new ArrayList<ProductTemplateDetailView>();
 	
-	public Templates(ConnectionGateway connGateway) {
+	public ProductTemplates(ConnectionGateway connGateway) {
 		this.connGateway = connGateway;
 		this.productTemplateDao = new ProductTemplateDao(this.connGateway);
 		this.productTemplatePartsDao = 
 				new ProductTemplatePartsDao(this.connGateway);
+	}
+	
+	public void loadInitialProductTemplates() throws SQLException{
+		ArrayList<ProductTemplate> templates = 
+				this.productTemplateDao.getProductTemplates();
+		this.productTemplates = templates;
 	}
 	
 	public List<ProductTemplate> getProductTemplates(){
@@ -48,13 +54,22 @@ public class Templates {
 				this.productTemplateDao.addProductTemplate(productTemplate);
 		this.productTemplates.add(tempTemplate);
 	}
+	
+	public void deleteProductTemplate(ProductTemplate productTemplate) 
+			throws SQLException{
+		if(this.productTemplates.contains(productTemplate)){
+			this.productTemplateDao.deleteProductTemplate(productTemplate);
+			this.productTemplates.remove(productTemplate);
+		}
+	}
 
 	public void registerView(ProductTemplatesView productTemplatesView){
 		this.productTemplatesView = productTemplatesView;
 		this.viewCreated = true;
 	}
 	
-	public void registerObservers(ProductTemplateDetailView productTemplateDetailView){
+	public void registerObservers(
+			ProductTemplateDetailView productTemplateDetailView){
 		this.observers.add(productTemplateDetailView);
 	}
 	

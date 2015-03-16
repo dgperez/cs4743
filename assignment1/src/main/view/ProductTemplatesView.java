@@ -4,17 +4,17 @@ import javax.swing.JFrame;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import main.model.Templates;
+import main.model.ProductTemplates;
 
 public class ProductTemplatesView extends JFrame {
 	
-	private Templates templates;
+	private ProductTemplates templates;
 
 	public ProductTemplatesView() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void refreshList(Templates templates){
+	public void refreshList(ProductTemplates templates){
 		throw new NotImplementedException();
 	}
 }
