@@ -13,12 +13,10 @@ public class ProductTemplate {
 	private List<ProductTemplatePart> productTemplateParts;
 	
 	public ProductTemplate(int id, String productNumber, 
-			String productDescription, 
-			List<ProductTemplatePart> productTemplateParts) {
+			String productDescription) {
 		this.id = id;
 		this.productNumber = productNumber;
 		this.productDescription = productDescription;
-		this.productTemplateParts = productTemplateParts;
 	}
 
 	public int getId(){
@@ -58,6 +56,21 @@ public class ProductTemplate {
 	public void deleteProductTemplatePart(
 			ProductTemplatePart productTemplatePart) {
 		this.productTemplateParts.remove(productTemplatePart);
+	}
+	
+	public void setProductTemplatePartsParentId(int productTemplateId){
+		for(ProductTemplatePart ptp : this.productTemplateParts){
+			ptp.setProductTemplateId(productTemplateId);
+		}
+	}
+	
+	public List<ProductTemplatePart> getProductTemplateParts(){
+		return this.productTemplateParts;
+	}
+	
+	public void setProductTemplateParts(
+			List<ProductTemplatePart> productTemplatePart){
+		this.productTemplateParts = productTemplatePart;
 	}
 	
 	public boolean validateProductNumber(String productNumber) 

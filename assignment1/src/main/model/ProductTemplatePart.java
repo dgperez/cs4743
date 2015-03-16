@@ -10,9 +10,8 @@ public class ProductTemplatePart {
 	
 	private int partQuantity;
 	
-	public ProductTemplatePart(int id, int productTemplateId, Part part, int partQuantity) {
+	public ProductTemplatePart(int id, Part part, int partQuantity) {
 		this.id = id;
-		this.productTemplateId = productTemplateId;
 		this.part = part;
 		this.partQuantity = partQuantity;
 	}
