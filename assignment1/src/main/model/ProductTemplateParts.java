@@ -69,4 +69,44 @@ public class ProductTemplateParts {
 			.editProductTemplatePart(productTemplatePart);
 	}
 
+	public void registerView(
+			ProductTemplatePartsListView productTemplatePartsListView){
+		this.productTemplatePartsListView = productTemplatePartsListView;
+		this.viewCreated = true;
+	}
+	
+	public void registerObservers(
+			ProductTemplatePartsDetailView productTemplatePartsDetailView){
+		this.observers.add(productTemplatePartsDetailView);
+	}
+	
+	public void updateObservers(){
+		for(ProductTemplatePartsDetailView ptdv : this.observers){
+			ptdv.refreshObserver();
+		}
+	}
+	
+	public void closeOpenObservers(ProductTemplatePart productTemplatePart){
+		ArrayList<ProductTemplatePartsDetailView> templatesToRemove = 
+				new ArrayList<ProductTemplatePartsDetailView>();
+		for(ProductTemplatePartsDetailView ptdv : this.observers){
+			if(ptdv.containsProductTemplatePart(productTemplatePart)){
+				templatesToRemove.add(ptdv);
+			}
+		}
+		
+		this.observers.removeAll(templatesToRemove);
+		
+		for(ProductTemplatePartsDetailView removedViews : templatesToRemove){
+			removedViews.dispose();
+		}
+	}
+	
+	public void updateViews(){
+		if(this.viewCreated){
+			this.productTemplatePartsListView.refreshList(
+					this.productTemplate);
+		}
+		this.updateObservers();
+	}
 }
