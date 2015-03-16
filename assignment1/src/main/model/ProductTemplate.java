@@ -71,6 +71,9 @@ public class ProductTemplate {
 		if(productNumber.length() > 20){
 			message += "Product # cannot exceed 20 characters in length.\n";
 			isValid = false;
+		} else if (productNumber.length() < 1){
+			message += "Product # must be entered.\n";
+			isValid = false;
 		}
 		if(!isValid){
 			throw new Exception(message);

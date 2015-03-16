@@ -48,5 +48,38 @@ public class ProductTemplatePart {
 	public void setPartQuantity(int partQuantity){
 		this.partQuantity = partQuantity;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		result = prime * result + ((part == null) ? 0 : part.hashCode());
+		result = prime * result + partQuantity;
+		result = prime * result + productTemplateId;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ProductTemplatePart other = (ProductTemplatePart) obj;
+		if (id != other.id)
+			return false;
+		if (part == null) {
+			if (other.part != null)
+				return false;
+		} else if (!part.equals(other.part))
+			return false;
+		if (partQuantity != other.partQuantity)
+			return false;
+		if (productTemplateId != other.productTemplateId)
+			return false;
+		return true;
+	}
 }
