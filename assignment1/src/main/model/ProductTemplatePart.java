@@ -54,7 +54,6 @@ public class ProductTemplatePart {
 		int result = 1;
 		result = prime * result + id;
 		result = prime * result + ((part == null) ? 0 : part.hashCode());
-		result = prime * result + partQuantity;
 		result = prime * result + productTemplateId;
 		return result;
 	}
@@ -74,8 +73,6 @@ public class ProductTemplatePart {
 			if (other.part != null)
 				return false;
 		} else if (!part.equals(other.part))
-			return false;
-		if (partQuantity != other.partQuantity)
 			return false;
 		if (productTemplateId != other.productTemplateId)
 			return false;

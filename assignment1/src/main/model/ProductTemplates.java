@@ -50,6 +50,18 @@ public class ProductTemplates {
 		this.productTemplates.add(tempTemplate);
 	}
 	
+	public void editProductTemplate(ProductTemplate productTemplate) 
+			throws Exception{
+		for(ProductTemplate pt : this.productTemplates){
+			if(pt.getId() == productTemplate.getId()){
+				pt.setProductNumber(productTemplate.getProductNumber());
+				pt.setProductDescription(
+						productTemplate.getProductDescription());
+			}
+			this.productTemplateDao.editProductTemplate(productTemplate);
+		}
+	}
+	
 	public void deleteProductTemplate(ProductTemplate productTemplate) 
 			throws SQLException{
 		if(this.productTemplates.contains(productTemplate)){
