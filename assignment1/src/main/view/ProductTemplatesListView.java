@@ -6,11 +6,11 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import main.model.ProductTemplates;
 
-public class ProductTemplatesView extends JFrame {
+public class ProductTemplatesListView extends JFrame {
 	
 	private ProductTemplates templates;
 
-	public ProductTemplatesView() {
+	public ProductTemplatesListView() {
 		// TODO Auto-generated constructor stub
 	}
 

@@ -8,7 +8,7 @@ import main.dao.ConnectionGateway;
 import main.dao.ProductTemplateDao;
 import main.dao.ProductTemplatePartsDao;
 import main.view.ProductTemplateDetailView;
-import main.view.ProductTemplatesView;
+import main.view.ProductTemplatesListView;
 
 public class ProductTemplates {
 
@@ -22,7 +22,7 @@ public class ProductTemplates {
 	
 	private boolean viewCreated = false;
 	
-	private ProductTemplatesView productTemplatesView;
+	private ProductTemplatesListView productTemplatesView;
 	
 	private ArrayList<ProductTemplateDetailView> observers = 
 			new ArrayList<ProductTemplateDetailView>();
@@ -63,7 +63,7 @@ public class ProductTemplates {
 		}
 	}
 
-	public void registerView(ProductTemplatesView productTemplatesView){
+	public void registerView(ProductTemplatesListView productTemplatesView){
 		this.productTemplatesView = productTemplatesView;
 		this.viewCreated = true;
 	}
