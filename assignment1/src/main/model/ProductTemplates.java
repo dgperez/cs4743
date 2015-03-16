@@ -6,7 +6,6 @@ import java.util.List;
 
 import main.dao.ConnectionGateway;
 import main.dao.ProductTemplateDao;
-import main.dao.ProductTemplatePartsDao;
 import main.view.ProductTemplateDetailView;
 import main.view.ProductTemplatesListView;
 
@@ -15,8 +14,6 @@ public class ProductTemplates {
 	private ConnectionGateway connGateway;
 	
 	private ProductTemplateDao productTemplateDao;
-	
-	private ProductTemplatePartsDao productTemplatePartsDao;
 	
 	private List<ProductTemplate> productTemplates;
 	
@@ -30,8 +27,6 @@ public class ProductTemplates {
 	public ProductTemplates(ConnectionGateway connGateway) {
 		this.connGateway = connGateway;
 		this.productTemplateDao = new ProductTemplateDao(this.connGateway);
-		this.productTemplatePartsDao = 
-				new ProductTemplatePartsDao(this.connGateway);
 	}
 	
 	public void loadInitialProductTemplates() throws SQLException{
