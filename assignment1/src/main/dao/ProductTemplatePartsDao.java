@@ -129,4 +129,15 @@ public class ProductTemplatePartsDao extends AbstractDao {
 		return productTemplatePart;
 	}
 
+	public void deleteProductTemplatePart(
+			ProductTemplatePart productTemplatePart) throws SQLException{
+		String deleteSql = "DELETE FROM `product_template_parts` " +
+				"WHERE `pid` = ?;";
+		Connection conn = this.connGateway.getConnection();
+		PreparedStatement prepStmt = conn.prepareStatement(deleteSql);
+		prepStmt.setInt(1, productTemplatePart.getId());
+		prepStmt.execute();
+		prepStmt.close();
+		this.connGateway.closeConnection(conn);
+	}
 }
