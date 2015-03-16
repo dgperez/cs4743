@@ -63,7 +63,6 @@ public class ProductTemplatePartsListView extends JFrame {
 		
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setVisible(true);
 	}
 	
 	public void registerListener(){}

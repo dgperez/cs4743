@@ -1,0 +1,1 @@
+UPDATE `parts` set `part_number` = CONCAT('P',`part_number`) WHERE `pid` > 0;
