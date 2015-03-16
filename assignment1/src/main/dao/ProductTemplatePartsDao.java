@@ -75,7 +75,7 @@ public class ProductTemplatePartsDao extends AbstractDao {
 		this.connGateway.closeConnection(conn);
 	}
 	
-	public List<ProductTemplatePart> getProductTemplateParts(
+	public ArrayList<ProductTemplatePart> getProductTemplateParts(
 			int productTemplateId) throws SQLException{
 		String selectSql = "SELECT `pid`, `parts_id`, " +
 				"`product_template_id`, `quantity` FROM " +
@@ -139,5 +139,13 @@ public class ProductTemplatePartsDao extends AbstractDao {
 		prepStmt.execute();
 		prepStmt.close();
 		this.connGateway.closeConnection(conn);
+	}
+	
+	public void deleteProductTemplateParts(
+			List<ProductTemplatePart> productTemplatePart) 
+					throws SQLException {
+		for(ProductTemplatePart ptp : productTemplatePart){
+			this.deleteProductTemplatePart(ptp);
+		}
 	}
 }
