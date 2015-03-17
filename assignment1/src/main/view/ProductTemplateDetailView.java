@@ -21,4 +21,6 @@ public class ProductTemplateDetailView extends JFrame {
 			ProductTemplatePart productTemplatePart){
 		return this.productTemplatePart.getId() == productTemplatePart.getId();
 	}
+	
+	public void registerListener(){}
 }

@@ -7,7 +7,7 @@ import java.util.List;
 import main.dao.ConnectionGateway;
 import main.dao.ProductTemplateDao;
 import main.view.ProductTemplateDetailView;
-import main.view.ProductTemplatesListView;
+import main.view.ProductTemplateListView;
 
 public class ProductTemplates {
 
@@ -19,7 +19,7 @@ public class ProductTemplates {
 	
 	private boolean viewCreated = false;
 	
-	private ProductTemplatesListView productTemplatesView;
+	private ProductTemplateListView productTemplatesView;
 	
 	private ArrayList<ProductTemplateDetailView> observers = 
 			new ArrayList<ProductTemplateDetailView>();
@@ -70,7 +70,7 @@ public class ProductTemplates {
 		}
 	}
 
-	public void registerView(ProductTemplatesListView productTemplatesView){
+	public void registerView(ProductTemplateListView productTemplatesView){
 		this.productTemplatesView = productTemplatesView;
 		this.viewCreated = true;
 	}

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import main.controller.InventoryListController;
 import main.controller.PartsListController;
+import main.controller.ProductTemplatesListController;
 import main.dao.ConnectionGateway;
 import main.dao.ItemDao;
 import main.dao.PartDao;
@@ -18,7 +19,7 @@ import main.model.ProductTemplates;
 import main.model.UnitsOfQuantity;
 import main.view.InventoryListView;
 import main.view.PartsListView;
-import main.view.ProductTemplatesListView;
+import main.view.ProductTemplateListView;
 
 public class Cabinetron {
 
@@ -28,6 +29,7 @@ public class Cabinetron {
 	public static void main(String[] args){
 		
 		// Testing
+		/*
 		try {
 			ConnectionGateway connGateway = new ConnectionGateway();
 			TypeDao typeDao = new TypeDao(connGateway);
@@ -70,17 +72,28 @@ public class Cabinetron {
 			e.printStackTrace();
 
 		}
-		/*
+		*/
+		
 		try{
 			ConnectionGateway connGateway = new ConnectionGateway();
-			ProductTemplates productTemplates = new ProductTemplates(connGateway);
+			ProductTemplates productTemplates = 
+					new ProductTemplates(connGateway);
 			productTemplates.loadInitialProductTemplates();
 			
-			ProductTemplatesListView ptlv = new ProductTemplatesListView(productTemplates);
-		} catch (Exception e){
+			ProductTemplateListView productTemplatesListView = 
+					new ProductTemplateListView(productTemplates);
+			productTemplates.registerView(productTemplatesListView);
 			
+			ProductTemplatesListController productTemplatesListController = 
+					new ProductTemplatesListController(productTemplates, 
+							productTemplatesListView);
+			productTemplatesListView
+				.registerListener(productTemplatesListController);
+			
+		} catch (Exception e){
+			e.printStackTrace();
 		}
-		*/
+		
 	}
 
 }
