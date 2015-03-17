@@ -86,11 +86,11 @@ public class ProductTemplates {
 		}
 	}
 	
-	public void closeOpenObservers(ProductTemplatePart productTemplatePart){
+	public void closeOpenObservers(ProductTemplate productTemplate){
 		ArrayList<ProductTemplateDetailView> templatesToRemove = 
 				new ArrayList<ProductTemplateDetailView>();
 		for(ProductTemplateDetailView ptdv : this.observers){
-			if(ptdv.containsProductTemplatePart(productTemplatePart)){
+			if(ptdv.containsProductTemplate(productTemplate)){
 				templatesToRemove.add(ptdv);
 			}
 		}

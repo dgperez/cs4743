@@ -2,24 +2,26 @@ package main.view;
 
 import javax.swing.JFrame;
 
-import main.model.ProductTemplatePart;
+import main.model.ProductTemplate;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class ProductTemplateDetailView extends JFrame {
 	
-	private ProductTemplatePart productTemplatePart;
+	private ProductTemplate productTemplate;
+	
+	private boolean newtemplate = false;
 
-	public ProductTemplateDetailView() {
-		// TODO Auto-generated constructor stub
+	public ProductTemplateDetailView(boolean newTemplate) {
+		this.newtemplate = newTemplate;
 	}
 
 	public void refreshObserver(){
 		throw new NotImplementedException();
 	}
 	
-	public boolean containsProductTemplatePart(
-			ProductTemplatePart productTemplatePart){
-		return this.productTemplatePart.getId() == productTemplatePart.getId();
+	public boolean containsProductTemplate(
+			ProductTemplate productTemplate){
+		return this.productTemplate.getId() == productTemplate.getId();
 	}
 	
 	public void registerListener(){}
