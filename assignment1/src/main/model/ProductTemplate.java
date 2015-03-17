@@ -108,4 +108,11 @@ public class ProductTemplate {
 		}
 		return isValid;
 	}
+	
+	@Override
+	public String toString(){
+		return "id: " + this.id + ", " + 
+				"prod#: " + this.productNumber + ", " + 
+				"prod_desc: " + this.productDescription;
+	}
 }
