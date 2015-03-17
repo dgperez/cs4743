@@ -82,6 +82,7 @@ public class ProductTemplatePartsDao extends AbstractDao {
 				"`product_template_parts` WHERE `product_template_id` = ?;";
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(selectSql);
+		prepStmt.setInt(1, productTemplateId);
 		ResultSet rs = prepStmt.executeQuery();
 		ArrayList<ProductTemplatePart> productTemplateParts = 
 				new ArrayList<ProductTemplatePart>();
