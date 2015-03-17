@@ -14,9 +14,11 @@ import main.model.Item;
 import main.model.Locations;
 import main.model.Part;
 import main.model.PartsInventory;
+import main.model.ProductTemplates;
 import main.model.UnitsOfQuantity;
 import main.view.InventoryListView;
 import main.view.PartsListView;
+import main.view.ProductTemplatesListView;
 
 public class Cabinetron {
 
@@ -68,6 +70,17 @@ public class Cabinetron {
 			e.printStackTrace();
 
 		}
+		/*
+		try{
+			ConnectionGateway connGateway = new ConnectionGateway();
+			ProductTemplates productTemplates = new ProductTemplates(connGateway);
+			productTemplates.loadInitialProductTemplates();
+			
+			ProductTemplatesListView ptlv = new ProductTemplatesListView(productTemplates);
+		} catch (Exception e){
+			
+		}
+		*/
 	}
 
 }

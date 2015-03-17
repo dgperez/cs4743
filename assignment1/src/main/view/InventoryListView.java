@@ -52,11 +52,11 @@ public class InventoryListView extends JFrame {
 		
 		this.controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 2));
 		
-		this.addPart = new JButton("Add Part");
+		this.addPart = new JButton("Add Item");
 		this.addPart.setActionCommand("add");
 		this.controls.add(this.addPart);
 		
-		this.deletePart = new JButton("Delete Part");
+		this.deletePart = new JButton("Delete Item");
 		this.deletePart.setActionCommand("delete");
 		this.controls.add(this.deletePart);
 		
