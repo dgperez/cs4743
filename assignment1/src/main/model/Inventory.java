@@ -54,6 +54,7 @@ public class Inventory {
 				i.setPart(item.getPart());
 			}
 		}
+		this.updateView();
 	}
 	
 	/**

@@ -9,8 +9,6 @@ import java.sql.SQLException;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
-import main.dao.ConnectionGateway;
-import main.dao.ItemDao;
 import main.model.Inventory;
 import main.model.Item;
 import main.model.Locations;

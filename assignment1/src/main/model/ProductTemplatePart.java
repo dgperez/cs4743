@@ -78,4 +78,11 @@ public class ProductTemplatePart {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString(){
+		return "part #:" + this.getPart().getPartNumber() + ", " +
+				"part_name:" + this.getPart().getPartName() + ", " +
+				"quantity: " + this.getPartQuantity();
+	}
 }

@@ -7,7 +7,7 @@ import java.util.List;
 import main.dao.ConnectionGateway;
 import main.dao.ProductTemplateDao;
 import main.view.ProductTemplateDetailView;
-import main.view.ProductTemplatesListView;
+import main.view.ProductTemplateListView;
 
 public class ProductTemplates {
 
@@ -19,7 +19,7 @@ public class ProductTemplates {
 	
 	private boolean viewCreated = false;
 	
-	private ProductTemplatesListView productTemplatesView;
+	private ProductTemplateListView productTemplatesView;
 	
 	private ArrayList<ProductTemplateDetailView> observers = 
 			new ArrayList<ProductTemplateDetailView>();
@@ -43,11 +43,13 @@ public class ProductTemplates {
 		this.productTemplates = productTemplates;
 	}
 	
-	public void addProductTemplate(ProductTemplate productTemplate) 
+	public ProductTemplate addProductTemplate(ProductTemplate productTemplate) 
 			throws SQLException{
 		ProductTemplate tempTemplate = 
 				this.productTemplateDao.addProductTemplate(productTemplate);
 		this.productTemplates.add(tempTemplate);
+		this.updateViews();
+		return tempTemplate;
 	}
 	
 	public void editProductTemplate(ProductTemplate productTemplate) 
@@ -60,6 +62,7 @@ public class ProductTemplates {
 			}
 			this.productTemplateDao.editProductTemplate(productTemplate);
 		}
+		this.updateViews();
 	}
 	
 	public void deleteProductTemplate(ProductTemplate productTemplate) 
@@ -67,10 +70,12 @@ public class ProductTemplates {
 		if(this.productTemplates.contains(productTemplate)){
 			this.productTemplateDao.deleteProductTemplate(productTemplate);
 			this.productTemplates.remove(productTemplate);
+			this.updateViews();
+			this.closeOpenObservers(productTemplate);
 		}
 	}
 
-	public void registerView(ProductTemplatesListView productTemplatesView){
+	public void registerView(ProductTemplateListView productTemplatesView){
 		this.productTemplatesView = productTemplatesView;
 		this.viewCreated = true;
 	}
@@ -86,11 +91,11 @@ public class ProductTemplates {
 		}
 	}
 	
-	public void closeOpenObservers(ProductTemplatePart productTemplatePart){
+	public void closeOpenObservers(ProductTemplate productTemplate){
 		ArrayList<ProductTemplateDetailView> templatesToRemove = 
 				new ArrayList<ProductTemplateDetailView>();
 		for(ProductTemplateDetailView ptdv : this.observers){
-			if(ptdv.containsProductTemplatePart(productTemplatePart)){
+			if(ptdv.containsProductTemplate(productTemplate)){
 				templatesToRemove.add(ptdv);
 			}
 		}
@@ -109,4 +114,40 @@ public class ProductTemplates {
 		this.updateObservers();
 	}
 	
+	public boolean validateProductTemplate(ProductTemplate productTemplate) 
+			throws Exception{
+		String message = "";
+		boolean isValid = true;
+		if(!productTemplate.getProductNumber().startsWith("A") && 
+				!productTemplate.getProductNumber().startsWith("a")){
+			message += "Product # must start with A.\n";
+			isValid = false;
+		}
+		if(productTemplate.getProductNumber().length() > 20){
+			message += "Product # cannot exceed 20 characters in length.\n";
+			isValid = false;
+		} else if (productTemplate.getProductNumber().length() < 1){
+			message += "Product # must be entered.\n";
+			isValid = false;
+		}
+		
+		if(productTemplate.getProductDescription().length() > 255){
+			message += "Product Description cannot exceed 255 characters " +
+					"in length.\n";
+			isValid = false;
+		}
+		
+		for(ProductTemplate pt : this.getProductTemplates()){
+			if(pt.getProductNumber().equalsIgnoreCase(
+					productTemplate.getProductNumber())){
+				message += "Product # already exists.";
+				isValid = false;
+			}
+		}
+		
+		if(!isValid){
+			throw new Exception(message);
+		}
+		return isValid;
+	}
 }

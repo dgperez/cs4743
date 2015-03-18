@@ -36,13 +36,14 @@ public class ProductTemplateDao extends AbstractDao {
 		rs.next();
 		int productTemplateId = rs.getInt(1);
 		rs.close();
-		productTemplate.setProductTemplatePartsParentId(productTemplateId);
 		ProductTemplatePartsDao productTemplatePartsDao = 
 				new ProductTemplatePartsDao(this.connGateway);
 		List<ProductTemplatePart> addedTemplateParts = 
 				productTemplatePartsDao.addProductTemplateParts(
 						productTemplate.getProductTemplateParts());
 		productTemplate.setProductTemplateParts(addedTemplateParts);
+		productTemplate.setProductTemplatePartsParentId(productTemplateId);
+		productTemplate.setId(productTemplateId);
 		return productTemplate;
 	}
 	

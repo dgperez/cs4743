@@ -1,9 +1,11 @@
 package main.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,9 +15,10 @@ import javax.swing.JScrollPane;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import main.controller.ProductTemplateListController;
 import main.model.ProductTemplates;
 
-public class ProductTemplatesListView extends JFrame {
+public class ProductTemplateListView extends JFrame {
 
 	private ProductTemplates productTemplates;
 	
@@ -25,13 +28,15 @@ public class ProductTemplatesListView extends JFrame {
 	
 	private JButton deleteProductTemplate;
 	
+	private JButton viewParts;
+	
 	private JScrollPane scrollPane;
 	
 	private JPanel controls;
 	
 	private JPanel panel;
 
-	public ProductTemplatesListView(ProductTemplates productTemplates) {
+	public ProductTemplateListView(ProductTemplates productTemplates) {
 		super("Cabinetron Product Templates");
 		
 		this.productTemplates = productTemplates;
@@ -51,12 +56,16 @@ public class ProductTemplatesListView extends JFrame {
 		this.controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 2));
 		
 		this.addProductTemplate = new JButton("Add Template");
-		this.addProductTemplate.setActionCommand("addproducttemplate");
+		this.addProductTemplate.setActionCommand("addTemplate");
 		this.controls.add(this.addProductTemplate);
 		
 		this.deleteProductTemplate = new JButton("Delete Template");
-		this.deleteProductTemplate.setActionCommand("deletetemplate");
+		this.deleteProductTemplate.setActionCommand("deleteTemplate");
 		this.controls.add(this.deleteProductTemplate);
+		
+		this.viewParts = new JButton("View Parts");
+		this.viewParts.setActionCommand("viewParts");
+		this.controls.add(this.viewParts);
 		
 		add(this.panel, BorderLayout.CENTER);
 		add(this.controls, BorderLayout.SOUTH);
@@ -68,7 +77,20 @@ public class ProductTemplatesListView extends JFrame {
 		this.setVisible(true);
 	}
 	
-	public void registerListener(){}
+	public void registerListener(
+			ProductTemplateListController productTemplatesListController){
+		
+		this.list.addMouseListener(productTemplatesListController);
+		
+		// add listener for buttons
+		Component[] components = this.controls.getComponents();
+		for (Component component : components) {
+			if (component instanceof AbstractButton) {
+				AbstractButton button = (AbstractButton) component;
+				button.addActionListener(productTemplatesListController);
+			}
+		}
+	}
 
 	public void refreshList(ProductTemplates productTemplates){
 		this.productTemplates = productTemplates;

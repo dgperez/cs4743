@@ -41,6 +41,7 @@ public class PartsInventory {
 		if(!this.allParts.contains(part)){
 			Part tempPart = this.partDao.addPart(part);
 			this.allParts.add(tempPart);
+			this.updateView();
 			return tempPart;
 		}
 		return null;

@@ -98,12 +98,10 @@ public class Part {
 
 	@Override
 	public String toString(){
-		return "Id: " + this.id + ", Part Name: " + this.partName + ", " +
+		return "Part Name: " + this.partName + ", " +
 				"Part#: " + this.partNumber + ", " +
 				((this.vendor != null) 
 						? "Vendor: " + this.vendor + ", " : "")  
-				+ " " + this.currentUnit.getValue()
-				+ ((!this.externalPartNumber.isEmpty()) 
-					? ", External Part Number: " + this.externalPartNumber: "");
+				+ " " + this.currentUnit.getValue();
 	}
 }

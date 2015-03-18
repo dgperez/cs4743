@@ -19,7 +19,7 @@ public class ProductTemplatePartsDao extends AbstractDao {
 	public ProductTemplatePart addProductTemplatePart(
 			ProductTemplatePart productTemplatePart) throws SQLException{
 		Connection tempConn = this.connGateway.getConnection();
-		String insertSql = "INSERT INTO `nlw716`.`product_template_parts` " +
+		String insertSql = "INSERT INTO `product_template_parts` " +
 				"(`parts_id`, `product_template_id`, `quantity`) " +
 				"VALUES (?, ?, ?);";
 		
