@@ -68,7 +68,7 @@ public abstract class AbstractDao {
 			return null;
 		}
 		String selectEntry = "select `"+columnName+"` from `"
-				+tableName+"` where `pid` = ? order by `pid` asc;";
+				+tableName+"` where `pid` = ?;";
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(selectEntry);
 		prepStmt.setInt(1, pid);
