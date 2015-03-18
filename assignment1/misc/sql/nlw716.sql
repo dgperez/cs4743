@@ -60,7 +60,7 @@ CREATE TABLE `inventory` (
 
 LOCK TABLES `inventory` WRITE;
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
-INSERT INTO `inventory` VALUES (3,4,15,3),(7,5,1,3),(10,4,11,1),(22,2,12,1),(23,14,20,1),(25,2,23,2);
+INSERT INTO `inventory` VALUES (3,4,15,3),(7,5,1,3),(10,4,11,1),(22,2,12,1),(23,14,3,1),(25,2,23,2);
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +119,7 @@ CREATE TABLE `parts` (
 
 LOCK TABLES `parts` WRITE;
 /*!40000 ALTER TABLE `parts` DISABLE KEYS */;
-INSERT INTO `parts` VALUES (2,'EVA001','Eva Unit 1',1,'EVO1',3),(3,'EVA004','Eva Unit 2',1,'EVA004',3),(4,'EVA003','Eva Unit 3',1,'EVO3',3),(5,'adsfasdfasdfasfa','asdfasdf',4,'asdfasdf',3),(9,'asdfasdfasdf','asdfasdf',8,'asdfasdfsdf',3),(14,'123','name1',13,'123',2),(16,'CH001','chair_seat',14,'A01',2),(17,'CH002','chair_back',14,'A02',2),(18,'CH003','chair_legs',14,'A03',2);
+INSERT INTO `parts` VALUES (2,'PEVA001','Eva Unit 1',1,'EVO1',3),(3,'PEVA004','Eva Unit 2',1,'EVA004',3),(4,'PEVA003','Eva Unit 3',1,'EVO3',3),(5,'Padsfasdfasdfasfa','asdfasdf',4,'asdfasdf',3),(9,'Pasdfasdfasdf','asdfasdf',8,'asdfasdfsdf',3),(14,'P123','name1',13,'123',2),(16,'PCH001','chair_seat',14,'A01',2),(17,'PCH002','chair_back',14,'A02',2),(18,'PCH003','chair_legs',14,'A03',2);
 /*!40000 ALTER TABLE `parts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,7 +168,7 @@ CREATE TABLE `product_templates` (
   PRIMARY KEY (`pid`),
   UNIQUE KEY `pid_UNIQUE` (`pid`),
   UNIQUE KEY `product_number_UNIQUE` (`product_number`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,7 +177,7 @@ CREATE TABLE `product_templates` (
 
 LOCK TABLES `product_templates` WRITE;
 /*!40000 ALTER TABLE `product_templates` DISABLE KEYS */;
-INSERT INTO `product_templates` VALUES (1,'A04','A Chair'),(2,'A06','Testing'),(12,'Atest23','asdfasdf'),(13,'Atest32343535','testadsfasdfasdf');
+INSERT INTO `product_templates` VALUES (1,'A04','A Chair'),(2,'A06','Testing'),(12,'Atest23','asdfasdf'),(13,'Atest32343535','testadsfasdfasdf'),(19,'A007','Testing');
 /*!40000 ALTER TABLE `product_templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,4 +260,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-18 17:26:41
+-- Dump completed on 2015-03-18 17:56:56
