@@ -110,7 +110,7 @@ CREATE TABLE `parts` (
   KEY `unit_of_quantities_fk1_idx` (`unit_of_quantities_id`),
   CONSTRAINT `unit_of_quantities_fk1` FOREIGN KEY (`unit_of_quantities_id`) REFERENCES `unit_of_quantities` (`pid`) ON UPDATE NO ACTION,
   CONSTRAINT `vendor_id_fk1` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`pid`) ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,7 +119,7 @@ CREATE TABLE `parts` (
 
 LOCK TABLES `parts` WRITE;
 /*!40000 ALTER TABLE `parts` DISABLE KEYS */;
-INSERT INTO `parts` VALUES (2,'EVA001','Eva Unit 1',1,'EVO1',3),(3,'EVA004','Eva Unit 2',1,'EVA004',3),(4,'EVA003','Eva Unit 3',1,'EVO3',3),(5,'adsfasdfasdfasfa','asdfasdf',4,'asdfasdf',3),(9,'asdfasdfasdf','asdfasdf',8,'asdfasdfsdf',3),(14,'123','name1',13,'123',2);
+INSERT INTO `parts` VALUES (2,'EVA001','Eva Unit 1',1,'EVO1',3),(3,'EVA004','Eva Unit 2',1,'EVA004',3),(4,'EVA003','Eva Unit 3',1,'EVO3',3),(5,'adsfasdfasdfasfa','asdfasdf',4,'asdfasdf',3),(9,'asdfasdfasdf','asdfasdf',8,'asdfasdfsdf',3),(14,'123','name1',13,'123',2),(16,'CH001','chair_seat',14,'A01',2),(17,'CH002','chair_back',14,'A02',2),(18,'CH003','chair_legs',14,'A03',2);
 /*!40000 ALTER TABLE `parts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,9 +139,9 @@ CREATE TABLE `product_template_parts` (
   UNIQUE KEY `pid_UNIQUE` (`pid`),
   UNIQUE KEY `product_part_unique` (`parts_id`,`product_template_id`),
   KEY `product_template_fkey1_idx` (`product_template_id`),
-  CONSTRAINT `product_template_fkey1` FOREIGN KEY (`product_template_id`) REFERENCES `product_templates` (`pid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `parts_fkey2` FOREIGN KEY (`parts_id`) REFERENCES `parts` (`pid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `product_template_fkey1` FOREIGN KEY (`product_template_id`) REFERENCES `product_templates` (`pid`) ON UPDATE NO ACTION,
+  CONSTRAINT `parts_fkey2` FOREIGN KEY (`parts_id`) REFERENCES `parts` (`pid`) ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,6 +150,7 @@ CREATE TABLE `product_template_parts` (
 
 LOCK TABLES `product_template_parts` WRITE;
 /*!40000 ALTER TABLE `product_template_parts` DISABLE KEYS */;
+INSERT INTO `product_template_parts` VALUES (1,16,1,1),(2,17,1,1),(3,18,1,4),(5,2,1,1),(7,4,1,1),(8,2,13,1);
 /*!40000 ALTER TABLE `product_template_parts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,7 +168,7 @@ CREATE TABLE `product_templates` (
   PRIMARY KEY (`pid`),
   UNIQUE KEY `pid_UNIQUE` (`pid`),
   UNIQUE KEY `product_number_UNIQUE` (`product_number`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,6 +177,7 @@ CREATE TABLE `product_templates` (
 
 LOCK TABLES `product_templates` WRITE;
 /*!40000 ALTER TABLE `product_templates` DISABLE KEYS */;
+INSERT INTO `product_templates` VALUES (1,'A04','A Chair'),(2,'A06','Testing'),(12,'Atest23','asdfasdf'),(13,'Atest32343535','testadsfasdfasdf');
 /*!40000 ALTER TABLE `product_templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,7 +220,7 @@ CREATE TABLE `vendors` (
   PRIMARY KEY (`pid`),
   UNIQUE KEY `pid_UNIQUE` (`pid`),
   UNIQUE KEY `vendor_name_UNIQUE` (`vendor_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -227,7 +229,7 @@ CREATE TABLE `vendors` (
 
 LOCK TABLES `vendors` WRITE;
 /*!40000 ALTER TABLE `vendors` DISABLE KEYS */;
-INSERT INTO `vendors` VALUES (13,''),(5,'adsfasdf'),(4,'asdfasdfasdf'),(8,'asdfasdfasdfasdf'),(10,'asdfasdfasdfasdfasdf'),(7,'asdfasdfsdfdsfds'),(1,'NERV1'),(2,'NERV2'),(3,'NERV3'),(6,'statements'),(12,'syncingshitup'),(11,'syncingtest'),(9,'testingnew');
+INSERT INTO `vendors` VALUES (13,''),(5,'adsfasdf'),(4,'asdfasdfasdf'),(8,'asdfasdfasdfasdf'),(10,'asdfasdfasdfasdfasdf'),(7,'asdfasdfsdfdsfds'),(14,'Chairs Inc'),(1,'NERV1'),(2,'NERV2'),(3,'NERV3'),(6,'statements'),(12,'syncingshitup'),(11,'syncingtest'),(9,'testingnew');
 /*!40000 ALTER TABLE `vendors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -258,4 +260,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-16 12:02:54
+-- Dump completed on 2015-03-18 17:26:41
