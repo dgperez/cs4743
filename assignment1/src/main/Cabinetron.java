@@ -29,7 +29,7 @@ public class Cabinetron {
 	public static void main(String[] args){
 		
 		// Testing
-		/*
+		
 		try {
 			ConnectionGateway connGateway = new ConnectionGateway();
 			TypeDao typeDao = new TypeDao(connGateway);
@@ -67,15 +67,6 @@ public class Cabinetron {
 			inventory.registerView(inventoryListView);
 			partsInventory.registerView(partsListView);
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
-		*/
-		
-		try{
-			ConnectionGateway connGateway = new ConnectionGateway();
 			ProductTemplates productTemplates = 
 					new ProductTemplates(connGateway);
 			productTemplates.loadInitialProductTemplates();
@@ -90,10 +81,9 @@ public class Cabinetron {
 			productTemplatesListView
 				.registerListener(productTemplatesListController);
 			
-		} catch (Exception e){
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
-
 }

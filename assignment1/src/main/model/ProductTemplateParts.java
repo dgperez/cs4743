@@ -47,7 +47,7 @@ public class ProductTemplateParts {
 					this.productTemplatesPartsDao
 						.addProductTemplatePart(productTemplatePart);
 			this.productTemplate.getProductTemplateParts()
-				.add(productTemplatePart);
+				.add(tempTemplatePart);
 			this.updateViews();
 			return tempTemplatePart;
 	}
