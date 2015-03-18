@@ -5,7 +5,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+
+import main.model.ProductTemplatePart;
 import main.model.ProductTemplateParts;
+import main.view.ProductTemplatePartsDetailView;
 import main.view.ProductTemplatePartsListView;
 
 public class ProductTemplatePartsListController implements ActionListener,
@@ -24,14 +29,60 @@ public class ProductTemplatePartsListController implements ActionListener,
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
+		if(e.getActionCommand().equals("addTemplatePart")){
+			ProductTemplatePartsDetailView productTemplatePartsDetailView = 
+					new ProductTemplatePartsDetailView(
+							this.productTemplateParts, true);
+			ProductTemplatePartsDetailController 
+				productTemplatePartsDetailController = 
+					new ProductTemplatePartsDetailController(
+							this.productTemplateParts, 
+							productTemplatePartsDetailView);
+			productTemplatePartsDetailController.templatePartIsNew();
+			productTemplatePartsDetailView
+				.registerListener(productTemplatePartsDetailController);
+			this.productTemplateParts
+				.registerObservers(productTemplatePartsDetailView);
+		} else if (e.getActionCommand().equals("deleteTemplatePart")){
+			ProductTemplatePart productTemplatePart = 
+					(ProductTemplatePart)this.productTemplatePartsListView
+						.getSelectedItem();
+			try{
+				this.productTemplateParts
+					.removeProductTemplatePart(productTemplatePart);
+			} catch (Exception e1){
+				e1.printStackTrace();
+				String message = e1.getMessage();
+				JOptionPane.showMessageDialog(null, "Error: " + 
+						message);
+			}
+		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		if(2 == e.getClickCount()){
+			if(e.getSource() instanceof JList){
+				@SuppressWarnings("unchecked")
+				JList<Object> list = (JList<Object>)e.getSource();
+				ProductTemplatePart productTemplatePart = 
+						(ProductTemplatePart)list.getSelectedValue();
+				ProductTemplatePartsDetailView productTemplatePartsDetailView = 
+						new ProductTemplatePartsDetailView(
+								this.productTemplateParts, false);
+				productTemplatePartsDetailView
+					.setProductTemplatePart(productTemplatePart);
+				ProductTemplatePartsDetailController 
+					productTemplatePartsDetailController = 
+						new ProductTemplatePartsDetailController(
+								this.productTemplateParts, 
+								productTemplatePartsDetailView);
+				productTemplatePartsDetailView
+					.registerListener(productTemplatePartsDetailController);
+				this.productTemplateParts
+					.registerObservers(productTemplatePartsDetailView);
+			}
+		}
 	}
 
 	@Override

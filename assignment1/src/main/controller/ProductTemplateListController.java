@@ -94,7 +94,7 @@ public class ProductTemplateListController implements MouseListener,
 				productTemplateDetailView.setProductTemplate(productTemplate);
 				ProductTemplateDetailController productTemplateDetailController 
 					= new ProductTemplateDetailController(
-							productTemplateDetailView, productTemplates);
+							productTemplateDetailView, this.productTemplates);
 				productTemplateDetailView.registerListener(
 						productTemplateDetailController);
 				this.productTemplates.registerObservers(

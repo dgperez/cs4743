@@ -39,8 +39,6 @@ public class ProductTemplateDetailView extends JFrame {
 	
 	private JButton saveTemplate;
 	
-	private JButton viewParts;
-	
 	private ProductTemplate productTemplate;
 	
 	private boolean newTemplate = false;
@@ -83,15 +81,8 @@ public class ProductTemplateDetailView extends JFrame {
 		this.saveTemplate = new JButton("Save Template");
 		this.saveTemplate.setActionCommand("saveTemplate");
 		
-		this.viewParts = new JButton("View Parts");
-		this.viewParts.setActionCommand("viewParts");
-		
 		this.controls.add(this.saveTemplate);
-		this.controls.add(this.viewParts);
-		if(this.newTemplate){
-			this.viewParts.setEnabled(false);
-		}
-		
+				
 		this.gui = new JPanel(new BorderLayout(10, 10));
 		this.gui.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		this.gui.add(this.inputs, BorderLayout.CENTER);
@@ -169,6 +160,5 @@ public class ProductTemplateDetailView extends JFrame {
 		this.newTemplate = isNew;
 		this.id_Label.setVisible(!isNew);
 		this.id_Text.setVisible(!isNew);
-		this.viewParts.setEnabled(!isNew);
 	}
 }

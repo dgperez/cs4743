@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.dao.ConnectionGateway;
+import main.dao.PartDao;
 import main.dao.ProductTemplatePartsDao;
 import main.view.ProductTemplatePartsDetailView;
 import main.view.ProductTemplatePartsListView;
@@ -19,6 +20,8 @@ public class ProductTemplateParts {
 	
 	private ProductTemplatePartsListView productTemplatePartsListView;
 	
+	private PartDao partDao;
+	
 	boolean viewCreated = false;
 	
 	private ArrayList<ProductTemplatePartsDetailView> observers = 
@@ -30,22 +33,23 @@ public class ProductTemplateParts {
 		this.productTemplate = productTemplate;	
 		this.productTemplatesPartsDao = 
 				new ProductTemplatePartsDao(this.connGateway);
+		this.partDao = new PartDao(this.connGateway);
 	}
 	
 	public List<ProductTemplatePart> getProductTemplateParts(){
 		return this.productTemplate.getProductTemplateParts();
 	}
 	
-	public void addProductTemplatePart(ProductTemplatePart productTemplatePart) 
+	public ProductTemplatePart addProductTemplatePart(
+			ProductTemplatePart productTemplatePart) 
 			throws SQLException{
-		if(!this.productTemplate.getProductTemplateParts()
-				.contains(productTemplatePart)){
-			this.productTemplatesPartsDao
-				.addProductTemplatePart(productTemplatePart);
+			ProductTemplatePart tempTemplatePart = 
+					this.productTemplatesPartsDao
+						.addProductTemplatePart(productTemplatePart);
 			this.productTemplate.getProductTemplateParts()
 				.add(productTemplatePart);
 			this.updateViews();
-		}
+			return tempTemplatePart;
 	}
 	
 	public void removeProductTemplatePart(
@@ -72,6 +76,14 @@ public class ProductTemplateParts {
 			}
 		}
 		this.updateViews();
+	}
+	
+	public List<Part> getAvailableParts() throws SQLException{
+		return this.partDao.getParts();
+	}
+	
+	public int getProductTemplateId(){
+		return this.productTemplate.getId();
 	}
 
 	public void registerView(
@@ -112,5 +124,19 @@ public class ProductTemplateParts {
 			this.productTemplatePartsListView.refreshList(this);
 		}
 		this.updateObservers();
+	}
+	
+	public boolean validateTemplatePart(
+			ProductTemplatePart productTemplatePart) throws Exception{
+		String message = "";
+		boolean isValid = true;
+		if(productTemplatePart.getPartQuantity() < 1){
+			message += "Part quantity must be greater than zero.\n";
+			isValid = false;
+		}
+		if(!isValid){
+			throw new Exception(message);
+		}
+		return isValid;
 	}
 }
