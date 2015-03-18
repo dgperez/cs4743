@@ -95,6 +95,7 @@ public class PartsInventory {
 				return false;
 			}
 		}
+		
 		return true;
 	}
 	
@@ -135,6 +136,12 @@ public class PartsInventory {
 			valid = false;
 			message += "A part with that number already exists.";
 		}
+		if(!part.getPartNumber().startsWith("P") 
+				&& !part.getPartNumber().startsWith("p")){
+			valid = false;
+			message += "A part number must begin with a P.\n";
+		}
+		
 		if(!valid){
 			throw new Exception(message);
 		}

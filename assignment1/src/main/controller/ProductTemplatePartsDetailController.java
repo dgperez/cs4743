@@ -52,8 +52,14 @@ public class ProductTemplatePartsDetailController implements ActionListener {
 				}
 			} catch (Exception e1) {
 				e1.printStackTrace();
+				String message = e1.getMessage();
+				if(message.contains("Duplicate entry")){
+					message = "You cannot add the same part multiple times " +
+							"to an existing template.\n Increment the " +
+							"number instead.\n";
+				}
 				JOptionPane.showMessageDialog(null, "Error: " + 
-						e1.getMessage());
+						message);
 			}
 		}
 
