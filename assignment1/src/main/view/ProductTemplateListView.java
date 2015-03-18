@@ -15,7 +15,7 @@ import javax.swing.JScrollPane;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import main.controller.ProductTemplatesListController;
+import main.controller.ProductTemplateListController;
 import main.model.ProductTemplates;
 
 public class ProductTemplateListView extends JFrame {
@@ -27,6 +27,8 @@ public class ProductTemplateListView extends JFrame {
 	private JButton addProductTemplate;
 	
 	private JButton deleteProductTemplate;
+	
+	private JButton viewParts;
 	
 	private JScrollPane scrollPane;
 	
@@ -61,6 +63,10 @@ public class ProductTemplateListView extends JFrame {
 		this.deleteProductTemplate.setActionCommand("deleteTemplate");
 		this.controls.add(this.deleteProductTemplate);
 		
+		this.viewParts = new JButton("View Parts");
+		this.viewParts.setActionCommand("viewParts");
+		this.controls.add(this.viewParts);
+		
 		add(this.panel, BorderLayout.CENTER);
 		add(this.controls, BorderLayout.SOUTH);
 		
@@ -72,7 +78,7 @@ public class ProductTemplateListView extends JFrame {
 	}
 	
 	public void registerListener(
-			ProductTemplatesListController productTemplatesListController){
+			ProductTemplateListController productTemplatesListController){
 		
 		this.list.addMouseListener(productTemplatesListController);
 		

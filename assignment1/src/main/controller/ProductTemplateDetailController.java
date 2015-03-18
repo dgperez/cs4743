@@ -6,8 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import main.model.ProductTemplate;
+import main.model.ProductTemplateParts;
 import main.model.ProductTemplates;
 import main.view.ProductTemplateDetailView;
+import main.view.ProductTemplatePartsListView;
 
 public class ProductTemplateDetailController implements ActionListener {
 

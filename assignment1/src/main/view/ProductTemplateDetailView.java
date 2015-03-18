@@ -39,13 +39,15 @@ public class ProductTemplateDetailView extends JFrame {
 	
 	private JButton saveTemplate;
 	
+	private JButton viewParts;
+	
 	private ProductTemplate productTemplate;
 	
-	private boolean newtemplate = false;
+	private boolean newTemplate = false;
 
 	public ProductTemplateDetailView(boolean newTemplate) {
 		super("Product Template");
-		this.newtemplate = newTemplate;
+		this.newTemplate = newTemplate;
 		
 		this.inputs = new JPanel(new BorderLayout(5, 5));
 		
@@ -62,7 +64,7 @@ public class ProductTemplateDetailView extends JFrame {
 		
 		this.productDescription_Text = new JTextField(10);
 		
-		if(this.newtemplate){
+		if(this.newTemplate){
 			this.id_Label.setVisible(false);
 			this.id_Text.setVisible(false);
 		}
@@ -81,7 +83,14 @@ public class ProductTemplateDetailView extends JFrame {
 		this.saveTemplate = new JButton("Save Template");
 		this.saveTemplate.setActionCommand("saveTemplate");
 		
+		this.viewParts = new JButton("View Parts");
+		this.viewParts.setActionCommand("viewParts");
+		
 		this.controls.add(this.saveTemplate);
+		this.controls.add(this.viewParts);
+		if(this.newTemplate){
+			this.viewParts.setEnabled(false);
+		}
 		
 		this.gui = new JPanel(new BorderLayout(10, 10));
 		this.gui.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -106,7 +115,7 @@ public class ProductTemplateDetailView extends JFrame {
 	}
 
 	public void refreshObserver(){
-		if(!this.newtemplate){
+		if(!this.newTemplate){
 			this.id_Text.setText(
 					Integer.toString(this.productTemplate.getId()));
 			this.productNumber_Text.setText(
@@ -147,15 +156,19 @@ public class ProductTemplateDetailView extends JFrame {
 	}
 	
 	public ProductTemplate getProductTemplate(){
-		return new ProductTemplate(
-				(!this.newtemplate) ? this.getId() : -1, 
-				this.getProductNumber(), 
-				this.getProductDescription());
+		if(this.productTemplate == null){
+			return new ProductTemplate(
+					(!this.newTemplate) ? this.getId() : -1, 
+					this.getProductNumber(), 
+					this.getProductDescription());
+		}
+		return this.productTemplate;
 	}
 	
 	public void setNew(boolean isNew){
-		this.newtemplate = isNew;
+		this.newTemplate = isNew;
 		this.id_Label.setVisible(!isNew);
 		this.id_Text.setVisible(!isNew);
+		this.viewParts.setEnabled(!isNew);
 	}
 }

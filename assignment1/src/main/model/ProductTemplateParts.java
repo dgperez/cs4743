@@ -27,6 +27,7 @@ public class ProductTemplateParts {
 	public ProductTemplateParts(ConnectionGateway connGateway, 
 			ProductTemplate productTemplate) {
 		this.connGateway = connGateway;
+		this.productTemplate = productTemplate;	
 		this.productTemplatesPartsDao = 
 				new ProductTemplatePartsDao(this.connGateway);
 	}
@@ -43,6 +44,7 @@ public class ProductTemplateParts {
 				.addProductTemplatePart(productTemplatePart);
 			this.productTemplate.getProductTemplateParts()
 				.add(productTemplatePart);
+			this.updateViews();
 		}
 	}
 	
@@ -52,10 +54,14 @@ public class ProductTemplateParts {
 			.remove(productTemplatePart);
 		this.productTemplatesPartsDao
 			.deleteProductTemplatePart(productTemplatePart);
+		this.updateViews();
+		this.closeOpenObservers(productTemplatePart);
 	}
 	
 	public void editProductTemplatePart(
 			ProductTemplatePart productTemplatePart) throws SQLException{
+		this.productTemplatesPartsDao
+			.editProductTemplatePart(productTemplatePart);
 		for(ProductTemplatePart ptp : 
 			this.productTemplate.getProductTemplateParts()){
 			if(ptp.getId() == productTemplatePart.getId()){
@@ -65,8 +71,7 @@ public class ProductTemplateParts {
 						productTemplatePart.getProductTemplateId());
 			}
 		}
-		this.productTemplatesPartsDao
-			.editProductTemplatePart(productTemplatePart);
+		this.updateViews();
 	}
 
 	public void registerView(
@@ -104,8 +109,7 @@ public class ProductTemplateParts {
 	
 	public void updateViews(){
 		if(this.viewCreated){
-			this.productTemplatePartsListView.refreshList(
-					this.productTemplate);
+			this.productTemplatePartsListView.refreshList(this);
 		}
 		this.updateObservers();
 	}

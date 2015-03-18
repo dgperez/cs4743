@@ -8,22 +8,29 @@ import java.awt.event.MouseListener;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
+import main.dao.ConnectionGateway;
 import main.model.ProductTemplate;
+import main.model.ProductTemplateParts;
 import main.model.ProductTemplates;
 import main.view.ProductTemplateDetailView;
 import main.view.ProductTemplateListView;
+import main.view.ProductTemplatePartsListView;
 
-public class ProductTemplatesListController implements MouseListener,
+public class ProductTemplateListController implements MouseListener,
 		ActionListener {
 
 	private ProductTemplates productTemplates;
 	
 	private ProductTemplateListView productTemplatesListView;
 	
-	public ProductTemplatesListController(ProductTemplates productTemplates,
-			ProductTemplateListView productTemplatesListView) {
+	private ConnectionGateway connGateway;
+	
+	public ProductTemplateListController(ProductTemplates productTemplates,
+			ProductTemplateListView productTemplatesListView,
+			ConnectionGateway connGateway) {
 		this.productTemplates = productTemplates;
 		this.productTemplatesListView = productTemplatesListView;
+		this.connGateway = connGateway;
 	}
 
 	@Override
@@ -49,6 +56,27 @@ public class ProductTemplatesListController implements MouseListener,
 				String message = e1.getMessage();
 				JOptionPane.showMessageDialog(null, "Error: " + 
 						message);
+			}
+		} else if (e.getActionCommand().equals("viewParts")){
+			if(this.productTemplatesListView.getSelectedListItem() != null){
+				ProductTemplate productTemplate = 
+						(ProductTemplate)this.productTemplatesListView
+							.getSelectedListItem();
+				ProductTemplateParts productTemplateParts = 
+						new ProductTemplateParts(this.connGateway, 
+								productTemplate);
+				ProductTemplatePartsListView productTemplatePartsListView = 
+						new ProductTemplatePartsListView(productTemplateParts);
+				productTemplateParts.registerView(
+						productTemplatePartsListView);
+				ProductTemplatePartsListController 
+					productTemplatePartsListController = 
+						new ProductTemplatePartsListController(
+								productTemplateParts, 
+								productTemplatePartsListView);
+				productTemplatePartsListView
+					.registerListener(productTemplatePartsListController);
+				productTemplatePartsListView.setVisible(true);
 			}
 		}
 	}

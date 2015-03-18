@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import main.controller.InventoryListController;
 import main.controller.PartsListController;
-import main.controller.ProductTemplatesListController;
+import main.controller.ProductTemplateListController;
 import main.dao.ConnectionGateway;
 import main.dao.ItemDao;
 import main.dao.PartDao;
@@ -84,9 +84,9 @@ public class Cabinetron {
 					new ProductTemplateListView(productTemplates);
 			productTemplates.registerView(productTemplatesListView);
 			
-			ProductTemplatesListController productTemplatesListController = 
-					new ProductTemplatesListController(productTemplates, 
-							productTemplatesListView);
+			ProductTemplateListController productTemplatesListController = 
+					new ProductTemplateListController(productTemplates, 
+							productTemplatesListView, connGateway);
 			productTemplatesListView
 				.registerListener(productTemplatesListController);
 			

@@ -118,7 +118,8 @@ public class ProductTemplates {
 			throws Exception{
 		String message = "";
 		boolean isValid = true;
-		if(!productTemplate.getProductNumber().startsWith("A")){
+		if(!productTemplate.getProductNumber().startsWith("A") && 
+				!productTemplate.getProductNumber().startsWith("a")){
 			message += "Product # must start with A.\n";
 			isValid = false;
 		}
@@ -134,6 +135,14 @@ public class ProductTemplates {
 			message += "Product Description cannot exceed 255 characters " +
 					"in length.\n";
 			isValid = false;
+		}
+		
+		for(ProductTemplate pt : this.getProductTemplates()){
+			if(pt.getProductNumber().equalsIgnoreCase(
+					productTemplate.getProductNumber())){
+				message += "Product # already exists.";
+				isValid = false;
+			}
 		}
 		
 		if(!isValid){

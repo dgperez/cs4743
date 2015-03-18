@@ -1,9 +1,11 @@
 package main.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,11 +13,12 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import main.model.ProductTemplate;
+import main.controller.ProductTemplatePartsListController;
+import main.model.ProductTemplateParts;
 
 public class ProductTemplatePartsListView extends JFrame {
 	
-	private ProductTemplate productTemplate;
+	private ProductTemplateParts productTemplateParts;
 	
 	private JList<Object> list;
 	
@@ -29,17 +32,18 @@ public class ProductTemplatePartsListView extends JFrame {
 	
 	private JPanel panel;
 
-	public ProductTemplatePartsListView(ProductTemplate productTemplate) {
+	public ProductTemplatePartsListView(
+			ProductTemplateParts productTemplateParts) {
 		super("Template Parts List");
 		
-		this.productTemplate = productTemplate;
+		this.productTemplateParts = productTemplateParts;
 		
 		this.panel = new JPanel();
 		this.panel.setLayout(new BorderLayout());
 		this.panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		
 		this.list = new JList<Object>(
-				this.productTemplate.getProductTemplateParts().toArray());
+				this.productTemplateParts.getProductTemplateParts().toArray());
 		
 		this.scrollPane = new JScrollPane();
 		this.scrollPane.getViewport().add(this.list);
@@ -61,16 +65,29 @@ public class ProductTemplatePartsListView extends JFrame {
 		
 		pack();
 		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
-	public void registerListener(){}
+	public void registerListener(
+			ProductTemplatePartsListController 
+				productTemplatePartsListController){
+		this.list.addMouseListener(productTemplatePartsListController);
+		
+		// add listener for buttons
+		Component[] components = this.controls.getComponents();
+		for (Component component : components) {
+			if (component instanceof AbstractButton) {
+				AbstractButton button = (AbstractButton) component;
+				button.addActionListener(productTemplatePartsListController);
+			}
+		}
+	}
 
-	public void refreshList(ProductTemplate productTemplate){
-		this.productTemplate = productTemplate;
+	public void refreshList(ProductTemplateParts productTemplateParts){
+		this.productTemplateParts = productTemplateParts;
 		this.list.setListData(
-				this.productTemplate.getProductTemplateParts().toArray());
+				this.productTemplateParts.getProductTemplateParts().toArray());
 		this.list.repaint();
 	}
 	
