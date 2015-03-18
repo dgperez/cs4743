@@ -1,5 +1,6 @@
 package main.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductTemplate {
@@ -10,7 +11,8 @@ public class ProductTemplate {
 	
 	private String productDescription;
 	
-	private List<ProductTemplatePart> productTemplateParts;
+	private List<ProductTemplatePart> productTemplateParts = 
+			new ArrayList<ProductTemplatePart>();;
 	
 	public ProductTemplate(int id, String productNumber, 
 			String productDescription) {
@@ -32,9 +34,7 @@ public class ProductTemplate {
 	}
 	
 	public void setProductNumber(String productNumber) throws Exception {
-		if(this.validateProductNumber(productNumber)){
-			this.productNumber = productNumber;
-		}
+		this.productNumber = productNumber;
 	}
 	
 	public String getProductDescription(){
@@ -43,9 +43,7 @@ public class ProductTemplate {
 	
 	public void setProductDescription(String productDescription) 
 			throws Exception{
-		if(this.validateProductDescription(productDescription)){
-			this.productDescription = productDescription;
-		}
+		this.productDescription = productDescription;
 	}
 	
 	public void addProductTemplatePart(
@@ -71,42 +69,6 @@ public class ProductTemplate {
 	public void setProductTemplateParts(
 			List<ProductTemplatePart> productTemplatePart){
 		this.productTemplateParts = productTemplatePart;
-	}
-	
-	public boolean validateProductNumber(String productNumber) 
-			throws Exception {
-		String message = "";
-		boolean isValid = true;
-		if(!productNumber.startsWith("A")){
-			message += "Product # must start with A.\n";
-			isValid = false;
-		}
-		if(productNumber.length() > 20){
-			message += "Product # cannot exceed 20 characters in length.\n";
-			isValid = false;
-		} else if (productNumber.length() < 1){
-			message += "Product # must be entered.\n";
-			isValid = false;
-		}
-		if(!isValid){
-			throw new Exception(message);
-		}
-		return isValid;
-	}
-	
-	public boolean validateProductDescription(String productDescription) 
-			throws Exception{
-		String message = "";
-		boolean isValid = true;
-		if(productDescription.length() > 255){
-			message += "Product Description cannot exceed 255 characters " +
-					"in length.\n";
-			isValid = false;
-		}
-		if(!isValid){
-			throw new Exception(message);
-		}
-		return isValid;
 	}
 	
 	@Override

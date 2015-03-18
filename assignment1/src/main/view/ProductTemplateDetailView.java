@@ -1,9 +1,11 @@
 package main.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,8 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import main.controller.ProductTemplateDetailController;
 import main.model.ProductTemplate;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class ProductTemplateDetailView extends JFrame {
 	
@@ -47,8 +49,8 @@ public class ProductTemplateDetailView extends JFrame {
 		
 		this.inputs = new JPanel(new BorderLayout(5, 5));
 		
-		JPanel labelsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
-		JPanel fieldsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
+		this.labelsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
+		this.fieldsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
 
 		this.inputs.add(labelsPanel, BorderLayout.WEST);
 		this.inputs.add(fieldsPanel, BorderLayout.CENTER);
@@ -58,21 +60,21 @@ public class ProductTemplateDetailView extends JFrame {
 		
 		this.productNumber_Text = new JTextField(10);
 		
-		this.productNumber_Text = new JTextField(10);
+		this.productDescription_Text = new JTextField(10);
 		
 		if(this.newtemplate){
 			this.id_Label.setVisible(false);
 			this.id_Text.setVisible(false);
 		}
 		
-		labelsPanel.add(this.id_Label);
-		fieldsPanel.add(this.id_Text);
+		this.labelsPanel.add(this.id_Label);
+		this.fieldsPanel.add(this.id_Text);
 		
-		labelsPanel.add(this.productNumber_Label);
-		fieldsPanel.add(this.productNumber_Text);
+		this.labelsPanel.add(this.productNumber_Label);
+		this.fieldsPanel.add(this.productNumber_Text);
 		
-		labelsPanel.add(this.productDescription_Label);
-		fieldsPanel.add(this.productDescription_Text);
+		this.labelsPanel.add(this.productDescription_Label);
+		this.fieldsPanel.add(this.productDescription_Text);
 		
 		this.controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
 		
@@ -104,7 +106,14 @@ public class ProductTemplateDetailView extends JFrame {
 	}
 
 	public void refreshObserver(){
-		throw new NotImplementedException();
+		if(!this.newtemplate){
+			this.id_Text.setText(
+					Integer.toString(this.productTemplate.getId()));
+			this.productNumber_Text.setText(
+					this.productTemplate.getProductNumber());
+			this.productDescription_Text.setText(
+					this.productTemplate.getProductDescription());
+		}
 	}
 	
 	public boolean containsProductTemplate(
@@ -112,5 +121,41 @@ public class ProductTemplateDetailView extends JFrame {
 		return this.productTemplate.getId() == productTemplate.getId();
 	}
 	
-	public void registerListener(){}
+	public void registerListener(
+			ProductTemplateDetailController productTemplateDetailController){
+		// add listener for buttons
+		Component[] components = this.controls.getComponents();
+		for (Component component : components) {
+			if (component instanceof AbstractButton) {
+				AbstractButton button = (AbstractButton) component;
+				button.addActionListener(
+						productTemplateDetailController);
+			}
+		}
+	}
+	
+	public int getId(){
+		return Integer.parseInt(this.id_Text.getText());
+	}
+	
+	public String getProductNumber(){
+		return this.productNumber_Text.getText();
+	}
+	
+	public String getProductDescription(){
+		return this.productDescription_Text.getText();
+	}
+	
+	public ProductTemplate getProductTemplate(){
+		return new ProductTemplate(
+				(!this.newtemplate) ? this.getId() : -1, 
+				this.getProductNumber(), 
+				this.getProductDescription());
+	}
+	
+	public void setNew(boolean isNew){
+		this.newtemplate = isNew;
+		this.id_Label.setVisible(!isNew);
+		this.id_Text.setVisible(!isNew);
+	}
 }

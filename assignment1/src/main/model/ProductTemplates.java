@@ -43,11 +43,13 @@ public class ProductTemplates {
 		this.productTemplates = productTemplates;
 	}
 	
-	public void addProductTemplate(ProductTemplate productTemplate) 
+	public ProductTemplate addProductTemplate(ProductTemplate productTemplate) 
 			throws SQLException{
 		ProductTemplate tempTemplate = 
 				this.productTemplateDao.addProductTemplate(productTemplate);
 		this.productTemplates.add(tempTemplate);
+		this.updateViews();
+		return tempTemplate;
 	}
 	
 	public void editProductTemplate(ProductTemplate productTemplate) 
@@ -60,6 +62,7 @@ public class ProductTemplates {
 			}
 			this.productTemplateDao.editProductTemplate(productTemplate);
 		}
+		this.updateViews();
 	}
 	
 	public void deleteProductTemplate(ProductTemplate productTemplate) 
@@ -67,6 +70,8 @@ public class ProductTemplates {
 		if(this.productTemplates.contains(productTemplate)){
 			this.productTemplateDao.deleteProductTemplate(productTemplate);
 			this.productTemplates.remove(productTemplate);
+			this.updateViews();
+			this.closeOpenObservers(productTemplate);
 		}
 	}
 
@@ -109,4 +114,31 @@ public class ProductTemplates {
 		this.updateObservers();
 	}
 	
+	public boolean validateProductTemplate(ProductTemplate productTemplate) 
+			throws Exception{
+		String message = "";
+		boolean isValid = true;
+		if(!productTemplate.getProductNumber().startsWith("A")){
+			message += "Product # must start with A.\n";
+			isValid = false;
+		}
+		if(productTemplate.getProductNumber().length() > 20){
+			message += "Product # cannot exceed 20 characters in length.\n";
+			isValid = false;
+		} else if (productTemplate.getProductNumber().length() < 1){
+			message += "Product # must be entered.\n";
+			isValid = false;
+		}
+		
+		if(productTemplate.getProductDescription().length() > 255){
+			message += "Product Description cannot exceed 255 characters " +
+					"in length.\n";
+			isValid = false;
+		}
+		
+		if(!isValid){
+			throw new Exception(message);
+		}
+		return isValid;
+	}
 }

@@ -21,7 +21,7 @@ public class PartsDetailController implements ActionListener {
 			PartsInventory partsInventory) {
 		this.view = view;
 		this.partsInventory = partsInventory;
-		view.showPartsDetailView();
+		this.view.showPartsDetailView();
 	}
 
 	@Override
@@ -38,6 +38,7 @@ public class PartsDetailController implements ActionListener {
 						this.view.setPart(part);
 						this.partsInventory.editPart(part);
 					}
+					this.view.refreshObserver();
 				}
 			} catch (Exception e1) {
 				e1.printStackTrace();
