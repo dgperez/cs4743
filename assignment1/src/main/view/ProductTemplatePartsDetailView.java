@@ -160,16 +160,13 @@ public class ProductTemplatePartsDetailView extends JFrame {
 	}
 	
 	public ProductTemplatePart getProductTemplatePart(){
-		if(this.newTemplatePart){
-			ProductTemplatePart temp =  new ProductTemplatePart(
-					(!this.newTemplatePart) ? this.getId() : -1, 
-							this.getPart(), 
-							this.getQuantity());
-			temp.setProductTemplateId(
-					this.productTemplateParts.getProductTemplateId());
-			return temp;
-		}
-		return this.productTemplatePart;
+		ProductTemplatePart temp =  new ProductTemplatePart(
+				(!this.newTemplatePart) ? this.getId() : -1, 
+						this.getPart(), 
+						this.getQuantity());
+		temp.setProductTemplateId(
+				this.productTemplateParts.getProductTemplateId());
+		return temp;
 	}
 
 	public void refreshObserver(){

@@ -37,6 +37,12 @@ public class Inventory {
  	public List<Item> getInventory(){
  		return this.inventory;
  	}
+ 	
+ 	public Item getItem(int id) throws SQLException{
+ 		Item temp = this.itemDao.getItem(id);
+ 		this.replaceItem(temp);
+ 		return temp;
+ 	}
 	
  	public Item addItem(Item item) throws Exception{
  		Item temp = this.itemDao.addItem(item);
@@ -45,16 +51,22 @@ public class Inventory {
  		return temp;
  	}
 	
-	public void editItem(Item item) throws SQLException{
-		this.itemDao.editItem(item);
+	public Item editItem(Item item) throws SQLException{
+		Item temp = this.itemDao.editItem(item);
+		this.replaceItem(item);
+		this.updateView();
+		return temp;
+	}
+	
+	private void replaceItem(Item item){
 		for(Item i : this.inventory){
 			if(i.getId() == item.getId()){
 				i.setQuantity(item.getQuantity());
 				i.setLocation(item.getLocation());
 				i.setPart(item.getPart());
+				i.setLastModified(item.getLastModified());
 			}
 		}
-		this.updateView();
 	}
 	
 	/**
@@ -112,7 +124,10 @@ public class Inventory {
 					&& i.getLocation().getValue()
 						.equals(item.getLocation().getValue())
 							&& i.getId() != item.getId()){
-				message += "No two parts can have the same " +
+				System.out.println(i.getPart() + " : " + item.getPart());
+				System.out.println(i.getLocation() + " : " + item.getLocation());
+				System.out.println(i.getId() + " : " + item.getId());
+				message += "No two Item's can have the same " +
 						"Location and Part Number.\n";
 				valid = false;
 				break;

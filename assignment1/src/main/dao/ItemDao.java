@@ -44,7 +44,14 @@ public class ItemDao extends AbstractDao {
 		return tempItem;
 	}
 	
-	public void editItem(Item item) throws SQLException{
+	public Item editItem(Item item) throws SQLException{
+		if(!this.getItemTimestamp(item.getId())
+				.equals(item.getLastModified())){
+			System.out.println(item.getLastModified() + " " + this.getItemTimestamp(item.getId()));
+			throw new SQLException("This item has been modified by another " +
+					"user. We will refresh the view.");
+		}
+		
 		int locationId = this.insertOrUpdate_TypeTable(1, 
 				item.getLocation().getValue());
 		String updateSql = "update `inventory` set `parts_id` = ?, " +
@@ -53,27 +60,29 @@ public class ItemDao extends AbstractDao {
 				"`last_modified` = null" +
 				" where `pid` = ?;";
 		Connection conn = this.connGateway.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-			PreparedStatement prepStmt = conn.prepareStatement(updateSql);
-			
-			prepStmt.setInt(1, item.getPart().getId());
-			prepStmt.setInt(2, item.getQuantity());
-			prepStmt.setInt(3, locationId);
-			prepStmt.setInt(4, item.getId());
-			
-			prepStmt.execute();
-			prepStmt.close();
-			conn.commit();
-		} catch (Exception ex){
-			ex.printStackTrace();
-			conn.rollback();
-			throw new SQLException("An error occurred: \n" + ex.getMessage());
-		} finally {
-			conn.setAutoCommit(true);
-			this.connGateway.closeConnection(conn);
-		}
+		PreparedStatement prepStmt = conn.prepareStatement(updateSql);
+		
+		prepStmt.setInt(1, item.getPart().getId());
+		prepStmt.setInt(2, item.getQuantity());
+		prepStmt.setInt(3, locationId);
+		prepStmt.setInt(4, item.getId());
+		
+		prepStmt.execute();
+		prepStmt.close();
+		this.connGateway.closeConnection(conn);
+		return this.getItem(item.getId());
+	}
+	
+	private Timestamp getItemTimestamp(int id) throws SQLException{
+		String selectSql = "SELECT `last_modified` FROM `inventory` " +
+				"WHERE `pid` = ?;";
+		Connection conn = this.connGateway.getConnection();
+		PreparedStatement prepStmt = conn.prepareStatement(selectSql);
+		prepStmt.setInt(1, id);
+		ResultSet rs = prepStmt.executeQuery();
+		rs.next();
+		Timestamp temp = rs.getTimestamp(1);
+		return temp;
 	}
 	
 	public ArrayList<Item> getItems() throws SQLException{

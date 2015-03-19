@@ -152,10 +152,14 @@ public class ItemDetailView extends JFrame {
 	}
 	
 	public Item getItem(){
-		return new Item((this.isNewItem) ? -1 : this.getId(), 
+		Item temp = new Item((this.isNewItem) ? -1 : this.getId(), 
 				this.getPart(), 
 				this.getQuantity(), 
 				this.getItemLocation());
+		if(!this.isNewItem){
+			temp.setLastModified(this.item.getLastModified());
+		}
+		return temp;
 	}
 		
 	public int getId(){

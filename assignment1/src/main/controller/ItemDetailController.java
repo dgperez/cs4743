@@ -35,18 +35,23 @@ public class ItemDetailController implements ActionListener {
 						this.newItem = false;
 						this.view.setNewItem(this.newItem);
 					} else {
-						this.view.setItem(item);
-						this.inventory.editItem(item);
+						this.view.setItem(this.inventory.editItem(item));
 					}
-					this.view.refreshObserver();
 				}
 			} catch (Exception e1) {
+				String message = e1.getMessage();
 				JOptionPane.showMessageDialog(null, "Error: " + 
-						e1.getMessage());
+						message);
+				try{
+					this.view.setItem(this.inventory.getItem(item.getId()));
+				} catch(Exception ex){
+					JOptionPane.showMessageDialog(null, "Error: " + 
+							ex.getMessage());
+				}
 				e1.printStackTrace();
 			}
-			this.view.dispatchEvent(new WindowEvent(this.view, 
-					WindowEvent.WINDOW_CLOSING));
+			this.view.refreshObserver();
+			//this.view.dispatchEvent(new WindowEvent(this.view, WindowEvent.WINDOW_CLOSING));
 		}
 		
 	}
