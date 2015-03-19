@@ -44,6 +44,7 @@ CREATE TABLE `inventory` (
   `parts_id` int(10) unsigned NOT NULL,
   `quantity` int(10) unsigned NOT NULL,
   `locations_id` int(10) unsigned NOT NULL,
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`pid`),
   UNIQUE KEY `pid_UNIQUE` (`pid`),
   UNIQUE KEY `part_locations_unique1` (`parts_id`,`locations_id`),
@@ -51,7 +52,7 @@ CREATE TABLE `inventory` (
   KEY `part_id_fkey1_idx` (`parts_id`),
   CONSTRAINT `locations_id_fkey1` FOREIGN KEY (`locations_id`) REFERENCES `locations` (`pid`) ON UPDATE NO ACTION,
   CONSTRAINT `part_id_fkey1` FOREIGN KEY (`parts_id`) REFERENCES `parts` (`pid`) ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,7 +61,7 @@ CREATE TABLE `inventory` (
 
 LOCK TABLES `inventory` WRITE;
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
-INSERT INTO `inventory` VALUES (3,4,15,3),(7,5,1,3),(10,4,11,1),(22,2,12,1),(23,14,3,1),(25,2,23,2);
+INSERT INTO `inventory` VALUES (3,4,15,3,'2015-03-18 23:13:12'),(7,5,1,3,'2015-03-18 23:13:12'),(10,4,11,1,'2015-03-18 23:13:12'),(22,2,12,1,'2015-03-18 23:13:12'),(23,14,3,1,'2015-03-18 23:13:12'),(25,2,23,2,'2015-03-18 23:13:12'),(27,17,2,1,'2015-03-19 00:26:24'),(28,16,6,3,'2015-03-19 01:50:48');
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,7 +142,7 @@ CREATE TABLE `product_template_parts` (
   KEY `product_template_fkey1_idx` (`product_template_id`),
   CONSTRAINT `product_template_fkey1` FOREIGN KEY (`product_template_id`) REFERENCES `product_templates` (`pid`) ON UPDATE NO ACTION,
   CONSTRAINT `parts_fkey2` FOREIGN KEY (`parts_id`) REFERENCES `parts` (`pid`) ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,7 +151,7 @@ CREATE TABLE `product_template_parts` (
 
 LOCK TABLES `product_template_parts` WRITE;
 /*!40000 ALTER TABLE `product_template_parts` DISABLE KEYS */;
-INSERT INTO `product_template_parts` VALUES (1,16,1,1),(2,17,1,1),(3,18,1,4),(5,2,1,1),(7,4,1,1),(8,2,13,1);
+INSERT INTO `product_template_parts` VALUES (1,16,1,1),(2,17,1,1),(3,18,1,4),(5,2,1,1),(7,4,1,1),(8,2,13,1),(19,2,19,2),(20,3,19,2);
 /*!40000 ALTER TABLE `product_template_parts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,4 +261,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-18 17:56:56
+-- Dump completed on 2015-03-18 22:49:14

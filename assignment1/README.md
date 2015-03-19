@@ -21,3 +21,23 @@ In terms of database connectivity, a basic gateway class was created to handle a
 Once complete, the PartDao and the ItemDao handled the insertion, deletion and editing of existing Part objects or Item objects. The normalized database is Kyle Haley's fault and probably overkill for this assignment.
 
 Model objects make calls to the database via the Dao objects in the 'dao' package. The Dao objects generate the model objects from data in the database.
+
+Assignment 4:
+
+PERFORMANCE NOTE: PartDao is slow to generate a list of Part's from the database, 
+which accounts for the slowness of adding ProductTemplatePart and for editing an existing
+ ProductTemplatePart.
+
+ Design Considerations: 
+ Two database tables were created, one to represent a Product Template and an assocation 
+ table which draws the assocation between Parts and a ProductTemplate and the quantity of the 
+ Part's in the Product Template.
+
+ There are two list views, one for all Product Template's and then a list view of all the Part's 
+ for each indiviual Product Template. There are two detail views, one for editing an 
+ individual Product Template, one for editing a Product Template Part.
+
+ For each table, a Dao (Data Access Object) was created for CRUD operations. Two models were 
+ created to represent the rows in each corresponding table. For each of those models, an 
+ additional model was created to manage the business rules and act as the intermediary between 
+ those models and the Dao's associated with them.
