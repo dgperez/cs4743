@@ -22,7 +22,7 @@ public class ProductTemplateParts {
 	
 	private PartDao partDao;
 	
-	boolean viewCreated = false;
+	private boolean viewCreated = false;
 	
 	private ArrayList<ProductTemplatePartsDetailView> observers = 
 			new ArrayList<ProductTemplatePartsDetailView>();
