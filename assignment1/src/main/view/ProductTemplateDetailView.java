@@ -18,6 +18,8 @@ import main.model.ProductTemplate;
 
 public class ProductTemplateDetailView extends JFrame {
 	
+	private static final long serialVersionUID = -4189487620065499866L;
+	
 	private JLabel id_Label = new JLabel("Id: ");
 	private JTextField id_Text;
 	

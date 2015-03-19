@@ -1,20 +1,13 @@
 package main;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import main.controller.InventoryListController;
 import main.controller.PartsListController;
 import main.controller.ProductTemplateListController;
 import main.dao.AbstractDao;
 import main.dao.ConnectionGateway;
-import main.dao.ItemDao;
-import main.dao.PartDao;
 import main.dao.TypeDao;
 import main.model.Inventory;
-import main.model.Item;
 import main.model.Locations;
-import main.model.Part;
 import main.model.PartsInventory;
 import main.model.ProductTemplates;
 import main.model.UnitsOfQuantity;

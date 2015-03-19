@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -22,9 +21,9 @@ import main.model.Part;
 import main.model.ProductTemplatePart;
 import main.model.ProductTemplateParts;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 public class ProductTemplatePartsDetailView extends JFrame {
+
+	private static final long serialVersionUID = -8582770873546275673L;
 
 	private ProductTemplateParts productTemplateParts;
 	

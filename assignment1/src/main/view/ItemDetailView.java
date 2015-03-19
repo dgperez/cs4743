@@ -6,7 +6,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -14,16 +13,12 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import main.controller.ItemDetailController;
-import main.dao.ConnectionGateway;
 import main.model.Item;
 import main.model.Locations;
 import main.model.Part;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import main.model.PartsInventory;
 
 public class ItemDetailView extends JFrame {

@@ -13,12 +13,12 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import main.controller.ProductTemplateListController;
 import main.model.ProductTemplates;
 
 public class ProductTemplateListView extends JFrame {
+
+	private static final long serialVersionUID = 6388543641141059098L;
 
 	private ProductTemplates productTemplates;
 	

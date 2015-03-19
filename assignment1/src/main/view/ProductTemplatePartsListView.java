@@ -18,6 +18,8 @@ import main.model.ProductTemplateParts;
 
 public class ProductTemplatePartsListView extends JFrame {
 	
+	private static final long serialVersionUID = -7498233909351028606L;
+
 	private ProductTemplateParts productTemplateParts;
 	
 	private JList<Object> list;
