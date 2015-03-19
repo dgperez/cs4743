@@ -63,7 +63,8 @@ public class Inventory {
 	 * @param inventory
 	 * @throws SQLException 
 	 */
-	public void removeItem(Item item, List<Item> inventory) throws SQLException {
+	public void removeItem(Item item, List<Item> inventory) 
+			throws SQLException {
 		inventory.remove(item);
 		this.itemDao.deleteItem(item);
 		this.updateView();
@@ -76,7 +77,8 @@ public class Inventory {
 	 * @param inventory 
 	 * @throws SQLException 
 	 */
-	public void removeItem(int index, List<Item> inventory) throws SQLException {
+	public void removeItem(int index, List<Item> inventory) 
+			throws SQLException {
 		Item temp = inventory.remove(index);
 		this.itemDao.deleteItem(temp);
 		this.updateView();
@@ -106,9 +108,9 @@ public class Inventory {
 			valid = false;
 		}
 		for(Item i : this.inventory){
-			if(i.getPart().equals(item.getPart()) &&
-					i.getLocation().getValue().equals(
-							item.getLocation().getValue())
+			if(i.getPart().equals(item.getPart()) 
+					&& i.getLocation().getValue()
+						.equals(item.getLocation().getValue())
 							&& i.getId() != item.getId()){
 				message += "No two parts can have the same " +
 						"Location and Part Number.\n";

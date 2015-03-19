@@ -1,5 +1,6 @@
 package main.model;
 
+import java.sql.Timestamp;
 import java.util.Map.Entry;
 
 public class Item {
@@ -10,6 +11,8 @@ public class Item {
 	private Part part;
 
 	private Entry<Integer, String> location;
+	
+	private Timestamp lastModified;
 	
 	public Item(int id, Part part, int quantity, 
 			Entry<Integer, String> location) {
@@ -53,6 +56,14 @@ public class Item {
 
 	public boolean canEditPart(){
 		return this.toEdit;
+	}
+	
+	public Timestamp getLastModified(){
+		return this.lastModified;
+	}
+	
+	public void setLastModified(Timestamp lastModified){
+		this.lastModified = lastModified;
 	}
 	
 	@Override

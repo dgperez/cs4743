@@ -50,8 +50,14 @@ public class PartsListController implements MouseListener, ActionListener{
 				e1.printStackTrace();
 				String message = e1.getMessage();
 				if(message.contains("foreign key constraint")){
-					message = "An item in inventory references this part. " +
-							"It cannot be deleted until that item is deleted.";
+					if(message.contains("product_template_parts")){
+						message = "An existing Product Template references " +
+								"this Part. Remove the template first.";
+					} else if (message.contains("inventory")){
+						message = "An item in inventory references this " +
+								"part. It cannot be deleted until that " +
+								"item is deleted.";
+					}
 				}
 				JOptionPane.showMessageDialog(null, "Error: " + 
 						message);

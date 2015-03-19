@@ -138,7 +138,7 @@ public class ItemDetailView extends JFrame {
 			this.id.setText(Integer.toString(this.item.getId()));
 			this.parts.setSelectedItem(this.item.getPart());
 			this.quantity.setText(Integer.toString(this.item.getQuantity()));
-			this.location.setSelectedItem(this.item.getLocation());
+			this.location.setSelectedItem(this.item.getLocation().getValue());
 		} else {
 			this.parts.setSelectedIndex(0);
 		}
@@ -160,7 +160,7 @@ public class ItemDetailView extends JFrame {
 		return new Item((this.isNewItem) ? -1 : this.getId(), 
 				this.getPart(), 
 				this.getQuantity(), 
-				this.getLoc());
+				this.getItemLocation());
 	}
 		
 	public int getId(){
@@ -183,7 +183,7 @@ public class ItemDetailView extends JFrame {
 		return i;
 	}
 	
-	public Entry<Integer, String> getLoc(){
+	public Entry<Integer, String> getItemLocation(){
 		String location = (String)this.location.getSelectedItem();
 		return this.locations.getEntryForLocation(location);
 	}

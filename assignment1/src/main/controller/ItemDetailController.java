@@ -31,7 +31,7 @@ public class ItemDetailController implements ActionListener {
 			try {
 				if(this.inventory.validateItem(item)){
 					if(this.newItem){
-						this.view.setItem(inventory.addItem(item));
+						this.view.setItem(this.inventory.addItem(item));
 						this.newItem = false;
 						this.view.setNewItem(this.newItem);
 					} else {

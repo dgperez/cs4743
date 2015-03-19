@@ -121,4 +121,19 @@ public abstract class AbstractDao {
 		return temp;
 	}
 	
+	public enum TableType{
+		LOCATIONS(1),
+		VENDORS(2),
+		UNITS_OF_QUANTITY(3);
+		
+		private int type;
+		TableType(int type){
+			this.type = type;
+		}
+		
+		public int getType(){
+			return this.type;
+		}
+	}
+	
 }

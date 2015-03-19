@@ -5,10 +5,12 @@ import java.util.Map.Entry;
 
 public class UnitsOfQuantity {
 	
-	private static HashMap<Integer, String> unitsOfQuantity = new HashMap<Integer, String>();
+	private static HashMap<Integer, String> unitsOfQuantity = 
+			new HashMap<Integer, String>();
 	
 	public Entry<Integer, String> getEntryForQuantity(String quantity){
-		for(Entry<Integer, String> id : UnitsOfQuantity.unitsOfQuantity.entrySet()){
+		for(Entry<Integer, String> id : 
+				UnitsOfQuantity.unitsOfQuantity.entrySet()){
 			if(id.getValue().equals(quantity)){
 				return id;
 			}

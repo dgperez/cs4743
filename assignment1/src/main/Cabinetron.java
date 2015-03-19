@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import main.controller.InventoryListController;
 import main.controller.PartsListController;
 import main.controller.ProductTemplateListController;
+import main.dao.AbstractDao;
 import main.dao.ConnectionGateway;
 import main.dao.ItemDao;
 import main.dao.PartDao;
@@ -35,10 +36,12 @@ public class Cabinetron {
 			TypeDao typeDao = new TypeDao(connGateway);
 			
 			UnitsOfQuantity unitsOfQuantity = new UnitsOfQuantity();
-			unitsOfQuantity.resetUnitsOfQuantity(typeDao.getTypeList(3));
+			unitsOfQuantity.resetUnitsOfQuantity(typeDao.getTypeList(
+					AbstractDao.TableType.UNITS_OF_QUANTITY.getType()));
 			
 			Locations locations = new Locations();
-			locations.resetLocations(typeDao.getTypeList(1));
+			locations.resetLocations(typeDao.getTypeList(
+					AbstractDao.TableType.LOCATIONS.getType()));
 			
 			Inventory inventory = new Inventory(connGateway);
 			inventory.loadInitialInventory();

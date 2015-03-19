@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
@@ -18,8 +19,8 @@ public class ItemDao extends AbstractDao {
 	
 	public Item addItem(Item item) throws SQLException{
 		String insertSql = "insert into `inventory` " +
-				"(`parts_id`,`quantity`,`locations_id`) VALUES " +
-				"(?, ?, ?);";
+				"(`parts_id`,`quantity`,`locations_id`,`last_modified`) " +
+				"VALUES (?, ?, ?, null);";
 		int locationId = 
 				this.insertOrUpdate_TypeTable(1, 
 						item.getLocation().getValue());
@@ -48,24 +49,36 @@ public class ItemDao extends AbstractDao {
 				item.getLocation().getValue());
 		String updateSql = "update `inventory` set `parts_id` = ?, " +
 				"`quantity` = ?, " +
-				"`locations_id` = ? " +
+				"`locations_id` = ?," +
+				"`last_modified` = null" +
 				" where `pid` = ?;";
 		Connection conn = this.connGateway.getConnection();
-		PreparedStatement prepStmt = conn.prepareStatement(updateSql);
-		
-		prepStmt.setInt(1, item.getPart().getId());
-		prepStmt.setInt(2, item.getQuantity());
-		prepStmt.setInt(3, locationId);
-		prepStmt.setInt(4, item.getId());
-		
-		prepStmt.execute();
-		prepStmt.close();
-		this.connGateway.closeConnection(conn);
+		try {
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+			PreparedStatement prepStmt = conn.prepareStatement(updateSql);
+			
+			prepStmt.setInt(1, item.getPart().getId());
+			prepStmt.setInt(2, item.getQuantity());
+			prepStmt.setInt(3, locationId);
+			prepStmt.setInt(4, item.getId());
+			
+			prepStmt.execute();
+			prepStmt.close();
+			conn.commit();
+		} catch (Exception ex){
+			ex.printStackTrace();
+			conn.rollback();
+			throw new SQLException("An error occurred: \n" + ex.getMessage());
+		} finally {
+			conn.setAutoCommit(true);
+			this.connGateway.closeConnection(conn);
+		}
 	}
 	
 	public ArrayList<Item> getItems() throws SQLException{
 		String selectSql = "select `pid`,`parts_id`,`quantity`," +
-				"`locations_id` from `inventory`;";
+				"`locations_id`, `last_modified` from `inventory`;";
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(selectSql);
 		ResultSet rs = prepStmt.executeQuery();
@@ -75,11 +88,14 @@ public class ItemDao extends AbstractDao {
 			int partId = rs.getInt(2);
 			int quantity = rs.getInt(3);
 			int locationId = rs.getInt(4);
+			Timestamp lastModified = rs.getTimestamp(5);
 			PartDao partDao = new PartDao(this.connGateway);
 			Part part = partDao.getPart(partId);
 			Entry<Integer, String> locationEntry = 
-					this.selectType(1, locationId);
+					this.selectType(AbstractDao.TableType.LOCATIONS.getType(), 
+							locationId);
 			Item tempItem = new Item(id, part, quantity, locationEntry);
+			tempItem.setLastModified(lastModified);
 			items.add(tempItem);
 		}
 		rs.close();
@@ -90,7 +106,8 @@ public class ItemDao extends AbstractDao {
 	
 	public Item getItem(int pid) throws SQLException{
 		String selectParts = "select `pid`,`parts_id`,`quantity`," +
-				"`locations_id` from `inventory` where `pid` = ?;";
+				"`locations_id`, `last_modified` from `inventory` " +
+				"where `pid` = ?;";
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(selectParts);
 		prepStmt.setInt(1, pid);
@@ -99,9 +116,12 @@ public class ItemDao extends AbstractDao {
 		int id = rs.getInt(1);
 		int partsId = rs.getInt(2);
 		int quantity = rs.getInt(3);
-		Entry<Integer, String> location = this.selectType(2, rs.getInt(4));
+		Entry<Integer, String> location = this.selectType(
+				AbstractDao.TableType.LOCATIONS.getType(), rs.getInt(4));
+		Timestamp lastModified = rs.getTimestamp(5);
 		PartDao partDao = new PartDao(this.connGateway);
 		Item item = new Item(id, partDao.getPart(partsId), quantity, location);
+		item.setLastModified(lastModified);
 		rs.close();
 		prepStmt.close();
 		this.connGateway.closeConnection(conn);
@@ -117,5 +137,4 @@ public class ItemDao extends AbstractDao {
 		prepStmt.close();
 		this.connGateway.closeConnection(conn);
 	}
-
 }

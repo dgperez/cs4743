@@ -95,10 +95,13 @@ public class PartDao extends AbstractDao {
 			int id = rs.getInt(1);
 			String partNumber = rs.getString(2);
 			String partName = rs.getString(3);
-			Entry<Integer, String> vendor = this.selectType(2, rs.getInt(4));
+			Entry<Integer, String> vendor = this.selectType(
+					AbstractDao.TableType.VENDORS.getType(), rs.getInt(4));
 			String externPartNumber = rs.getString(5);
 			Entry<Integer, String> unitOfQuantity = 
-					this.selectType(3, rs.getInt(6));
+					this.selectType(
+						AbstractDao.TableType.UNITS_OF_QUANTITY.getType(), 
+							rs.getInt(6));
 			Part tempPart = new Part(id, partNumber, partName, 
 					vendor.getValue(), unitOfQuantity, externPartNumber);
 			parts.add(tempPart);
@@ -121,10 +124,13 @@ public class PartDao extends AbstractDao {
 		int id = rs.getInt(1);
 		String partNumber = rs.getString(2);
 		String partName = rs.getString(3);
-		Entry<Integer, String> vendor = this.selectType(2, rs.getInt(4));
+		Entry<Integer, String> vendor = this.selectType(
+				AbstractDao.TableType.VENDORS.getType(), rs.getInt(4));
 		String externPartNumber = rs.getString(5);
 		Entry<Integer, String> unitOfQuantity = 
-				this.selectType(3, rs.getInt(6));
+				this.selectType(
+						AbstractDao.TableType.UNITS_OF_QUANTITY.getType(), 
+							rs.getInt(6));
 		Part tempPart = new Part(id, partNumber, partName, 
 				vendor.getValue(), unitOfQuantity, externPartNumber);
 		rs.close();
