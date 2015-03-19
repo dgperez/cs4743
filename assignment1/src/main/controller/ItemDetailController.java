@@ -28,6 +28,7 @@ public class ItemDetailController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("saveItem")){
 			Item item = this.view.getItem();
+			boolean itemRefreshed = false;
 			try {
 				if(this.inventory.validateItem(item)){
 					if(this.newItem){
@@ -42,16 +43,23 @@ public class ItemDetailController implements ActionListener {
 				String message = e1.getMessage();
 				JOptionPane.showMessageDialog(null, "Error: " + 
 						message);
-				try{
-					this.view.setItem(this.inventory.getItem(item.getId()));
-				} catch(Exception ex){
-					JOptionPane.showMessageDialog(null, "Error: " + 
-							ex.getMessage());
+				if(message.contains(
+						"This item has been modified by another user")){
+					try{
+						this.view.setItem(this.inventory.getItem(item.getId()));
+						itemRefreshed = true;
+					} catch(Exception ex){
+						JOptionPane.showMessageDialog(null, "Error: " + 
+								ex.getMessage());
+					}
 				}
 				e1.printStackTrace();
 			}
 			this.view.refreshObserver();
-			//this.view.dispatchEvent(new WindowEvent(this.view, WindowEvent.WINDOW_CLOSING));
+			if(!itemRefreshed){
+				this.view.dispatchEvent(new WindowEvent(this.view, 
+						WindowEvent.WINDOW_CLOSING));
+			}
 		}
 		
 	}
