@@ -6,10 +6,12 @@ import main.controller.ProductTemplateListController;
 import main.dao.AbstractDao;
 import main.dao.ConnectionGateway;
 import main.dao.TypeDao;
+import main.model.Authenticator;
 import main.model.Inventory;
 import main.model.Locations;
 import main.model.PartsInventory;
 import main.model.ProductTemplates;
+import main.model.Session;
 import main.model.UnitsOfQuantity;
 import main.view.InventoryListView;
 import main.view.PartsListView;
@@ -27,6 +29,9 @@ public class Cabinetron {
 		try {
 			ConnectionGateway connGateway = new ConnectionGateway();
 			TypeDao typeDao = new TypeDao(connGateway);
+
+			Authenticator auth = new Authenticator("tjones", "tjonespass", connGateway);
+			Session session = auth.Authenticate();
 			
 			UnitsOfQuantity unitsOfQuantity = new UnitsOfQuantity();
 			unitsOfQuantity.resetUnitsOfQuantity(typeDao.getTypeList(
@@ -44,14 +49,14 @@ public class Cabinetron {
 			partsInventory.loadParts();
 			
 			InventoryListView inventoryListView = 
-					new InventoryListView(inventory);
+					new InventoryListView(inventory, session);
 			
 			PartsListView partsListView = 
 					new PartsListView(partsInventory);
 			
 			InventoryListController inventoryListController = 
 					new InventoryListController(inventoryListView, inventory, 
-							locations, partsInventory);
+							locations, partsInventory, session);
 			
 			PartsListController partsListController = 
 					new PartsListController(partsInventory, unitsOfQuantity,

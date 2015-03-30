@@ -21,23 +21,24 @@ public class SessionDao extends AbstractDao {
 			throw new Exception("Username/Password Incorrect.");
 		}
 		String selectSql = "select `full_name`, `email`," +
-				"`role` from `inventory` where `id` = ?";
+				"`role` from `user` where `pid` = ?";
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(selectSql);
 		prepStmt.setInt(1, id);
 		ResultSet rs = prepStmt.executeQuery();
 
 		Session session = new Session();
+		rs.next();
 		User user = new User(rs.getString(1), rs.getString(2));
 		session.setUser(user);
-		if(rs.getString(3) == "Inventory Manager"){
+		if(rs.getString(3).equals("Inventory Manager")){
 			session.getUser().setInventoryManager(session);
-		} else if(rs.getString(3) == "Production Manager"){
+		} else if(rs.getString(3).equals("Production Manager")){
 			session.getUser().setProductionManager(session);
-		} else if(rs.getString(3) == "Admin"){
+		} else if(rs.getString(3).equals("Admin")){
 			session.getUser().setAdmin(session);
 		} else {
-			throw new Exception("User Role not set.");
+			throw new Exception("User Role not set. Found: " + rs.getString(3));
 		}
 		
 		rs.close();

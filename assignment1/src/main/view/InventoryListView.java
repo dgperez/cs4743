@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 
 import main.controller.InventoryListController;
 import main.model.Inventory;
+import main.model.Session;
 
 public class InventoryListView extends JFrame {
 	
@@ -33,11 +34,14 @@ public class InventoryListView extends JFrame {
 	private JPanel controls;
 	
 	private JPanel panel;
+	
+	private Session session;
 
-	public InventoryListView(Inventory inventory) {
+	public InventoryListView(Inventory inventory, Session session) {
 		super("Cabinetron Inventory");
 		
 		this.inventory = inventory;
+		this.session = session;
 		
 		this.panel = new JPanel();
 		this.panel.setLayout(new BorderLayout());
@@ -55,10 +59,16 @@ public class InventoryListView extends JFrame {
 		this.addPart = new JButton("Add Item");
 		this.addPart.setActionCommand("add");
 		this.controls.add(this.addPart);
+		if(!session.isCanAddInventory()){
+			this.addPart.setEnabled(false);
+		}
 		
 		this.deletePart = new JButton("Delete Item");
 		this.deletePart.setActionCommand("delete");
 		this.controls.add(this.deletePart);
+		if(!session.isCanDeleteInventory()){
+			this.deletePart.setEnabled(false);
+		}
 		
 		add(this.panel, BorderLayout.CENTER);
 		add(this.controls, BorderLayout.SOUTH);

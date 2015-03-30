@@ -13,6 +13,7 @@ import main.model.Inventory;
 import main.model.Item;
 import main.model.Locations;
 import main.model.PartsInventory;
+import main.model.Session;
 import main.view.InventoryListView;
 import main.view.ItemDetailView;
 
@@ -25,19 +26,22 @@ public class InventoryListController implements MouseListener, ActionListener {
 	private Locations locations;
 	
 	private PartsInventory partsInventory;
+	
+	private Session session;
 
 	public InventoryListController(InventoryListView listView, 
 			Inventory inventory, Locations locations, 
-			PartsInventory partsInventory) {
+			PartsInventory partsInventory, Session session) {
 		this.locations = locations;
 		this.listView = listView;
 		this.inventory = inventory;
 		this.partsInventory = partsInventory;
+		this.session = session;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(e.getClickCount() == 2){
+		if(e.getClickCount() == 2 && session.isCanAddInventory()){
 			if(e.getSource() instanceof JList){
 				@SuppressWarnings("unchecked")
 				JList<Object> list = (JList<Object>)e.getSource();
