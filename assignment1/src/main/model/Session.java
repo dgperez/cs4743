@@ -52,7 +52,7 @@ public class Session {
 		this.user = user;
 	}
 
-	public boolean isCanViewProductTemplates() {
+	public boolean canViewProductTemplates() {
 		return canViewProductTemplates;
 	}
 
@@ -60,7 +60,7 @@ public class Session {
 		this.canViewProductTemplates = canViewProductTemplates;
 	}
 
-	public boolean isCanAddProductTemplates() {
+	public boolean canAddProductTemplates() {
 		return canAddProductTemplates;
 	}
 
@@ -68,7 +68,7 @@ public class Session {
 		this.canAddProductTemplates = canAddProductTemplates;
 	}
 
-	public boolean isCanDeleteProductTemplates() {
+	public boolean canDeleteProductTemplates() {
 		return canDeleteProductTemplates;
 	}
 
@@ -76,7 +76,7 @@ public class Session {
 		this.canDeleteProductTemplates = canDeleteProductTemplates;
 	}
 
-	public boolean isCanCreateProducts() {
+	public boolean canCreateProducts() {
 		return canCreateProducts;
 	}
 
@@ -84,7 +84,7 @@ public class Session {
 		this.canCreateProducts = canCreateProducts;
 	}
 
-	public boolean isCanViewInventory() {
+	public boolean canViewInventory() {
 		return canViewInventory;
 	}
 
@@ -92,7 +92,7 @@ public class Session {
 		this.canViewInventory = canViewInventory;
 	}
 
-	public boolean isCanAddInventory() {
+	public boolean canAddInventory() {
 		return canAddInventory;
 	}
 
@@ -100,7 +100,7 @@ public class Session {
 		this.canAddInventory = canAddInventory;
 	}
 
-	public boolean isCanViewParts() {
+	public boolean canViewParts() {
 		return canViewParts;
 	}
 
@@ -108,7 +108,7 @@ public class Session {
 		this.canViewParts = canViewParts;
 	}
 
-	public boolean isCanAddParts() {
+	public boolean canAddParts() {
 		return canAddParts;
 	}
 
@@ -116,7 +116,7 @@ public class Session {
 		this.canAddParts = canAddParts;
 	}
 
-	public boolean isCanDeleteParts() {
+	public boolean canDeleteParts() {
 		return canDeleteParts;
 	}
 
@@ -124,7 +124,7 @@ public class Session {
 		this.canDeleteParts = canDeleteParts;
 	}
 
-	public boolean isCanDeleteInventory() {
+	public boolean canDeleteInventory() {
 		return canDeleteInventory;
 	}
 

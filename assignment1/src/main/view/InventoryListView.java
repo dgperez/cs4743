@@ -59,14 +59,14 @@ public class InventoryListView extends JFrame {
 		this.addPart = new JButton("Add Item");
 		this.addPart.setActionCommand("add");
 		this.controls.add(this.addPart);
-		if(!session.isCanAddInventory()){
+		if(!session.canAddInventory()){
 			this.addPart.setEnabled(false);
 		}
 		
 		this.deletePart = new JButton("Delete Item");
 		this.deletePart.setActionCommand("delete");
 		this.controls.add(this.deletePart);
-		if(!session.isCanDeleteInventory()){
+		if(!session.canDeleteInventory()){
 			this.deletePart.setEnabled(false);
 		}
 		

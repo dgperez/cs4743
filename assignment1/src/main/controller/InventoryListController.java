@@ -41,7 +41,7 @@ public class InventoryListController implements MouseListener, ActionListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(e.getClickCount() == 2 && session.isCanAddInventory()){
+		if(e.getClickCount() == 2 && session.canAddInventory()){
 			if(e.getSource() instanceof JList){
 				@SuppressWarnings("unchecked")
 				JList<Object> list = (JList<Object>)e.getSource();
