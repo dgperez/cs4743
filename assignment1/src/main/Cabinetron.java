@@ -23,65 +23,66 @@ public class Cabinetron {
 	 * 
 	 * */
 	public static void main(String[] args){
-		
+
 		// Testing
-		
+
 		try {
 			ConnectionGateway connGateway = new ConnectionGateway();
 			TypeDao typeDao = new TypeDao(connGateway);
 
-			Authenticator auth = new Authenticator("tjones", "tjonespass", connGateway);
+			Authenticator auth = new Authenticator("ssmith", "ssmithpass", connGateway);
 			Session session = auth.Authenticate();
-			
+
 			UnitsOfQuantity unitsOfQuantity = new UnitsOfQuantity();
 			unitsOfQuantity.resetUnitsOfQuantity(typeDao.getTypeList(
 					AbstractDao.TableType.UNITS_OF_QUANTITY.getType()));
-			
+
 			Locations locations = new Locations();
 			locations.resetLocations(typeDao.getTypeList(
 					AbstractDao.TableType.LOCATIONS.getType()));
-			
+
 			Inventory inventory = new Inventory(connGateway);
 			inventory.loadInitialInventory();
-			
+
 			PartsInventory partsInventory = new PartsInventory(connGateway, 
 					inventory);
 			partsInventory.loadParts();
-			
+
 			InventoryListView inventoryListView = 
 					new InventoryListView(inventory, session);
-			
+
 			PartsListView partsListView = 
-					new PartsListView(partsInventory);
-			
+					new PartsListView(partsInventory, session);
+
 			InventoryListController inventoryListController = 
 					new InventoryListController(inventoryListView, inventory, 
 							locations, partsInventory, session);
-			
+
 			PartsListController partsListController = 
 					new PartsListController(partsInventory, unitsOfQuantity,
-							partsListView);
-			
+							partsListView, session);
+
 			inventoryListView.registerListener(inventoryListController);
 			partsListView.registerListener(partsListController);
-			
+
 			inventory.registerView(inventoryListView);
 			partsInventory.registerView(partsListView);
-			
-			ProductTemplates productTemplates = 
-					new ProductTemplates(connGateway);
-			productTemplates.loadInitialProductTemplates();
-			
-			ProductTemplateListView productTemplatesListView = 
-					new ProductTemplateListView(productTemplates);
-			productTemplates.registerView(productTemplatesListView);
-			
-			ProductTemplateListController productTemplatesListController = 
-					new ProductTemplateListController(productTemplates, 
-							productTemplatesListView, connGateway);
-			productTemplatesListView
+
+			if(session.canViewProductTemplates()){
+				ProductTemplates productTemplates = 
+						new ProductTemplates(connGateway);
+				productTemplates.loadInitialProductTemplates();
+
+				ProductTemplateListView productTemplatesListView = 
+						new ProductTemplateListView(productTemplates);
+				productTemplates.registerView(productTemplatesListView);
+
+				ProductTemplateListController productTemplatesListController = 
+						new ProductTemplateListController(productTemplates, 
+								productTemplatesListView, connGateway);
+				productTemplatesListView
 				.registerListener(productTemplatesListController);
-			
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

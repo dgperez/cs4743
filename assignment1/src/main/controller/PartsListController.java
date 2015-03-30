@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import main.model.Part;
 import main.model.PartsInventory;
+import main.model.Session;
 import main.model.UnitsOfQuantity;
 import main.view.PartsDetailView;
 import main.view.PartsListView;
@@ -23,9 +24,11 @@ public class PartsListController implements MouseListener, ActionListener{
 	
 	private PartsListView partsListView;
 	
+	private Session session;
+	
 	public PartsListController(PartsInventory partsInventory, 
 			UnitsOfQuantity unitsOfQuantityTypes,
-			PartsListView partsListView) {
+			PartsListView partsListView, Session session) {
 		this.partsInventory = partsInventory;
 		this.unitsOfQuantityTypes = unitsOfQuantityTypes;
 		this.partsListView = partsListView;
@@ -67,7 +70,7 @@ public class PartsListController implements MouseListener, ActionListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(e.getClickCount() == 2){
+		if(e.getClickCount() == 2 && session.canAddParts()){
 			if(e.getSource() instanceof JList){
 				@SuppressWarnings("unchecked")
 				JList<Object> list = (JList<Object>)e.getSource();
