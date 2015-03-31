@@ -41,3 +41,9 @@ which accounts for the slowness of adding ProductTemplatePart and for editing an
  created to represent the rows in each corresponding table. For each of those models, an 
  additional model was created to manage the business rules and act as the intermediary between 
  those models and the Dao's associated with them.
+
+ Assignment 5:
+
+ PERFORMANCE NOTE: Refactored PartDao and ItemDao, but still seeing a large performance hit. Did a check and it appears 62 independent connections are being made. I looked into pooling the connections, but decided that I'd rather save that for assignment six. - Kyle Haley
+
+ LOGIN: A login view was created with a corresponding controller to manage permissions. The selected user is passed to the Authenticator constructor and a Session object is returned. Based on the role, the permissions in the Session are configured and then passed to other views, so that the corresponding permissions filter down to the controllers. For login, a while loop is used to control whether or not the other views are loaded properly.
