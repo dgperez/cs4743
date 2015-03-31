@@ -165,6 +165,10 @@ public class ProductTemplateDetailView extends JFrame {
 					this.getProductNumber(), 
 					this.getProductDescription(),
 					this.getQuantity());
+		} else {
+			this.productTemplate.setProductNumber(this.getProductNumber());
+			this.productTemplate.setProductDescription(this.getProductDescription());
+			this.productTemplate.setQuantity(this.getQuantity());
 		}
 		return this.productTemplate;
 	}
