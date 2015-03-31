@@ -26,24 +26,6 @@ public class Session {
 	public Session(User user){
 		this.user = user;
 	}
-	
-	public Session(User user, boolean canViewProductTemplates,
-			boolean canAddProductTemplates, boolean canDeleteProductTemplates,
-			boolean canCreateProducts, boolean canViewInventory,
-			boolean canAddInventory, boolean canViewParts, boolean canAddParts,
-			boolean canDeleteParts, boolean canDeleteInventory) {
-		this.user = user;
-		this.canViewProductTemplates = canViewProductTemplates;
-		this.canAddProductTemplates = canAddProductTemplates;
-		this.canDeleteProductTemplates = canDeleteProductTemplates;
-		this.canCreateProducts = canCreateProducts;
-		this.canViewInventory = canViewInventory;
-		this.canAddInventory = canAddInventory;
-		this.canViewParts = canViewParts;
-		this.canAddParts = canAddParts;
-		this.canDeleteParts = canDeleteParts;
-		this.canDeleteInventory = canDeleteInventory;
-	}
 
 	public User getUser() {
 		return user;
@@ -73,7 +55,8 @@ public class Session {
 		return canDeleteProductTemplates;
 	}
 
-	public void setCanDeleteProductTemplates(boolean canDeleteProductTemplates) {
+	public void setCanDeleteProductTemplates(
+			boolean canDeleteProductTemplates) {
 		this.canDeleteProductTemplates = canDeleteProductTemplates;
 	}
 

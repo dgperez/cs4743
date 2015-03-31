@@ -13,15 +13,15 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import main.controller.LoginController;
 import main.model.Session;
 import main.model.User;
 
 public class LoginView extends JFrame {
+
+	private static final long serialVersionUID = -2140865485424909774L;
 
 	private JLabel loginLabel = new JLabel("Login: ");
 	
@@ -89,6 +89,7 @@ public class LoginView extends JFrame {
 	}
 	
 	public void closeView(){
+		this.setVisible(false);
 		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 	}
 	

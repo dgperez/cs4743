@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import main.model.Inventory;
 import main.model.Item;
+import main.model.Session;
 import main.view.ItemDetailView;
 
 public class ItemDetailController implements ActionListener {
@@ -18,15 +19,19 @@ public class ItemDetailController implements ActionListener {
 	
 	private boolean newItem = false;
 	
+	private Session session;
+	
 	public ItemDetailController(ItemDetailView view
-			, Inventory inventory) {
+			,Inventory inventory, Session session) {
 		this.view = view;
 		this.inventory = inventory;
+		this.session = session;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getActionCommand().equals("saveItem")){
+		if(e.getActionCommand().equals("saveItem") 
+				&& this.session.canAddInventory()){
 			Item item = this.view.getItem();
 			boolean itemRefreshed = false;
 			try {

@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import main.controller.PartsDetailController;
 import main.model.Part;
+import main.model.Session;
 import main.model.UnitsOfQuantity;
 
 public class PartsDetailView extends JFrame {
@@ -67,10 +68,14 @@ public class PartsDetailView extends JFrame {
 	
 	private boolean newPart = false;
 	
-	public PartsDetailView(UnitsOfQuantity unitsOfQuantityTypes, boolean newPart) {
+	private Session session;
+	
+	public PartsDetailView(UnitsOfQuantity unitsOfQuantityTypes, 
+			boolean newPart, Session session) {
 		this.unitsOfQuantityTypes = unitsOfQuantityTypes;
 		this.newPart = newPart;
 		this.inputs = new JPanel(new BorderLayout(5, 5));
+		this.session = session;
 		
 		JPanel labelsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
 		JPanel fieldsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
@@ -120,6 +125,9 @@ public class PartsDetailView extends JFrame {
 		
 		this.savePart = new JButton("Save Part");
 		this.savePart.setActionCommand("savePart");
+		if(!this.session.canAddParts()){
+			this.savePart.setEnabled(false);
+		}
 		
 		this.controls.add(this.savePart);
 	

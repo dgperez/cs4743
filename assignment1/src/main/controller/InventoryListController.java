@@ -72,7 +72,7 @@ public class InventoryListController implements MouseListener, ActionListener {
 					this.inventory.registerObservers(view);
 					view.setItem(tempItem);
 					ItemDetailController itemController = 
-							new ItemDetailController(view, this.inventory);
+							new ItemDetailController(view, this.inventory, this.session);
 					view.registerListener(itemController);
 					this.inventory.registerObservers(view);
 					view.setVisible(true);
@@ -99,7 +99,8 @@ public class InventoryListController implements MouseListener, ActionListener {
 			ItemDetailView view = new ItemDetailView(this.locations, 
 					this.partsInventory, true);
 			ItemDetailController itemController = 
-					new ItemDetailController(view, this.inventory);
+					new ItemDetailController(view, this.inventory, 
+							this.session);
 			this.inventory.registerObservers(view);
 			itemController.itemIsNew();
 			view.registerListener(itemController);

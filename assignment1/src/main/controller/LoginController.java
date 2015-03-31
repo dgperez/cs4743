@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import main.dao.ConnectionGateway;
 import main.model.Authenticator;
+import main.model.Session;
 import main.model.User;
 import main.view.LoginView;
 
@@ -28,7 +29,15 @@ public class LoginController implements ActionListener {
 			User user = this.loginView.getUser();
 			try{
 				Authenticator auth = new Authenticator(user, this.connGateway);
-				this.loginView.setSession(auth.Authenticate());
+				Session session = auth.Authenticate();
+				if(user.getRole().equals("Production Manager")){
+					user.setProductionManager(session);
+				} else if (user.getRole().equals("Inventory Manager")){
+					user.setInventoryManager(session);
+				} else if (user.getRole().equals("Admin")){
+					user.setAdmin(session);
+				}
+				this.loginView.setSession(session);
 				this.loginView.setValidLogin(true);
 			} catch(Exception e1){
 				e1.printStackTrace();

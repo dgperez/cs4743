@@ -1,6 +1,5 @@
 package main;
 
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import main.controller.InventoryListController;
@@ -10,7 +9,6 @@ import main.controller.ProductTemplateListController;
 import main.dao.AbstractDao;
 import main.dao.ConnectionGateway;
 import main.dao.TypeDao;
-import main.model.Authenticator;
 import main.model.Inventory;
 import main.model.Locations;
 import main.model.PartsInventory;
@@ -30,14 +28,15 @@ public class Cabinetron {
 	 * */
 	public static void main(String[] args){
 
-		// Testing
-
 		try {
 			ConnectionGateway connGateway = new ConnectionGateway();
 			
-			User user1 = new User("Tom Jones", "tom.jones@test.com");
-			User user2 = new User("Sue Smith", "sue.smith@test.com");
-			User user3 = new User("Ragnar Nelson", "ragnar.nelson@test.com");
+			User user1 = new User("Tom Jones", "tom.jones@test.com", 
+					"Production Manager");
+			User user2 = new User("Sue Smith", "sue.smith@test.com", 
+					"Inventory Manager");
+			User user3 = new User("Ragnar Nelson", "ragnar.nelson@test.com", 
+					"Admin");
 			ArrayList<User> users = new ArrayList<User>();
 			
 			users.add(user1);
@@ -54,66 +53,72 @@ public class Cabinetron {
 			boolean validLogin = false;
 			while(!validLogin){
 				validLogin = loginView.getValidLogin();
+				// The while loop needs a pause for this assignment, 
+				//otherwise it seems a race condition prevents the 
+				//assignment from working.
+				// C# event handling is superior.
+				Thread.sleep(100);
 			}
 
 			session = loginView.getSession();
+			
 			loginView.closeView();
 			
 			TypeDao typeDao = new TypeDao(connGateway);
-			
-			UnitsOfQuantity unitsOfQuantity = new UnitsOfQuantity();
-			unitsOfQuantity.resetUnitsOfQuantity(typeDao.getTypeList(
-					AbstractDao.TableType.UNITS_OF_QUANTITY.getType()));
-
-			Locations locations = new Locations();
-			locations.resetLocations(typeDao.getTypeList(
-					AbstractDao.TableType.LOCATIONS.getType()));
 
 			Inventory inventory = new Inventory(connGateway);
 			inventory.loadInitialInventory();
-
+			
 			PartsInventory partsInventory = new PartsInventory(connGateway, 
 					inventory);
 			partsInventory.loadParts();
-
-			InventoryListView inventoryListView = 
-					new InventoryListView(inventory, session);
-
-			PartsListView partsListView = 
-					new PartsListView(partsInventory, session);
-
 			ProductTemplates productTemplates = null;
-			ProductTemplateListView productTemplatesListView = null;
-			ProductTemplateListController productTemplatesListController = 
-					null;
 			if(session.canViewProductTemplates()){
 				productTemplates = new ProductTemplates(connGateway);
 				productTemplates.loadInitialProductTemplates();
 
-				productTemplatesListView = 
+				ProductTemplateListView productTemplatesListView = 
 						new ProductTemplateListView(productTemplates);
 				productTemplates.registerView(productTemplatesListView);
 
-				productTemplatesListController = 
+				ProductTemplateListController productTemplatesListController = 
 						new ProductTemplateListController(productTemplates, 
 								productTemplatesListView, connGateway);
 				productTemplatesListView
 				.registerListener(productTemplatesListController);
 			}
 			
-			InventoryListController inventoryListController = 
-					new InventoryListController(inventoryListView, inventory, 
-							locations, partsInventory, session, productTemplates);
-
-			PartsListController partsListController = 
-					new PartsListController(partsInventory, unitsOfQuantity,
-							partsListView, session);
-
-			inventoryListView.registerListener(inventoryListController);
-			partsListView.registerListener(partsListController);
-
-			inventory.registerView(inventoryListView);
-			partsInventory.registerView(partsListView);
+			InventoryListView inventoryListView = null;
+			InventoryListController inventoryListController = null;
+			if(session.canViewInventory()){
+				Locations locations = new Locations();
+				locations.resetLocations(typeDao.getTypeList(
+						AbstractDao.TableType.LOCATIONS.getType()));
+				
+				inventoryListView = new InventoryListView(inventory, session);
+				inventoryListController = new 
+						InventoryListController(inventoryListView, 
+								inventory, locations, partsInventory, session, 
+								productTemplates);
+				inventoryListView.registerListener(inventoryListController);
+				inventory.registerView(inventoryListView);
+			}
+			
+			if(session.canViewParts()){
+				UnitsOfQuantity unitsOfQuantity = new UnitsOfQuantity();
+				unitsOfQuantity.resetUnitsOfQuantity(typeDao.getTypeList(
+						AbstractDao.TableType.UNITS_OF_QUANTITY.getType()));
+				
+				PartsListView partsListView = 
+						new PartsListView(partsInventory, session);
+	
+				PartsListController partsListController = 
+						new PartsListController(partsInventory, unitsOfQuantity,
+								partsListView, session);
+				partsListView.registerListener(partsListController);
+	
+				partsInventory.registerView(partsListView);
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

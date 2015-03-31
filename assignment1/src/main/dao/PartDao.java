@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map.Entry;
 
 import main.model.Part;
@@ -88,20 +89,30 @@ public class PartDao extends AbstractDao {
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(selectParts);
 		ResultSet rs = prepStmt.executeQuery();
-		//prepStmt.close();
-		//this.connGateway.closeConnection(conn);
+		// Originally had two queries hitting the database
+		TypeDao types = new TypeDao(this.connGateway);
+		HashMap<Integer, String> vendors = types.getTypeList(2);
+		HashMap<Integer, String> units = types.getTypeList(3);
 		ArrayList<Part> parts = new ArrayList<Part>();
 		while(rs.next()){
 			int id = rs.getInt(1);
 			String partNumber = rs.getString(2);
 			String partName = rs.getString(3);
-			Entry<Integer, String> vendor = this.selectType(
-					AbstractDao.TableType.VENDORS.getType(), rs.getInt(4));
+			Entry<Integer, String> vendor = null;
+			int vendor_id = rs.getInt(4);
+			for(Entry<Integer, String> entry : vendors.entrySet()){
+				if(entry.getKey() == vendor_id){
+					vendor = entry;
+				}
+			}
 			String externPartNumber = rs.getString(5);
-			Entry<Integer, String> unitOfQuantity = 
-					this.selectType(
-						AbstractDao.TableType.UNITS_OF_QUANTITY.getType(), 
-							rs.getInt(6));
+			Entry<Integer, String> unitOfQuantity = null;
+			int units_of_quantity_id = rs.getInt(6);
+			for(Entry<Integer, String> entry : units.entrySet()){
+				if(entry.getKey() == units_of_quantity_id){
+					unitOfQuantity = entry;
+				}
+			}
 			Part tempPart = new Part(id, partNumber, partName, 
 					vendor.getValue(), unitOfQuantity, externPartNumber);
 			parts.add(tempPart);

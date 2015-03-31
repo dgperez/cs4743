@@ -1,15 +1,17 @@
 package main.model;
 
 public class User {
+	
 	private String fullName;
 	
 	private String role;
 	
 	private String email;
 	
-	public User(String fullName, String email){
+	public User(String fullName, String email, String role){
 		this.fullName = fullName;
 		this.email = email;
+		this.role = role;
 	}
 
 	public String getFullName() {
@@ -39,7 +41,6 @@ public class User {
 		session.setCanAddParts(true);
 		session.setCanDeleteParts(false);
 		session.setCanDeleteInventory(false);
-		this.role = "Inventory Manager";
 	}
 	
 	public void setProductionManager(Session session){
@@ -53,7 +54,6 @@ public class User {
 		session.setCanAddParts(false);
 		session.setCanDeleteParts(false);
 		session.setCanDeleteInventory(false);
-		this.role = "Production Manager";
 	}
 	
 	public void setAdmin(Session session){
@@ -67,7 +67,6 @@ public class User {
 		session.setCanAddParts(true);
 		session.setCanDeleteParts(true);
 		session.setCanDeleteInventory(true);
-		this.role = "Admin";
 	}
 	
 	public String getRole(){

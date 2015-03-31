@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map.Entry;
 
 import main.model.Item;
@@ -92,6 +93,8 @@ public class ItemDao extends AbstractDao {
 		PreparedStatement prepStmt = conn.prepareStatement(selectSql);
 		ResultSet rs = prepStmt.executeQuery();
 		ArrayList<Item> items = new ArrayList<Item>();
+		TypeDao types = new TypeDao(this.connGateway);
+		HashMap<Integer, String> locations = types.getTypeList(1);
 		while(rs.next()){
 			int id = rs.getInt(1);
 			int partId = rs.getInt(2);
@@ -100,9 +103,12 @@ public class ItemDao extends AbstractDao {
 			Timestamp lastModified = rs.getTimestamp(5);
 			PartDao partDao = new PartDao(this.connGateway);
 			Part part = partDao.getPart(partId);
-			Entry<Integer, String> locationEntry = 
-					this.selectType(AbstractDao.TableType.LOCATIONS.getType(), 
-							locationId);
+			Entry<Integer, String> locationEntry = null;
+			for(Entry<Integer, String> entry : locations.entrySet()){
+				if(entry.getKey() == locationId){
+					locationEntry = entry;
+				}
+			}
 			Item tempItem = new Item(id, part, quantity, locationEntry);
 			tempItem.setLastModified(lastModified);
 			items.add(tempItem);

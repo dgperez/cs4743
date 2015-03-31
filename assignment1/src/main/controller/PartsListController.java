@@ -32,20 +32,23 @@ public class PartsListController implements MouseListener, ActionListener{
 		this.partsInventory = partsInventory;
 		this.unitsOfQuantityTypes = unitsOfQuantityTypes;
 		this.partsListView = partsListView;
+		this.session = session;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if("addPart".equals(e.getActionCommand())){
+		if("addPart".equals(e.getActionCommand()) 
+				&& this.session.canAddParts()){
 			PartsDetailView partsDetailView = new PartsDetailView(
-					this.unitsOfQuantityTypes, true);
+					this.unitsOfQuantityTypes, true, this.session);
 			PartsDetailController partsDetailController = 
 					new PartsDetailController(partsDetailView, 
-							this.partsInventory);
+							this.partsInventory, this.session);
 			partsDetailController.partIsNew();
 			partsDetailView.registerListener(partsDetailController);
 			this.partsInventory.registerObservers(partsDetailView);
-		} else if ("deletePart".equals(e.getActionCommand())){
+		} else if ("deletePart".equals(e.getActionCommand()) 
+				&& this.session.canDeleteParts()){
 			 Part part = (Part)this.partsListView.getSelectedListPart();
 			 try {
 				this.partsInventory.removePart(part);
@@ -70,17 +73,17 @@ public class PartsListController implements MouseListener, ActionListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(e.getClickCount() == 2 && session.canAddParts()){
+		if(e.getClickCount() == 2){
 			if(e.getSource() instanceof JList){
 				@SuppressWarnings("unchecked")
 				JList<Object> list = (JList<Object>)e.getSource();
 				Part part = (Part)list.getSelectedValue();
 				PartsDetailView partsDetailView = new PartsDetailView(
-						this.unitsOfQuantityTypes, false);
+						this.unitsOfQuantityTypes, false, this.session);
 				partsDetailView.setPart(part);
 				PartsDetailController partsDetailController = 
 						new PartsDetailController(partsDetailView, 
-								this.partsInventory);
+								this.partsInventory, this.session);
 				partsDetailView.registerListener(partsDetailController);
 				this.partsInventory.registerObservers(partsDetailView);
 			}
