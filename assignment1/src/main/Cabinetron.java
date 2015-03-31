@@ -55,9 +55,10 @@ public class Cabinetron {
 			while(!validLogin){
 				validLogin = loginView.getValidLogin();
 			}
-			
+
 			session = loginView.getSession();
 			loginView.closeView();
+			
 			TypeDao typeDao = new TypeDao(connGateway);
 			
 			UnitsOfQuantity unitsOfQuantity = new UnitsOfQuantity();

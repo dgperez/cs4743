@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.AbstractButton;
@@ -46,6 +47,7 @@ public class LoginView extends JFrame {
 	boolean validLogin = false;
 	
 	public LoginView(ArrayList<User> users) {
+		super("Login");
 		this.users = users;
 		this.inputs = new JPanel(new BorderLayout(5, 5));
 		
@@ -82,13 +84,12 @@ public class LoginView extends JFrame {
 		pack();
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setTitle("Part Detail");
 		setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 	
 	public void closeView(){
-		this.dispose();
+		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 	}
 	
 	public boolean getValidLogin(){
