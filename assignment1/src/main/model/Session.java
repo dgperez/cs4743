@@ -23,9 +23,10 @@ public class Session {
 	
 	private boolean canDeleteInventory;
 	
-	public Session(){
-		user = new User();
+	public Session(User user){
+		this.user = user;
 	}
+	
 	public Session(User user, boolean canViewProductTemplates,
 			boolean canAddProductTemplates, boolean canDeleteProductTemplates,
 			boolean canCreateProducts, boolean canViewInventory,

@@ -76,7 +76,7 @@ public class PartsDetailView extends JFrame {
 		JPanel fieldsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
 		
 		this.id = new JTextField(10);
-		id.setEditable(false);
+		this.id.setEditable(false);
 		
 		this.partNumber = new JTextField(10);
 		

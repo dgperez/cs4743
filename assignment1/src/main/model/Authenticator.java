@@ -4,15 +4,13 @@ import main.dao.ConnectionGateway;
 import main.dao.SessionDao;
 
 public class Authenticator {
-	private String username;
 	
-	private String password;
+	private User user;
 	
 	private ConnectionGateway connGateway;
 	
-	public Authenticator(String username, String password, ConnectionGateway connGateway){
-		this.username = username;
-		this.password = password;
+	public Authenticator(User user, 
+			ConnectionGateway connGateway){
 		this.connGateway = connGateway;
 	}
 
@@ -20,7 +18,7 @@ public class Authenticator {
 		SessionDao sessionDao = new SessionDao(connGateway);
 		Session session;
 		try {
-			session = sessionDao.getSession(username, password);
+			session = sessionDao.getSession(this.user);
 		} catch (Exception e) {
 			throw e;
 		}
