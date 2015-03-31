@@ -74,9 +74,7 @@ public class ConnectionGateway {
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			String temp = this.getConnectionString();
-			conn = DriverManager.getConnection(temp + " " + ++total_connections);
-			System.out.println(temp);
+			conn = DriverManager.getConnection(this.getConnectionString());
 		} catch (InstantiationException | IllegalAccessException
 				| ClassNotFoundException e) {
 			// TODO Auto-generated catch block

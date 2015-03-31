@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import main.model.Part;
 import main.model.PartsInventory;
+import main.model.Session;
 import main.view.PartsDetailView;
 
 public class PartsDetailController implements ActionListener {
@@ -17,16 +18,22 @@ public class PartsDetailController implements ActionListener {
 
 	private boolean newPart = false;
 	
+	private Session session;
+	
 	public PartsDetailController(PartsDetailView view, 
-			PartsInventory partsInventory) {
+			PartsInventory partsInventory, Session session) {
 		this.view = view;
 		this.partsInventory = partsInventory;
-		this.view.showPartsDetailView();
+		this.session = session;
+		if(this.session.canViewParts()){
+			this.view.showPartsDetailView();
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getActionCommand().equals("savePart")){
+		if(e.getActionCommand().equals("savePart") 
+				&& this.session.canAddParts()){
 			Part part = this.view.getPart();
 			try {
 				if(this.partsInventory.validateSavedPart(part)){
