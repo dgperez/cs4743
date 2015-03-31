@@ -12,6 +12,7 @@ import main.dao.TypeDao;
 import main.model.Inventory;
 import main.model.Locations;
 import main.model.PartsInventory;
+import main.model.ProductTemplateInventory;
 import main.model.ProductTemplates;
 import main.model.Session;
 import main.model.UnitsOfQuantity;
@@ -73,6 +74,7 @@ public class Cabinetron {
 					inventory);
 			partsInventory.loadParts();
 			ProductTemplates productTemplates = null;
+			ProductTemplateInventory productInventory = null;
 			if(session.canViewProductTemplates()){
 				productTemplates = new ProductTemplates(connGateway);
 				productTemplates.loadInitialProductTemplates();
@@ -86,6 +88,8 @@ public class Cabinetron {
 								productTemplatesListView, connGateway);
 				productTemplatesListView
 				.registerListener(productTemplatesListController);
+				productInventory = new ProductTemplateInventory(connGateway);
+				productInventory.loadInitialInventory();
 			}
 			
 			InventoryListView inventoryListView = null;
@@ -95,7 +99,7 @@ public class Cabinetron {
 				locations.resetLocations(typeDao.getTypeList(
 						AbstractDao.TableType.LOCATIONS.getType()));
 				
-				inventoryListView = new InventoryListView(inventory, session);
+				inventoryListView = new InventoryListView(inventory, productInventory, session);
 				inventoryListController = new 
 						InventoryListController(inventoryListView, 
 								inventory, locations, partsInventory, session, 
