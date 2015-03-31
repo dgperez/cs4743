@@ -166,6 +166,7 @@ CREATE TABLE `product_templates` (
   `pid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `product_number` varchar(21) NOT NULL,
   `product_description` varchar(256) NOT NULL,
+  `quantity` int(11) NOT NULL,
   PRIMARY KEY (`pid`),
   UNIQUE KEY `pid_UNIQUE` (`pid`),
   UNIQUE KEY `product_number_UNIQUE` (`product_number`)
@@ -178,7 +179,7 @@ CREATE TABLE `product_templates` (
 
 LOCK TABLES `product_templates` WRITE;
 /*!40000 ALTER TABLE `product_templates` DISABLE KEYS */;
-INSERT INTO `product_templates` VALUES (1,'A04','A Chair'),(2,'A06','Testing'),(12,'Atest23','asdfasdf'),(13,'Atest32343535','testadsfasdfasdf'),(19,'A007','Testing');
+INSERT INTO `product_templates` VALUES (1,'A04','A Chair',1),(2,'A06','Testing',2),(12,'Atest23','asdfasdf',1),(13,'Atest32343535','testadsfasdfasdf',15),(19,'A007','Testing',5);
 /*!40000 ALTER TABLE `product_templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,6 +207,33 @@ LOCK TABLES `unit_of_quantities` WRITE;
 /*!40000 ALTER TABLE `unit_of_quantities` DISABLE KEYS */;
 INSERT INTO `unit_of_quantities` VALUES (3,'Linear Feet'),(2,'Pieces'),(1,'Unknown');
 /*!40000 ALTER TABLE `unit_of_quantities` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `pid` int(11) NOT NULL AUTO_INCREMENT,
+  `full_name` varchar(60) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `role` varchar(20) NOT NULL,
+  PRIMARY KEY (`pid`),
+  UNIQUE KEY `pid` (`pid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'Tom Jones','tom.jones@test.com','Production Manager'),(2,'Sue Smith','sue.smith@test.com','Inventory Manager'),(3,'Ragnar Nelson','ragnar.nelson@test.com','Admin');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -261,4 +289,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-18 22:49:14
+-- Dump completed on 2015-03-31  0:22:33

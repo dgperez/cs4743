@@ -54,6 +54,10 @@ public class Cabinetron {
 			boolean validLogin = false;
 			while(!validLogin){
 				validLogin = loginView.getValidLogin();
+				// The while loop needs a pause for this assignment, 
+				//otherwise it seems a race condition prevents the 
+				//assignment from working
+				Thread.sleep(100);
 			}
 
 			session = loginView.getSession();
