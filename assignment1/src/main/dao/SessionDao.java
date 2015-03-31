@@ -14,24 +14,21 @@ public class SessionDao extends AbstractDao {
 		super(connGateway);
 	}
 	
-	public Session getSession(String username, String pass) throws Exception{
-		int id;
-		try{
-			id = validation(username, pass);
-		} catch(SQLException e){
-			//throw new Exception("Username/Password Incorrect.");
-			throw e;
-		}
+	public Session getSession(User tempUser) throws Exception {
 		String selectSql = "select `full_name`, `email`," +
-				"`role` from `user` where `pid` = ?";
+				"`role` from `user` where `email` = ?";
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(selectSql);
-		prepStmt.setInt(1, id);
+		prepStmt.setNString(1, tempUser.getEmail());
 		ResultSet rs = prepStmt.executeQuery();
 
-		Session session = new Session();
-		rs.next();
+		boolean noRows = rs.next();
+		if(!noRows){
+			throw new Exception("Bad Login");
+		}
+		
 		User user = new User(rs.getString(1), rs.getString(2));
+		Session session = new Session(user);
 		session.setUser(user);
 		if(rs.getString(3).equals("Inventory Manager")){
 			session.getUser().setInventoryManager(session);
@@ -40,33 +37,13 @@ public class SessionDao extends AbstractDao {
 		} else if(rs.getString(3).equals("Admin")){
 			session.getUser().setAdmin(session);
 		} else {
-			throw new Exception("User Role not set. Found: " + rs.getString(3));
+			throw new Exception("User Role not set. Found: " 
+					+ rs.getString(3));
 		}
 		
 		rs.close();
 		prepStmt.close();
 		this.connGateway.closeConnection(conn);
 		return session;
-	}
-
-	public int validation(String username, String password) throws SQLException{
-		String selectSql = "select `user_id` from `login` where `username` = ? AND `password` = ?";
-		Connection conn = this.connGateway.getConnection();
-		PreparedStatement prepStmt = conn.prepareStatement(selectSql);
-		prepStmt.setString(1, username);
-		prepStmt.setString(2, password);
-		
-		ResultSet rs = prepStmt.executeQuery();
-		
-		rs.next();
-		int user_id = rs.getInt(1);
-		if(user_id == 0){
-			throw new SQLException("Username/Password Incorrect.");
-		}
-		
-		rs.close();
-		prepStmt.close();
-		this.connGateway.closeConnection(conn);
-		return user_id;
 	}
 }

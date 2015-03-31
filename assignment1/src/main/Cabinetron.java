@@ -1,6 +1,9 @@
 package main;
 
+import java.util.ArrayList;
+
 import main.controller.InventoryListController;
+import main.controller.LoginController;
 import main.controller.PartsListController;
 import main.controller.ProductTemplateListController;
 import main.dao.AbstractDao;
@@ -13,7 +16,9 @@ import main.model.PartsInventory;
 import main.model.ProductTemplates;
 import main.model.Session;
 import main.model.UnitsOfQuantity;
+import main.model.User;
 import main.view.InventoryListView;
+import main.view.LoginView;
 import main.view.PartsListView;
 import main.view.ProductTemplateListView;
 
@@ -28,11 +33,32 @@ public class Cabinetron {
 
 		try {
 			ConnectionGateway connGateway = new ConnectionGateway();
+			
+			User user1 = new User("Tom Jones", "tom.jones@test.com");
+			User user2 = new User("Sue Smith", "sue.smith@test.com");
+			User user3 = new User("Ragnar Nelson", "ragnar.nelson@test.com");
+			ArrayList<User> users = new ArrayList<User>();
+			
+			users.add(user1);
+			users.add(user2);
+			users.add(user3);
+			
+			Session session;
+			
+			LoginView loginView = new LoginView(users);
+			LoginController loginController = 
+					new LoginController(loginView, connGateway);
+			loginView.registerListener(loginController);
+			
+			boolean validLogin = false;
+			while(!validLogin){
+				validLogin = loginView.getValidLogin();
+			}
+			
+			session = loginView.getSession();
+
 			TypeDao typeDao = new TypeDao(connGateway);
-
-			Authenticator auth = new Authenticator("ssmith", "ssmithpass", connGateway);
-			Session session = auth.Authenticate();
-
+			
 			UnitsOfQuantity unitsOfQuantity = new UnitsOfQuantity();
 			unitsOfQuantity.resetUnitsOfQuantity(typeDao.getTypeList(
 					AbstractDao.TableType.UNITS_OF_QUANTITY.getType()));
