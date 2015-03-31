@@ -78,4 +78,11 @@ public class User {
 		return role;
 	}
 	
+	@Override
+	public String toString(){
+		return "user: " + this.fullName
+				+ ", login: " + this.email
+				+ ", role: " + this.role;
+	}
+	
 }

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import main.model.Session;
 import main.model.User;
 
@@ -18,7 +19,8 @@ public class SessionDao extends AbstractDao {
 		try{
 			id = validation(username, pass);
 		} catch(SQLException e){
-			throw new Exception("Username/Password Incorrect.");
+			//throw new Exception("Username/Password Incorrect.");
+			throw e;
 		}
 		String selectSql = "select `full_name`, `email`," +
 				"`role` from `user` where `pid` = ?";
@@ -58,6 +60,9 @@ public class SessionDao extends AbstractDao {
 		
 		rs.next();
 		int user_id = rs.getInt(1);
+		if(user_id == 0){
+			throw new SQLException("Username/Password Incorrect.");
+		}
 		
 		rs.close();
 		prepStmt.close();
