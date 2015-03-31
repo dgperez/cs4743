@@ -25,8 +25,6 @@ public class ConnectionGateway {
 	
 	private static String propertyFilePath;
 	
-	private static int total_connections = 0;
-	
 	public ConnectionGateway() {
 		this.initProperties();		
 	}

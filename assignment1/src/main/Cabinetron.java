@@ -34,9 +34,9 @@ public class Cabinetron {
 			User user1 = new User("Tom Jones", "tom.jones@test.com", 
 					"Production Manager");
 			User user2 = new User("Sue Smith", "sue.smith@test.com", 
-					"Production Manager");
+					"Inventory Manager");
 			User user3 = new User("Ragnar Nelson", "ragnar.nelson@test.com", 
-					"Production Manager");
+					"Admin");
 			ArrayList<User> users = new ArrayList<User>();
 			
 			users.add(user1);
@@ -65,41 +65,43 @@ public class Cabinetron {
 			loginView.closeView();
 			
 			TypeDao typeDao = new TypeDao(connGateway);
-			
-			UnitsOfQuantity unitsOfQuantity = new UnitsOfQuantity();
-			unitsOfQuantity.resetUnitsOfQuantity(typeDao.getTypeList(
-					AbstractDao.TableType.UNITS_OF_QUANTITY.getType()));
-
-			Locations locations = new Locations();
-			locations.resetLocations(typeDao.getTypeList(
-					AbstractDao.TableType.LOCATIONS.getType()));
 
 			Inventory inventory = new Inventory(connGateway);
 			inventory.loadInitialInventory();
-
+			
 			PartsInventory partsInventory = new PartsInventory(connGateway, 
 					inventory);
 			partsInventory.loadParts();
 
-			InventoryListView inventoryListView = 
-					new InventoryListView(inventory, session);
-
-			PartsListView partsListView = 
-					new PartsListView(partsInventory, session);
-
-			InventoryListController inventoryListController = 
-					new InventoryListController(inventoryListView, inventory, 
-							locations, partsInventory, session);
-
-			PartsListController partsListController = 
-					new PartsListController(partsInventory, unitsOfQuantity,
-							partsListView, session);
-
-			inventoryListView.registerListener(inventoryListController);
-			partsListView.registerListener(partsListController);
-
-			inventory.registerView(inventoryListView);
-			partsInventory.registerView(partsListView);
+			if(session.canViewInventory()){
+				Locations locations = new Locations();
+				locations.resetLocations(typeDao.getTypeList(
+						AbstractDao.TableType.LOCATIONS.getType()));
+				
+				InventoryListView inventoryListView = 
+						new InventoryListView(inventory, session);
+				InventoryListController inventoryListController = 
+						new InventoryListController(inventoryListView, 
+								inventory, locations, partsInventory, session);
+				inventoryListView.registerListener(inventoryListController);
+				inventory.registerView(inventoryListView);
+			}
+			
+			if(session.canViewParts()){
+				UnitsOfQuantity unitsOfQuantity = new UnitsOfQuantity();
+				unitsOfQuantity.resetUnitsOfQuantity(typeDao.getTypeList(
+						AbstractDao.TableType.UNITS_OF_QUANTITY.getType()));
+				
+				PartsListView partsListView = 
+						new PartsListView(partsInventory, session);
+	
+				PartsListController partsListController = 
+						new PartsListController(partsInventory, unitsOfQuantity,
+								partsListView, session);
+				partsListView.registerListener(partsListController);
+	
+				partsInventory.registerView(partsListView);
+			}
 
 			if(session.canViewProductTemplates()){
 				ProductTemplates productTemplates = 
