@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import main.controller.InventoryListController;
@@ -54,9 +55,10 @@ public class Cabinetron {
 			while(!validLogin){
 				validLogin = loginView.getValidLogin();
 			}
-			
-			session = loginView.getSession();
 
+			session = loginView.getSession();
+			loginView.closeView();
+			
 			TypeDao typeDao = new TypeDao(connGateway);
 			
 			UnitsOfQuantity unitsOfQuantity = new UnitsOfQuantity();
