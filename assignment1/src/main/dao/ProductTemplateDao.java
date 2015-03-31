@@ -50,14 +50,16 @@ public class ProductTemplateDao extends AbstractDao {
 	public ProductTemplate editProductTemplate(ProductTemplate productTemplate) 
 			throws SQLException{
 		String updateSql = "UPDATE `product_templates` " +
-				"SET `product_number` = ?, " +
-				"`product_description` = ? " +
-				"WHERE `pid` = ?;";
+				"SET `product_number`=?," +
+				"`product_description`=?," +
+				"`quantity`=? " +
+				"WHERE `pid` = ?";
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(updateSql);
 		prepStmt.setNString(1, productTemplate.getProductNumber());
 		prepStmt.setNString(2, productTemplate.getProductDescription());
-		prepStmt.setInt(3, productTemplate.getId());
+		prepStmt.setInt(3, productTemplate.getQuantity());
+		prepStmt.setInt(4, productTemplate.getId());
 		
 		prepStmt.execute();
 		prepStmt.close();

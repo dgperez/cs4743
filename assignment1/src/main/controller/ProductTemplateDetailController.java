@@ -12,11 +12,11 @@ import main.view.ProductTemplateDetailView;
 public class ProductTemplateDetailController implements ActionListener {
 
 	private ProductTemplateDetailView productTemplateDetailView;
-	
+
 	private ProductTemplates productTemplates;
-	
+
 	private boolean newTemplate = false;
-	
+
 	public ProductTemplateDetailController(
 			ProductTemplateDetailView productTemplateDetailView,
 			ProductTemplates productTemplates) {
@@ -31,24 +31,25 @@ public class ProductTemplateDetailController implements ActionListener {
 			ProductTemplate productTemplate = 
 					this.productTemplateDetailView.getProductTemplate();
 			try{
-				if(this.productTemplates.validateProductTemplate(
-						productTemplate)){
-					if(this.newTemplate){
+
+				if(this.newTemplate){
+					if(this.productTemplates.validateProductTemplate(
+							productTemplate)){
 						this.productTemplateDetailView.setProductTemplate(
 								this.productTemplates.addProductTemplate(
 										productTemplate));
 						this.newTemplate = false;
 						this.productTemplateDetailView.setNew(
 								this.newTemplate);
-					} else {
-						this.productTemplateDetailView.setProductTemplate(
-								productTemplate);
-						this.productTemplates.editProductTemplate(
-								productTemplate);
 					}
-					this.productTemplateDetailView.refreshObserver();
+				} else {
+					this.productTemplateDetailView.setProductTemplate(
+							productTemplate);
+					this.productTemplates.editProductTemplate(
+							productTemplate);
 				}
-			
+				this.productTemplateDetailView.refreshObserver();
+
 			} catch (Exception e1) {
 				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, "Error: " + 
@@ -56,7 +57,7 @@ public class ProductTemplateDetailController implements ActionListener {
 			}
 		}
 	}
-	
+
 	public void templateIsNew(){
 		this.newTemplate = true;
 	}

@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -15,6 +16,8 @@ import javax.swing.JScrollPane;
 
 import main.controller.InventoryListController;
 import main.model.Inventory;
+import main.model.Item;
+import main.model.ProductTemplate;
 import main.model.ProductTemplateInventory;
 import main.model.Session;
 
@@ -24,11 +27,15 @@ public class InventoryListView extends JFrame {
 
 	private JList<Object> list;
 	
+	DefaultListModel<Object> listModel;
+	
 	private JButton addPart;
 	
 	private JButton deletePart;
 	
 	private Inventory inventory;
+	
+	private ProductTemplateInventory productInventory;
 	
 	private JScrollPane scrollPane;
 	
@@ -38,17 +45,28 @@ public class InventoryListView extends JFrame {
 	
 	private Session session;
 
-	public InventoryListView(Inventory inventory, Session session) {
+	public InventoryListView(Inventory inventory, 
+			ProductTemplateInventory productInventory, Session session) {
 		super("Cabinetron Inventory");
 		
 		this.inventory = inventory;
+		this.productInventory = productInventory;
 		this.session = session;
 		
 		this.panel = new JPanel();
 		this.panel.setLayout(new BorderLayout());
 		this.panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		
-		this.list = new JList<Object>(this.inventory.getInventory().toArray());
+		listModel = new DefaultListModel<Object>();
+		for(Item item : this.inventory.getInventory()){
+			listModel.addElement(item);
+		}
+		if(session.canViewProductTemplates()){
+			for(ProductTemplate product : this.productInventory.getInventory()){
+				listModel.addElement(product);
+			}
+		}
+		this.list = new JList<Object>(listModel);
 		
 		this.scrollPane = new JScrollPane();
 		this.scrollPane.getViewport().add(this.list);
@@ -100,14 +118,25 @@ public class InventoryListView extends JFrame {
 		}
 	}
 	
-	public void refreshList(Inventory inventory){
-		this.list.setListData(inventory.getInventory().toArray());
+	private void refreshList(){
+		this.listModel.clear();
+		for(Item item : this.inventory.getInventory()){
+			listModel.addElement(item);
+		}
+		for(ProductTemplate product : this.productInventory.getInventory()){
+			listModel.addElement(product);
+		}
 		this.list.repaint();
 	}
-
-	public void refreshList(ProductTemplateInventory productInventory) {
-		this.list.setListData(productInventory.getInventory().toArray());
-		this.list.repaint();
+	
+	public void refreshList(Inventory inventory){
+		this.inventory = inventory;
+		refreshList();
+	}
+	
+	public void refreshList(ProductTemplateInventory productInventory){
+		this.productInventory = productInventory;
+		refreshList();
 	}
 	
 	public Object getSelectedListItem(){
