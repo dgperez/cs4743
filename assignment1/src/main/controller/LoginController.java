@@ -18,6 +18,7 @@ public class LoginController implements ActionListener {
 	
 	public LoginController(LoginView loginView, 
 			ConnectionGateway connGateway) {
+		this.loginView = loginView;
 		this.connGateway = connGateway;
 	}
 

@@ -21,7 +21,7 @@ public class User {
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {
@@ -77,8 +77,7 @@ public class User {
 	@Override
 	public String toString(){
 		return "user: " + this.fullName
-				+ ", login: " + this.email
-				+ ", role: " + this.role;
+				+ ", login: " + this.email;
 	}
 	
 }

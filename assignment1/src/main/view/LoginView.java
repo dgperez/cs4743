@@ -84,6 +84,11 @@ public class LoginView extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Part Detail");
 		setLocationRelativeTo(null);
+		this.setVisible(true);
+	}
+	
+	public void closeView(){
+		this.dispose();
 	}
 	
 	public boolean getValidLogin(){

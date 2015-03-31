@@ -11,6 +11,7 @@ public class Authenticator {
 	
 	public Authenticator(User user, 
 			ConnectionGateway connGateway){
+		this.user = user;
 		this.connGateway = connGateway;
 	}
 
