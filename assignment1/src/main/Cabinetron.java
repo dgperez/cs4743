@@ -56,7 +56,8 @@ public class Cabinetron {
 				validLogin = loginView.getValidLogin();
 				// The while loop needs a pause for this assignment, 
 				//otherwise it seems a race condition prevents the 
-				//assignment from working
+				//assignment from working.
+				// C# event handling is superior.
 				Thread.sleep(100);
 			}
 
