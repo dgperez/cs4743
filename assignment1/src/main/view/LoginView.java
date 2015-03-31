@@ -89,6 +89,7 @@ public class LoginView extends JFrame {
 	}
 	
 	public void closeView(){
+		this.setVisible(false);
 		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 	}
 	
