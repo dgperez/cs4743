@@ -30,6 +30,13 @@ public class LoginController implements ActionListener {
 				Authenticator auth = new Authenticator(user, this.connGateway);
 				this.loginView.setSession(auth.Authenticate());
 				this.loginView.setValidLogin(true);
+				if(user.getRole().equals("Production Manager")){
+					user.setProductionManager(this.loginView.getSession());
+				} else if (user.getRole().equals("Inventory Manager")){
+					user.setInventoryManager(this.loginView.getSession());
+				} else if (user.getRole().equals("Admin")){
+					user.setAdmin(this.loginView.getSession());
+				}
 			} catch(Exception e1){
 				e1.printStackTrace();
 				this.loginView.setValidLogin(false);

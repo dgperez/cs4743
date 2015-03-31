@@ -26,7 +26,8 @@ public class SessionDao extends AbstractDao {
 			throw new Exception("Bad Login");
 		}
 		
-		User user = new User(rs.getString(1), rs.getString(2));
+		User user = new User(rs.getString(1), rs.getString(2), 
+				rs.getString(3));
 		Session session = new Session(user);
 		session.setUser(user);
 		if(rs.getString(3).equals("Inventory Manager")){

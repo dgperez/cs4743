@@ -31,9 +31,12 @@ public class Cabinetron {
 		try {
 			ConnectionGateway connGateway = new ConnectionGateway();
 			
-			User user1 = new User("Tom Jones", "tom.jones@test.com");
-			User user2 = new User("Sue Smith", "sue.smith@test.com");
-			User user3 = new User("Ragnar Nelson", "ragnar.nelson@test.com");
+			User user1 = new User("Tom Jones", "tom.jones@test.com", 
+					"Production Manager");
+			User user2 = new User("Sue Smith", "sue.smith@test.com", 
+					"Production Manager");
+			User user3 = new User("Ragnar Nelson", "ragnar.nelson@test.com", 
+					"Production Manager");
 			ArrayList<User> users = new ArrayList<User>();
 			
 			users.add(user1);

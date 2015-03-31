@@ -25,6 +25,8 @@ public class ConnectionGateway {
 	
 	private static String propertyFilePath;
 	
+	private static int total_connections = 0;
+	
 	public ConnectionGateway() {
 		this.initProperties();		
 	}
@@ -72,7 +74,9 @@ public class ConnectionGateway {
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			conn = DriverManager.getConnection(this.getConnectionString());
+			String temp = this.getConnectionString();
+			conn = DriverManager.getConnection(temp + " " + ++total_connections);
+			System.out.println(temp);
 		} catch (InstantiationException | IllegalAccessException
 				| ClassNotFoundException e) {
 			// TODO Auto-generated catch block
