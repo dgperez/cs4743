@@ -1,6 +1,5 @@
 package main;
 
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import main.controller.InventoryListController;
@@ -10,7 +9,6 @@ import main.controller.ProductTemplateListController;
 import main.dao.AbstractDao;
 import main.dao.ConnectionGateway;
 import main.dao.TypeDao;
-import main.model.Authenticator;
 import main.model.Inventory;
 import main.model.Locations;
 import main.model.PartsInventory;
@@ -29,8 +27,6 @@ public class Cabinetron {
 	 * 
 	 * */
 	public static void main(String[] args){
-
-		// Testing
 
 		try {
 			ConnectionGateway connGateway = new ConnectionGateway();
@@ -62,6 +58,7 @@ public class Cabinetron {
 			}
 
 			session = loginView.getSession();
+			
 			loginView.closeView();
 			
 			TypeDao typeDao = new TypeDao(connGateway);
