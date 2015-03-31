@@ -12,13 +12,24 @@ public class ProductTemplate {
 	private String productDescription;
 	
 	private List<ProductTemplatePart> productTemplateParts = 
-			new ArrayList<ProductTemplatePart>();;
+			new ArrayList<ProductTemplatePart>();
+	
+	private int quantity;
 	
 	public ProductTemplate(int id, String productNumber, 
-			String productDescription) {
+			String productDescription, int quantity) {
 		this.id = id;
 		this.productNumber = productNumber;
 		this.productDescription = productDescription;
+		this.quantity = quantity;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	public int getId(){
@@ -33,7 +44,7 @@ public class ProductTemplate {
 		return this.productNumber;
 	}
 	
-	public void setProductNumber(String productNumber) throws Exception {
+	public void setProductNumber(String productNumber){
 		this.productNumber = productNumber;
 	}
 	
@@ -41,8 +52,7 @@ public class ProductTemplate {
 		return this.productDescription;
 	}
 	
-	public void setProductDescription(String productDescription) 
-			throws Exception{
+	public void setProductDescription(String productDescription){
 		this.productDescription = productDescription;
 	}
 	

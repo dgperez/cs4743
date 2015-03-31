@@ -54,9 +54,28 @@ public class Cabinetron {
 			PartsListView partsListView = 
 					new PartsListView(partsInventory, session);
 
+			ProductTemplates productTemplates = null;
+			ProductTemplateListView productTemplatesListView = null;
+			ProductTemplateListController productTemplatesListController = 
+					null;
+			if(session.canViewProductTemplates()){
+				productTemplates = new ProductTemplates(connGateway);
+				productTemplates.loadInitialProductTemplates();
+
+				productTemplatesListView = 
+						new ProductTemplateListView(productTemplates);
+				productTemplates.registerView(productTemplatesListView);
+
+				productTemplatesListController = 
+						new ProductTemplateListController(productTemplates, 
+								productTemplatesListView, connGateway);
+				productTemplatesListView
+				.registerListener(productTemplatesListController);
+			}
+			
 			InventoryListController inventoryListController = 
 					new InventoryListController(inventoryListView, inventory, 
-							locations, partsInventory, session);
+							locations, partsInventory, session, productTemplates);
 
 			PartsListController partsListController = 
 					new PartsListController(partsInventory, unitsOfQuantity,
@@ -67,22 +86,6 @@ public class Cabinetron {
 
 			inventory.registerView(inventoryListView);
 			partsInventory.registerView(partsListView);
-
-			if(session.canViewProductTemplates()){
-				ProductTemplates productTemplates = 
-						new ProductTemplates(connGateway);
-				productTemplates.loadInitialProductTemplates();
-
-				ProductTemplateListView productTemplatesListView = 
-						new ProductTemplateListView(productTemplates);
-				productTemplates.registerView(productTemplatesListView);
-
-				ProductTemplateListController productTemplatesListController = 
-						new ProductTemplateListController(productTemplates, 
-								productTemplatesListView, connGateway);
-				productTemplatesListView
-				.registerListener(productTemplatesListController);
-			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

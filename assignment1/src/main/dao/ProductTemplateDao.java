@@ -47,7 +47,7 @@ public class ProductTemplateDao extends AbstractDao {
 		return productTemplate;
 	}
 	
-	public void editProductTemplate(ProductTemplate productTemplate) 
+	public ProductTemplate editProductTemplate(ProductTemplate productTemplate) 
 			throws SQLException{
 		String updateSql = "UPDATE `product_templates` " +
 				"SET `product_number` = ?, " +
@@ -62,12 +62,13 @@ public class ProductTemplateDao extends AbstractDao {
 		prepStmt.execute();
 		prepStmt.close();
 		this.connGateway.closeConnection(conn);
+		return productTemplate;
 	}
 	
 	public ArrayList<ProductTemplate> getProductTemplates() 
 			throws SQLException {
 		String selectSql = "SELECT `pid`, `product_number`, " +
-				"`product_description` FROM `product_templates`;";
+				"`product_description`, `quantity` FROM `product_templates`";
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(selectSql);
 		ResultSet rs = prepStmt.executeQuery();
@@ -79,12 +80,13 @@ public class ProductTemplateDao extends AbstractDao {
 			int productTemplateId = rs.getInt(1);
 			String productNumber = rs.getString(2);
 			String productDescription = rs.getString(3);
+			int quantity = rs.getInt(4);
 			ArrayList<ProductTemplatePart> parts = 
 					productTemplatePartsDao.
 						getProductTemplateParts(productTemplateId);
 			ProductTemplate productTemplate = 
 					new ProductTemplate(productTemplateId, 
-							productNumber, productDescription);
+							productNumber, productDescription, quantity);
 			productTemplate.setProductTemplateParts(parts);
 			productTemplates.add(productTemplate);
 		}
@@ -96,7 +98,7 @@ public class ProductTemplateDao extends AbstractDao {
 	
 	public ProductTemplate getProductTemplate(int pid) throws SQLException{
 		String selectSql = "SELECT `pid`, `product_number`, " +
-				"`product_description` FROM `product_templates` " +
+				"`product_description`, `quantity` FROM `product_templates` " +
 				"WHERE `pid` = ?;";
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(selectSql);
@@ -106,6 +108,7 @@ public class ProductTemplateDao extends AbstractDao {
 		int productTemplateId = rs.getInt(1);
 		String productNumber = rs.getString(2);
 		String productDescription = rs.getString(3);
+		int quantity = rs.getInt(4);
 		rs.close();
 		prepStmt.close();
 		
@@ -119,7 +122,7 @@ public class ProductTemplateDao extends AbstractDao {
 		
 		ProductTemplate productTemplate = 
 				new ProductTemplate(productTemplateId, productNumber, 
-						productDescription);
+						productDescription, quantity);
 		productTemplate.setProductTemplateParts(parts);
 		return productTemplate;
 	}

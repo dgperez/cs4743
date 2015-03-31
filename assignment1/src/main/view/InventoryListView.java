@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 
 import main.controller.InventoryListController;
 import main.model.Inventory;
+import main.model.ProductTemplateInventory;
 import main.model.Session;
 
 public class InventoryListView extends JFrame {
@@ -101,6 +102,11 @@ public class InventoryListView extends JFrame {
 	
 	public void refreshList(Inventory inventory){
 		this.list.setListData(inventory.getInventory().toArray());
+		this.list.repaint();
+	}
+
+	public void refreshList(ProductTemplateInventory productInventory) {
+		this.list.setListData(productInventory.getInventory().toArray());
 		this.list.repaint();
 	}
 	

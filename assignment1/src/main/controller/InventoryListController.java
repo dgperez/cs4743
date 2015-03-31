@@ -13,30 +13,36 @@ import main.model.Inventory;
 import main.model.Item;
 import main.model.Locations;
 import main.model.PartsInventory;
+import main.model.ProductTemplate;
+import main.model.ProductTemplates;
 import main.model.Session;
 import main.view.InventoryListView;
 import main.view.ItemDetailView;
+import main.view.ProductTemplateDetailView;
 
 public class InventoryListController implements MouseListener, ActionListener {
-	
+
 	private InventoryListView listView;
-	
+
 	private Inventory inventory;
-	
+
+	private ProductTemplates productTemplates;
+
 	private Locations locations;
-	
+
 	private PartsInventory partsInventory;
-	
+
 	private Session session;
 
 	public InventoryListController(InventoryListView listView, 
 			Inventory inventory, Locations locations, 
-			PartsInventory partsInventory, Session session) {
+			PartsInventory partsInventory, Session session, ProductTemplates productTemplates) {
 		this.locations = locations;
 		this.listView = listView;
 		this.inventory = inventory;
 		this.partsInventory = partsInventory;
 		this.session = session;
+		this.productTemplates = productTemplates;
 	}
 
 	@Override
@@ -45,17 +51,32 @@ public class InventoryListController implements MouseListener, ActionListener {
 			if(e.getSource() instanceof JList){
 				@SuppressWarnings("unchecked")
 				JList<Object> list = (JList<Object>)e.getSource();
-				Item tempItem = (Item)list.getSelectedValue();
-				ItemDetailView view = new 
-						ItemDetailView(this.locations, this.partsInventory, 
-								false);
-				this.inventory.registerObservers(view);
-				view.setItem(tempItem);
-				ItemDetailController itemController = 
-						new ItemDetailController(view, this.inventory);
-				view.registerListener(itemController);
-				this.inventory.registerObservers(view);
-				view.setVisible(true);
+				if(session.canViewProductTemplates() && 
+						list.getSelectedValue() instanceof ProductTemplate){
+					ProductTemplate tempProduct = 
+							(ProductTemplate)list.getSelectedValue();
+					ProductTemplateDetailView view = 
+							new ProductTemplateDetailView(false);
+					this.productTemplates.registerObservers(view);
+					view.setProductTemplate(tempProduct);
+					ProductTemplateDetailController productController = 
+							new ProductTemplateDetailController(view, productTemplates);
+					view.registerListener(productController);
+					this.productTemplates.registerObservers(view);
+					view.setVisible(true);
+				} else {
+					Item tempItem = (Item)list.getSelectedValue();
+					ItemDetailView view = new 
+							ItemDetailView(this.locations, this.partsInventory, 
+									false);
+					this.inventory.registerObservers(view);
+					view.setItem(tempItem);
+					ItemDetailController itemController = 
+							new ItemDetailController(view, this.inventory);
+					view.registerListener(itemController);
+					this.inventory.registerObservers(view);
+					view.setVisible(true);
+				}
 			}
 		}
 	}
@@ -86,6 +107,7 @@ public class InventoryListController implements MouseListener, ActionListener {
 		} else if ("delete".equals(e.getActionCommand())){
 			Object temp = this.listView.getSelectedListItem();
 			if(temp != null){
+				if(temp instanceof Item){
 				Item tempItem = (Item)temp;
 				if(tempItem.getQuantity() != 0){
 					JOptionPane.showMessageDialog(null, 
@@ -99,6 +121,15 @@ public class InventoryListController implements MouseListener, ActionListener {
 								this.inventory.getInventory());
 					} catch (SQLException e1) {
 						e1.printStackTrace();
+					}
+				}
+				} else {
+					ProductTemplate tempProduct = (ProductTemplate)temp;
+					if(tempProduct.getQuantity() != 0){
+						JOptionPane.showMessageDialog(null, 
+								"Quantity must be zero to delete product template.", 
+								"Quantity Greater Than Zero", 
+								JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			} else {

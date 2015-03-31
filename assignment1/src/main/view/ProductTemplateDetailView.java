@@ -29,6 +29,9 @@ public class ProductTemplateDetailView extends JFrame {
 	private JLabel productDescription_Label = new JLabel("Product Desc: ");
 	private JTextField productDescription_Text;
 	
+	private JLabel quantity_Label = new JLabel("Quantity: ");
+	private JTextField quantity_Text;
+	
 	private JPanel controls;
 	
 	private JPanel inputs;
@@ -64,6 +67,8 @@ public class ProductTemplateDetailView extends JFrame {
 		
 		this.productDescription_Text = new JTextField(10);
 		
+		this.quantity_Text = new JTextField(10);
+		
 		if(this.newTemplate){
 			this.id_Label.setVisible(false);
 			this.id_Text.setVisible(false);
@@ -77,6 +82,9 @@ public class ProductTemplateDetailView extends JFrame {
 		
 		this.labelsPanel.add(this.productDescription_Label);
 		this.fieldsPanel.add(this.productDescription_Text);
+		
+		this.fieldsPanel.add(this.quantity_Label);
+		this.fieldsPanel.add(this.quantity_Text);
 		
 		this.controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
 		
@@ -115,6 +123,8 @@ public class ProductTemplateDetailView extends JFrame {
 					this.productTemplate.getProductNumber());
 			this.productDescription_Text.setText(
 					this.productTemplate.getProductDescription());
+			this.quantity_Text.setText(
+					Integer.toString(this.productTemplate.getQuantity()));
 		}
 	}
 	
@@ -153,9 +163,14 @@ public class ProductTemplateDetailView extends JFrame {
 			return new ProductTemplate(
 					(!this.newTemplate) ? this.getId() : -1, 
 					this.getProductNumber(), 
-					this.getProductDescription());
+					this.getProductDescription(),
+					this.getQuantity());
 		}
 		return this.productTemplate;
+	}
+	
+	public int getQuantity(){
+		return Integer.parseInt(this.quantity_Text.getText());
 	}
 	
 	public void setNew(boolean isNew){
