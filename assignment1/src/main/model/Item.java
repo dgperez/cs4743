@@ -6,9 +6,10 @@ import java.util.Map.Entry;
 public class Item {
 	private int id;
 	private int quantity;
-	private boolean toEdit = false;
 	
 	private Part part;
+	
+	private ProductTemplate productTemplate;
 
 	private Entry<Integer, String> location;
 	
@@ -18,6 +19,14 @@ public class Item {
 			Entry<Integer, String> location) {
 		this.id = id;
 		this.part = part;
+		this.quantity = quantity;
+		this.location = location;
+	}
+	
+	public Item(int id, ProductTemplate productTemplate, int quantity, 
+			Entry<Integer, String> location) {
+		this.id = id;
+		this.productTemplate = productTemplate;
 		this.quantity = quantity;
 		this.location = location;
 	}
@@ -50,12 +59,12 @@ public class Item {
 		this.part = part;
 	}
 	
-	public void setEditPart(boolean editPart){
-		this.toEdit = editPart;
+	public ProductTemplate getProductTemplate(){
+		return this.productTemplate;
 	}
-
-	public boolean canEditPart(){
-		return this.toEdit;
+	
+	public void setProductTemplate(ProductTemplate productTemplate){
+		this.productTemplate = productTemplate;
 	}
 	
 	public Timestamp getLastModified(){
@@ -106,6 +115,11 @@ public class Item {
 			if (other.part != null)
 				return false;
 		} else if (!part.equals(other.part))
+			return false;
+		if (productTemplate == null) {
+			if (other.productTemplate != null)
+				return false;
+		} else if (!productTemplate.equals(other.productTemplate))
 			return false;
 		if (quantity != other.quantity)
 			return false;
