@@ -47,6 +47,8 @@ public class ProductTemplateDetailView extends JFrame {
 	private ProductTemplate productTemplate;
 	
 	private boolean newTemplate = false;
+	
+	private JButton createProduct;
 
 	public ProductTemplateDetailView(boolean newTemplate) {
 		super("Product Template");
@@ -88,9 +90,13 @@ public class ProductTemplateDetailView extends JFrame {
 		
 		this.controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
 		
+		this.createProduct = new JButton ("Create Product");
+		this.createProduct.setActionCommand("createPtoduct");
+		
 		this.saveTemplate = new JButton("Save Template");
 		this.saveTemplate.setActionCommand("saveTemplate");
 		
+		this.controls.add(createProduct);
 		this.controls.add(this.saveTemplate);
 				
 		this.gui = new JPanel(new BorderLayout(10, 10));
