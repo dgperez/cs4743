@@ -32,6 +32,8 @@ public class InventoryListView extends JFrame {
 	private JButton addPart;
 
 	private JButton deletePart;
+	
+	private JButton addProduct;
 
 	private Inventory inventory;
 
@@ -79,6 +81,13 @@ public class InventoryListView extends JFrame {
 		if(!this.session.canAddInventory()){
 			this.addPart.setEnabled(false);
 		}
+		
+		this.addProduct = new JButton("Add Product");
+		this.addProduct.setActionCommand("addProduct");
+		this.controls.add(this.addProduct);
+		if(!this.session.canCreateProducts()){
+			this.addProduct.setEnabled(false);
+		}
 
 		this.deletePart = new JButton("Delete Item");
 		this.deletePart.setActionCommand("delete");
@@ -86,7 +95,7 @@ public class InventoryListView extends JFrame {
 		if(!this.session.canDeleteInventory()){
 			this.deletePart.setEnabled(false);
 		}
-
+		
 		add(this.panel, BorderLayout.CENTER);
 		add(this.controls, BorderLayout.SOUTH);
 

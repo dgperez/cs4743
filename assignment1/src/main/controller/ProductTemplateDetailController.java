@@ -65,7 +65,6 @@ public class ProductTemplateDetailController implements ActionListener {
 			try{
 				ProductsDao pDao = new ProductsDao(connGateway);
 				pDao.addProduct(productTemplate);
-				productTemplate.setQuantity(productTemplate.getQuantity()+1);
 				this.productTemplates.editProductTemplate(productTemplate);
 			} catch(Exception e1){
 				e1.printStackTrace();

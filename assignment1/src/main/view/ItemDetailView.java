@@ -20,6 +20,8 @@ import main.model.Item;
 import main.model.Locations;
 import main.model.Part;
 import main.model.PartsInventory;
+import main.model.ProductTemplate;
+import main.model.ProductTemplates;
 
 public class ItemDetailView extends JFrame {
 
@@ -27,9 +29,11 @@ public class ItemDetailView extends JFrame {
 
 	private JTextField id;
 
-	private JComboBox<Part> parts;
+	private JComboBox<Object> partsOrProductTemplates;
 
 	private PartsInventory partInventory;
+	
+	private ProductTemplates productTemplates;
 
 	private JTextField quantity;
 
@@ -41,7 +45,7 @@ public class ItemDetailView extends JFrame {
 
 	private JLabel quantityLabel = new JLabel("Quantity: ");
 
-	private JLabel partLabel = new JLabel("Part: ");
+	private JLabel partOrProductLabel;
 
 	private JLabel locationLabel = new JLabel("Location: ");
 
@@ -54,12 +58,16 @@ public class ItemDetailView extends JFrame {
 	private Item item;
 	
 	private boolean isNewItem;
+	
+	private boolean isProduct;
 
 	public ItemDetailView(Locations locations, PartsInventory partsInventory, 
-			boolean isNewItem) {
+			boolean isNewItem, boolean isProduct, 
+			ProductTemplates productTemplates) {
 		this.locations = locations;
 		this.inputs = new JPanel(new BorderLayout(5,5));
 		this.isNewItem = isNewItem;
+		this.isProduct = isProduct;
 
 		JPanel labelsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
 		JPanel fieldsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
@@ -67,9 +75,16 @@ public class ItemDetailView extends JFrame {
 		this.partInventory = partsInventory;
 		
 		this.id = new JTextField(10);
-		this.parts = new JComboBox<Part>(
-				partInventory.getAllParts().toArray(
-						new Part[this.partInventory.getAllParts().size()]));
+		if(!this.isProduct){
+			this.partOrProductLabel = new JLabel("Part: ");
+			this.partsOrProductTemplates = new JComboBox<Object>(
+					this.partInventory.getAllParts().toArray());
+		} else {
+			this.partOrProductLabel = new JLabel("Product: ");
+			this.partsOrProductTemplates = new JComboBox<Object>(
+					this.productTemplates.getProductTemplates().toArray());
+		}
+		
 		this.quantity = new JTextField(10);
 		this.location = new JComboBox<String>(this.locations.getLocations());
 
@@ -85,8 +100,8 @@ public class ItemDetailView extends JFrame {
 		fieldsPanel.add(this.id);
 		this.id.setEditable(false);
 
-		labelsPanel.add(this.partLabel);
-		fieldsPanel.add(this.parts);
+		labelsPanel.add(this.partOrProductLabel);
+		fieldsPanel.add(this.partsOrProductTemplates);
 
 		labelsPanel.add(this.quantityLabel);
 		fieldsPanel.add(this.quantity);
@@ -131,11 +146,18 @@ public class ItemDetailView extends JFrame {
 	public void refreshObserver(){
 		if(!this.isNewItem){
 			this.id.setText(Integer.toString(this.item.getId()));
-			this.parts.setSelectedItem(this.item.getPart());
+			if(!this.isProduct){
+				this.partsOrProductTemplates.setSelectedItem(
+						this.item.getPart());
+			} else {
+				this.partsOrProductTemplates.setSelectedItem(
+						this.item.getProductTemplate());
+			}
+			
 			this.quantity.setText(Integer.toString(this.item.getQuantity()));
 			this.location.setSelectedItem(this.item.getLocation().getValue());
 		} else {
-			this.parts.setSelectedIndex(0);
+			this.partsOrProductTemplates.setSelectedIndex(0);
 		}
 	}
 
@@ -152,10 +174,18 @@ public class ItemDetailView extends JFrame {
 	}
 	
 	public Item getItem(){
-		Item temp = new Item((this.isNewItem) ? -1 : this.getId(), 
-				this.getPart(), 
-				this.getQuantity(), 
-				this.getItemLocation());
+		Item temp = null;
+		if(!this.isProduct){
+			temp = new Item((this.isNewItem) ? -1 : this.getId(), 
+					this.getPart(), 
+					this.getQuantity(), 
+					this.getItemLocation());
+		} else {
+			temp = new Item((this.isNewItem) ? -1 : this.getId(), 
+					this.getProductTemplate(), 
+					this.getQuantity(), 
+					this.getItemLocation());
+		}
 		if(!this.isNewItem){
 			temp.setLastModified(this.item.getLastModified());
 		}
@@ -167,8 +197,15 @@ public class ItemDetailView extends JFrame {
 	}
 	
 	public Part getPart(){
-		Part part = (Part)this.parts.getSelectedItem();
+		Part part = (Part)this.partsOrProductTemplates.getSelectedItem();
 		return part;
+	}
+	
+	public ProductTemplate getProductTemplate(){
+		ProductTemplate productTemplate = 
+				(ProductTemplate)this.partsOrProductTemplates
+					.getSelectedItem();
+		return productTemplate;
 	}
 	
 	public int getQuantity(){

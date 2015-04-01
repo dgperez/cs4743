@@ -14,22 +14,11 @@ public class ProductTemplate {
 	private List<ProductTemplatePart> productTemplateParts = 
 			new ArrayList<ProductTemplatePart>();
 	
-	private int quantity;
-	
 	public ProductTemplate(int id, String productNumber, 
-			String productDescription, int quantity) {
+			String productDescription) {
 		this.id = id;
 		this.productNumber = productNumber;
 		this.productDescription = productDescription;
-		this.quantity = quantity;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
 	}
 
 	public int getId(){

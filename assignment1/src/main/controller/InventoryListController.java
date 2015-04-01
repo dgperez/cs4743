@@ -52,9 +52,13 @@ public class InventoryListController implements MouseListener, ActionListener {
 				@SuppressWarnings("unchecked")
 				JList<Object> list = (JList<Object>)e.getSource();
 				Item tempItem = (Item)list.getSelectedValue();
+				boolean isProduct = false;
+				if(tempItem.getPart() == null){
+					isProduct = true;
+				}
 				ItemDetailView view = new 
 						ItemDetailView(this.locations, this.partsInventory, 
-								false);
+								false, isProduct);
 				this.inventory.registerObservers(view);
 				view.setItem(tempItem);
 				ItemDetailController itemController = 
@@ -81,9 +85,36 @@ public class InventoryListController implements MouseListener, ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if("add".equals(e.getActionCommand())){
+		boolean isProduct = false;
+		if ("addProduct".equals(e.getActionCommand())){
+			isProduct = true;
+		} else if ("delete".equals(e.getActionCommand())){
+			Object temp = this.listView.getSelectedListItem();
+			if(temp != null){
+				Item tempItem = (Item)temp;
+				if(tempItem.getQuantity() != 0){
+					JOptionPane.showMessageDialog(null,
+							"Quantity must be zero to delete item.",
+							"Quantity Greater Than Zero",
+							JOptionPane.ERROR_MESSAGE);
+						return;
+				} else {
+					try {
+						this.inventory.removeItem(tempItem,
+								this.inventory.getInventory());
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Select an item in the list to delete.",
+						"No Item to Delete", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		if(e.getActionCommand().startsWith("add")){
 			ItemDetailView view = new ItemDetailView(this.locations, 
-					this.partsInventory, true);
+					this.partsInventory, true, isProduct);
 			ItemDetailController itemController = 
 					new ItemDetailController(view, this.inventory, 
 							this.session);
@@ -91,39 +122,6 @@ public class InventoryListController implements MouseListener, ActionListener {
 			itemController.itemIsNew();
 			view.registerListener(itemController);
 			view.showItemDetailView();
-		} else if ("delete".equals(e.getActionCommand())){
-			Object temp = this.listView.getSelectedListItem();
-			if(temp != null){
-				if(temp instanceof Item){
-				Item tempItem = (Item)temp;
-				if(tempItem.getQuantity() != 0){
-					JOptionPane.showMessageDialog(null, 
-							"Quantity must be zero to delete item.", 
-							"Quantity Greater Than Zero", 
-							JOptionPane.ERROR_MESSAGE);
-					return;
-				} else {
-					try {
-						this.inventory.removeItem(tempItem, 
-								this.inventory.getInventory());
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-				}
-				} else {
-					ProductTemplate tempProduct = (ProductTemplate)temp;
-					if(tempProduct.getQuantity() != 0){
-						JOptionPane.showMessageDialog(null, 
-								"Quantity must be zero to delete product template.", 
-								"Quantity Greater Than Zero", 
-								JOptionPane.ERROR_MESSAGE);
-					}
-				}
-			} else {
-				JOptionPane.showMessageDialog(null, 
-						"Select an item in the list to delete.", 
-						"No Item to Delete", JOptionPane.ERROR_MESSAGE);
-			}
 		}
 	}
 }

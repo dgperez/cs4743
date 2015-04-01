@@ -77,7 +77,7 @@ public class ProductsDao extends AbstractDao {
 					"SET `quantity`=? " + 
 					"WHERE `pid`=?";
 			prepStmt = conn.prepareCall(updateSql);
-			prepStmt.setInt(1, (productTemplate.getQuantity()+1));
+			//prepStmt.setInt(1, (productTemplate.getQuantity()+1));
 			prepStmt.setInt(2, productTemplate.getId());
 			prepStmt.execute();
 			prepStmt = conn.prepareCall(commit);
