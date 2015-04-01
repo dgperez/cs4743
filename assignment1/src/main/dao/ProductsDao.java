@@ -36,6 +36,18 @@ public class ProductsDao extends AbstractDao {
 					prepStmt = conn.prepareCall(selectSql);
 					prepStmt.setInt(1, ptp.getPart().getId());
 					ResultSet rs = prepStmt.executeQuery();
+					boolean quantity_met = false;
+					int quantity = ptp.getPartQuantity();
+					while(rs.next()){
+						int temp_quantity = rs.getInt(3);
+						if(temp_quantity == quantity){
+							quantity_met = true;
+						}
+						if(quantity_met){
+							break;
+						}
+					}
+					
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
