@@ -24,7 +24,8 @@ DROP TABLE IF EXISTS `inventory`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `inventory` (
   `pid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `parts_id` int(10) unsigned NOT NULL,
+  `parts_id` int(10) unsigned DEFAULT NULL,
+  `product_templates_id` int(10) unsigned DEFAULT NULL,
   `quantity` int(10) unsigned NOT NULL,
   `locations_id` int(10) unsigned NOT NULL,
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -33,8 +34,8 @@ CREATE TABLE `inventory` (
   UNIQUE KEY `part_locations_unique1` (`parts_id`,`locations_id`),
   KEY `locations_id_fkey1_idx` (`locations_id`),
   KEY `part_id_fkey1_idx` (`parts_id`),
-  CONSTRAINT `locations_id_fkey1` FOREIGN KEY (`locations_id`) REFERENCES `locations` (`pid`) ON UPDATE NO ACTION,
-  CONSTRAINT `part_id_fkey1` FOREIGN KEY (`parts_id`) REFERENCES `parts` (`pid`) ON UPDATE NO ACTION
+  CONSTRAINT `part_id_fkey1` FOREIGN KEY (`parts_id`) REFERENCES `parts` (`pid`) ON UPDATE NO ACTION,
+  CONSTRAINT `locations_id_fkey1` FOREIGN KEY (`locations_id`) REFERENCES `locations` (`pid`) ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -44,7 +45,7 @@ CREATE TABLE `inventory` (
 
 LOCK TABLES `inventory` WRITE;
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
-INSERT INTO `inventory` VALUES (3,4,15,3,'2015-03-18 23:13:12'),(7,5,1,3,'2015-03-18 23:13:12'),(10,4,11,1,'2015-03-18 23:13:12'),(22,2,12,1,'2015-04-01 05:36:12'),(23,14,3,1,'2015-03-18 23:13:12'),(25,2,23,2,'2015-03-18 23:13:12'),(27,17,7,1,'2015-03-19 00:26:24'),(28,16,9,3,'2015-03-19 01:50:48'),(29,18,20,1,'2015-04-01 05:36:48');
+INSERT INTO `inventory` VALUES (3,4,NULL,15,3,'2015-03-18 23:13:12'),(7,5,NULL,1,3,'2015-03-18 23:13:12'),(10,4,NULL,11,1,'2015-03-18 23:13:12'),(22,2,NULL,12,1,'2015-04-01 05:36:12'),(23,14,NULL,3,1,'2015-03-18 23:13:12'),(25,2,NULL,23,2,'2015-03-18 23:13:12'),(27,17,NULL,2,1,'2015-03-19 00:26:24'),(28,16,NULL,2,3,'2015-03-19 01:50:48'),(29,18,NULL,8,1,'2015-04-01 05:36:48');
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,7 +163,7 @@ CREATE TABLE `product_templates` (
 
 LOCK TABLES `product_templates` WRITE;
 /*!40000 ALTER TABLE `product_templates` DISABLE KEYS */;
-INSERT INTO `product_templates` VALUES (1,'A04','A Chair',2),(2,'A06','Testing',2),(12,'Atest23','asdfasdf',1),(13,'Atest32343535','testadsfasdfasdf',15),(19,'A007','Testing',5);
+INSERT INTO `product_templates` VALUES (1,'A04','A Chair',6),(2,'A06','Testing',2),(12,'Atest23','asdfasdf',1),(13,'Atest32343535','testadsfasdfasdf',15),(19,'A007','Testing',5);
 /*!40000 ALTER TABLE `product_templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -254,4 +255,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-01 15:50:27
+-- Dump completed on 2015-04-01 17:25:23
