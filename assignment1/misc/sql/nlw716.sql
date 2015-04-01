@@ -16,23 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Temporary view structure for view `all_parts`
---
-
-DROP TABLE IF EXISTS `all_parts`;
-/*!50001 DROP VIEW IF EXISTS `all_parts`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `all_parts` AS SELECT 
- 1 AS `pid`,
- 1 AS `part_number`,
- 1 AS `part_name`,
- 1 AS `vendor_name`,
- 1 AS `extern_part_number`,
- 1 AS `quantity_name`*/;
-SET character_set_client = @saved_cs_client;
-
---
 -- Table structure for table `inventory`
 --
 
@@ -52,7 +35,7 @@ CREATE TABLE `inventory` (
   KEY `part_id_fkey1_idx` (`parts_id`),
   CONSTRAINT `locations_id_fkey1` FOREIGN KEY (`locations_id`) REFERENCES `locations` (`pid`) ON UPDATE NO ACTION,
   CONSTRAINT `part_id_fkey1` FOREIGN KEY (`parts_id`) REFERENCES `parts` (`pid`) ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,7 +44,7 @@ CREATE TABLE `inventory` (
 
 LOCK TABLES `inventory` WRITE;
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
-INSERT INTO `inventory` VALUES (3,4,15,3,'2015-03-18 23:13:12'),(7,5,1,3,'2015-03-18 23:13:12'),(10,4,11,1,'2015-03-18 23:13:12'),(22,2,12,1,'2015-03-18 23:13:12'),(23,14,3,1,'2015-03-18 23:13:12'),(25,2,23,2,'2015-03-18 23:13:12'),(27,17,2,1,'2015-03-19 00:26:24'),(28,16,6,3,'2015-03-19 01:50:48');
+INSERT INTO `inventory` VALUES (3,4,15,3,'2015-03-18 23:13:12'),(7,5,1,3,'2015-03-18 23:13:12'),(10,4,11,1,'2015-03-18 23:13:12'),(22,2,12,1,'2015-04-01 05:36:12'),(23,14,3,1,'2015-03-18 23:13:12'),(25,2,23,2,'2015-03-18 23:13:12'),(27,17,7,1,'2015-03-19 00:26:24'),(28,16,9,3,'2015-03-19 01:50:48'),(29,18,20,1,'2015-04-01 05:36:48');
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +134,7 @@ CREATE TABLE `product_template_parts` (
 
 LOCK TABLES `product_template_parts` WRITE;
 /*!40000 ALTER TABLE `product_template_parts` DISABLE KEYS */;
-INSERT INTO `product_template_parts` VALUES (1,16,1,1),(2,17,1,1),(3,18,1,4),(5,2,1,1),(7,4,1,1),(8,2,13,1),(19,2,19,2),(20,3,19,2);
+INSERT INTO `product_template_parts` VALUES (1,16,1,1),(2,17,1,1),(3,18,1,4),(8,2,13,1),(19,2,19,2),(20,3,19,2);
 /*!40000 ALTER TABLE `product_template_parts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -179,7 +162,7 @@ CREATE TABLE `product_templates` (
 
 LOCK TABLES `product_templates` WRITE;
 /*!40000 ALTER TABLE `product_templates` DISABLE KEYS */;
-INSERT INTO `product_templates` VALUES (1,'A04','A Chair',1),(2,'A06','Testing',2),(12,'Atest23','asdfasdf',1),(13,'Atest32343535','testadsfasdfasdf',15),(19,'A007','Testing',5);
+INSERT INTO `product_templates` VALUES (1,'A04','A Chair',2),(2,'A06','Testing',2),(12,'Atest23','asdfasdf',1),(13,'Atest32343535','testadsfasdfasdf',15),(19,'A007','Testing',5);
 /*!40000 ALTER TABLE `product_templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -261,24 +244,6 @@ LOCK TABLES `vendors` WRITE;
 INSERT INTO `vendors` VALUES (13,''),(5,'adsfasdf'),(4,'asdfasdfasdf'),(8,'asdfasdfasdfasdf'),(10,'asdfasdfasdfasdfasdf'),(7,'asdfasdfsdfdsfds'),(14,'Chairs Inc'),(1,'NERV1'),(2,'NERV2'),(3,'NERV3'),(6,'statements'),(12,'syncingshitup'),(11,'syncingtest'),(9,'testingnew');
 /*!40000 ALTER TABLE `vendors` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Final view structure for view `all_parts`
---
-
-/*!50001 DROP VIEW IF EXISTS `all_parts`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`nlw716`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `all_parts` AS select `prt`.`pid` AS `pid`,`prt`.`part_number` AS `part_number`,`prt`.`part_name` AS `part_name`,`ven`.`vendor_name` AS `vendor_name`,`prt`.`extern_part_number` AS `extern_part_number`,`uoq`.`quantity_name` AS `quantity_name` from ((`parts` `prt` join `vendors` `ven` on((`ven`.`pid` = `prt`.`vendor_id`))) join `unit_of_quantities` `uoq` on((`uoq`.`pid` = `prt`.`unit_of_quantities_id`))) */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -289,4 +254,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-31  0:22:33
+-- Dump completed on 2015-04-01 15:50:27
