@@ -77,9 +77,13 @@ public class Item {
 	
 	@Override
 	public String toString(){
+		String temp = (this.part != null) ?
+				"part#: " + this.getPart().getPartNumber() + ", " 
+				: "product#: " + 
+					this.getProductTemplate().getProductNumber() + ", ";
 		return "id: " + this.getId() + ", " +
-				"part#: " + this.getPart().getPartNumber() + ", " +
-				"quantity: " + this.quantity + ", " +
+				temp
+				+ "quantity: " + this.quantity + ", " +
 				"location: " + this.getLocation().getValue();
 	}
 
