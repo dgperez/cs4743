@@ -76,13 +76,27 @@ public class ProductTemplateDetailController implements ActionListener {
 				boolean valid = true;
 				this.inventory.loadInitialInventory();
 				for(ProductTemplatePart p : productTemplate.getProductTemplateParts()){
+					if(!valid){
+						break;
+					}
+					boolean partExists = false;
 					for(Item item : this.inventory.getInventory()){
 						if(item.getPart().getId() == p.getPart().getId()){
+							partExists = true;
 							System.out.println("Checking");
-							if(item.getQuantity() < p.getPartQuantity()){
+							System.out.println(item.getPart().getPartName() + " " + Integer.toString(item.getQuantity()));
+							System.out.println(p.getPart().getPartName() + " " + Integer.toString(p.getPartQuantity()));
+							if(item.getQuantity() < p.getPartQuantity() ){
+								System.out.println("Failed!");
 								valid = false;
 							}
+							break;
 						}
+					}
+					if(!partExists){
+						JOptionPane.showMessageDialog(null, "Error: " +
+								"One or more parts no longer exist.");
+						return;
 					}
 				}
 				if(valid){
