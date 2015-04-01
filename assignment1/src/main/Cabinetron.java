@@ -73,12 +73,13 @@ public class Cabinetron {
 			PartsInventory partsInventory = new PartsInventory(connGateway, 
 					inventory);
 			partsInventory.loadParts();
-			ProductTemplates productTemplates = null;
-			ProductTemplateInventory productInventory = null;
+			ProductTemplates productTemplates = 
+					new ProductTemplates(connGateway);
+			productTemplates.loadInitialProductTemplates();
+			ProductTemplateInventory productInventory = 
+					new ProductTemplateInventory(connGateway);
+			productInventory.loadInitialInventory();
 			if(session.canViewProductTemplates()){
-				productTemplates = new ProductTemplates(connGateway);
-				productTemplates.loadInitialProductTemplates();
-
 				ProductTemplateListView productTemplatesListView = 
 						new ProductTemplateListView(productTemplates);
 				productTemplates.registerView(productTemplatesListView);
@@ -88,9 +89,8 @@ public class Cabinetron {
 								productTemplatesListView, connGateway);
 				productTemplatesListView
 				.registerListener(productTemplatesListController);
-				productInventory = new ProductTemplateInventory(connGateway);
-				productInventory.loadInitialInventory();
 			}
+			
 			
 			InventoryListView inventoryListView = null;
 			InventoryListController inventoryListController = null;

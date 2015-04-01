@@ -51,8 +51,7 @@ public class InventoryListController implements MouseListener, ActionListener {
 			if(e.getSource() instanceof JList){
 				@SuppressWarnings("unchecked")
 				JList<Object> list = (JList<Object>)e.getSource();
-				if(session.canViewProductTemplates() && 
-						list.getSelectedValue() instanceof ProductTemplate){
+				if(list.getSelectedValue() instanceof ProductTemplate){
 					ProductTemplate tempProduct = 
 							(ProductTemplate)list.getSelectedValue();
 					ProductTemplateDetailView view = 
