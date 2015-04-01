@@ -26,7 +26,7 @@ public class ProductTemplateDetailView extends JFrame {
 	private JLabel productNumber_Label = new JLabel("Product #: ");
 	private JTextField productNumber_Text;
 	
-	private JLabel productDescription_Label = new JLabel("Product Desc: ");
+	private JLabel productDescription_Label = new JLabel("Prod Desc: ");
 	private JTextField productDescription_Text;
 	
 	private JLabel quantity_Label = new JLabel("Quantity: ");
@@ -83,7 +83,7 @@ public class ProductTemplateDetailView extends JFrame {
 		this.labelsPanel.add(this.productDescription_Label);
 		this.fieldsPanel.add(this.productDescription_Text);
 		
-		this.fieldsPanel.add(this.quantity_Label);
+		this.labelsPanel.add(this.quantity_Label);
 		this.fieldsPanel.add(this.quantity_Text);
 		
 		this.controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));

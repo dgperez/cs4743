@@ -31,7 +31,6 @@ public class ProductTemplateDetailController implements ActionListener {
 			ProductTemplate productTemplate = 
 					this.productTemplateDetailView.getProductTemplate();
 			try{
-
 				if(this.newTemplate){
 					if(this.productTemplates.validateProductTemplate(
 							productTemplate)){
