@@ -51,31 +51,18 @@ public class InventoryListController implements MouseListener, ActionListener {
 			if(e.getSource() instanceof JList){
 				@SuppressWarnings("unchecked")
 				JList<Object> list = (JList<Object>)e.getSource();
-				if(list.getSelectedValue() instanceof ProductTemplate){
-					ProductTemplate tempProduct = 
-							(ProductTemplate)list.getSelectedValue();
-					ProductTemplateDetailView view = 
-							new ProductTemplateDetailView(false);
-					this.productTemplates.registerObservers(view);
-					view.setProductTemplate(tempProduct);
-					ProductTemplateDetailController productController = 
-							new ProductTemplateDetailController(view, productTemplates);
-					view.registerListener(productController);
-					this.productTemplates.registerObservers(view);
-					view.setVisible(true);
-				} else {
-					Item tempItem = (Item)list.getSelectedValue();
-					ItemDetailView view = new 
-							ItemDetailView(this.locations, this.partsInventory, 
-									false);
-					this.inventory.registerObservers(view);
-					view.setItem(tempItem);
-					ItemDetailController itemController = 
-							new ItemDetailController(view, this.inventory, this.session);
-					view.registerListener(itemController);
-					this.inventory.registerObservers(view);
-					view.setVisible(true);
-				}
+				Item tempItem = (Item)list.getSelectedValue();
+				ItemDetailView view = new 
+						ItemDetailView(this.locations, this.partsInventory, 
+								false);
+				this.inventory.registerObservers(view);
+				view.setItem(tempItem);
+				ItemDetailController itemController = 
+						new ItemDetailController(view, this.inventory, 
+								this.session);
+				view.registerListener(itemController);
+				this.inventory.registerObservers(view);
+				view.setVisible(true);
 			}
 		}
 	}

@@ -121,9 +121,6 @@ public class InventoryListView extends JFrame {
 		for(Item item : this.inventory.getInventory()){
 			listModel.addElement(item);
 		}
-		for(ProductTemplate product : this.productInventory.getInventory()){
-			listModel.addElement(product);
-		}
 		this.list.repaint();
 	}
 
