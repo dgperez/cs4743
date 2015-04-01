@@ -18,6 +18,9 @@ public class ProductsDao extends AbstractDao {
 
 	public void addProduct(ProductTemplate productTemplate) 
 			throws SQLException {
+		String startTransaction = "START TRANSACTION;";
+		String commit = "COMMIT;";
+		String rollback = "ROLLBACK;";
 		String lockSql = "LOCK TABLES `inventory` WRITE;";
 		String unlockSql = "UNLOCK TABLES;";
 		String selectSql = "SELECT `pid`, " +
@@ -30,7 +33,7 @@ public class ProductsDao extends AbstractDao {
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt;
 		try {
-			prepStmt = conn.prepareStatement(lockSql);
+			prepStmt = conn.prepareCall(lockSql);
 			prepStmt.execute();
 			for(ProductTemplatePart ptp : 
 					productTemplate.getProductTemplateParts()){
@@ -49,8 +52,10 @@ public class ProductsDao extends AbstractDao {
 					}
 				}
 			}
+			prepStmt = conn.prepareCall(startTransaction);
+			prepStmt.execute();
 			lockSql = "LOCK TABLES `product_templates` WRITE;";
-			prepStmt = conn.prepareStatement(lockSql);
+			prepStmt = conn.prepareCall(lockSql);
 			prepStmt.execute();
 			String updateSql = "UPDATE `inventory` " +
 					"SET `quantity`= `quantity`-? " + 
@@ -58,7 +63,7 @@ public class ProductsDao extends AbstractDao {
 			lockSql = "LOCK TABLES `inventory` WRITE;";
 			for(ProductTemplatePart ptp : 
 					productTemplate.getProductTemplateParts()){
-				prepStmt = conn.prepareStatement(lockSql);
+				prepStmt = conn.prepareCall(lockSql);
 				prepStmt.execute();
 				prepStmt = conn.prepareCall(updateSql);
 				prepStmt.setInt(1, ptp.getPartQuantity());
@@ -75,10 +80,14 @@ public class ProductsDao extends AbstractDao {
 			prepStmt.setInt(1, (productTemplate.getQuantity()+1));
 			prepStmt.setInt(2, productTemplate.getId());
 			prepStmt.execute();
+			prepStmt = conn.prepareCall(commit);
+			prepStmt.execute();
 		} catch (SQLException e) {
+			prepStmt = conn.prepareCall(rollback);
+			prepStmt.execute();
 			e.printStackTrace();
 		} finally {
-			prepStmt = conn.prepareStatement(unlockSql);
+			prepStmt = conn.prepareCall(unlockSql);
 			prepStmt.execute();
 			prepStmt.close();
 			this.connGateway.closeConnection(conn);
