@@ -64,6 +64,8 @@ public class PartsDetailView extends JFrame {
 	
 	private JButton savePart;
 	
+	private JButton createProduct;
+	
 	private UnitsOfQuantity unitsOfQuantityTypes;
 	
 	private boolean newPart = false;
@@ -127,6 +129,12 @@ public class PartsDetailView extends JFrame {
 		this.savePart.setActionCommand("savePart");
 		if(!this.session.canAddParts()){
 			this.savePart.setEnabled(false);
+		}
+		
+		this.createProduct = new JButton("Create Product");
+		this.createProduct.setActionCommand("createProduct");
+		if(!this.session.canCreateProducts()){
+			this.createProduct.setEnabled(false);
 		}
 		
 		this.controls.add(this.savePart);
