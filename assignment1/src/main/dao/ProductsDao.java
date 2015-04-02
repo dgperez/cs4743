@@ -16,7 +16,7 @@ public class ProductsDao extends AbstractDao {
 	}
 
 	public Item addProduct(Item item) throws SQLException{
-		String lockSql = "LOCK TABLES `inventory` WRITE;";
+		String lockSql = "LOCK TABLES `inventory` WRITE, `locations` READ;";
 		String unlockSql = "UNLOCK TABLES;";
 		String selectSql = "SELECT `pid`, " +
 				"`parts_id`, " + 
@@ -127,6 +127,9 @@ public class ProductsDao extends AbstractDao {
 				}
 				prepStmt.close();
 				conn.commit();
+				prepStmt = conn.prepareStatement(unlockSql);
+				prepStmt.execute();
+				prepStmt.close();
 				int itemId = 0;
 				if(actual_quantity == 0){
 					String getIdSql = "select last_insert_id();";
@@ -157,9 +160,6 @@ public class ProductsDao extends AbstractDao {
 				tempException = e;
 			} finally {
 				conn.setAutoCommit(true);
-				prepStmt = conn.prepareStatement(unlockSql);
-				prepStmt.execute();
-				prepStmt.close();
 				this.connGateway.closeConnection(conn);
 				if(tempException != null){
 					throw tempException;
