@@ -44,7 +44,7 @@ which accounts for the slowness of adding ProductTemplatePart and for editing an
 
  Assignment 5:
 
- PERFORMANCE NOTE: Refactored PartDao and ItemDao, but still seeing a large performance hit. Did a check and it appears 62 independent connections are being made. I looked into pooling the connections, but decided that I'd rather save that for assignment six. - Kyle Haley
+ PERFORMANCE NOTE: Refactored PartDao and ItemDao, but still seeing a large performance hit. Did a check and it appears 62 independent connections are being made. I looked into pooling the connections, but decided that I'd rather save that for assignment six. Instead, I overloaded several methods and trimmed the number of connections down to 5 on startup. There is a lot of duplicate code, but this can be fixed in assignment six as well. - Kyle Haley
 
  LOGIN: A login view was created with a corresponding controller to manage permissions. The selected user is passed to the Authenticator constructor and a Session object is returned. Based on the role, the permissions in the Session are configured and then passed to other views, so that the corresponding permissions filter down to the controllers. For login, a while loop is used to control whether or not the other views are loaded properly.
 
