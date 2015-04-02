@@ -41,8 +41,6 @@ public class ProductTemplateDetailView extends JFrame {
 	
 	private JButton saveTemplate;
 	
-	private JButton createProduct;
-	
 	private ProductTemplate productTemplate;
 	
 	private boolean newTemplate = false;
@@ -82,14 +80,10 @@ public class ProductTemplateDetailView extends JFrame {
 		
 		this.controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
 		
-		this.createProduct = new JButton("Create Product");
-		this.createProduct.setActionCommand("createProduct");
-		
 		this.saveTemplate = new JButton("Save Template");
 		this.saveTemplate.setActionCommand("saveTemplate");
 		
 		this.controls.add(this.saveTemplate);
-		this.controls.add(createProduct);
 				
 		this.gui = new JPanel(new BorderLayout(10, 10));
 		this.gui.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -162,7 +156,8 @@ public class ProductTemplateDetailView extends JFrame {
 					this.getProductDescription());
 		} else {
 			this.productTemplate.setProductNumber(this.getProductNumber());
-			this.productTemplate.setProductDescription(this.getProductDescription());
+			this.productTemplate
+				.setProductDescription(this.getProductDescription());
 		}
 		return this.productTemplate;
 	}

@@ -48,14 +48,23 @@ public class ItemDao extends AbstractDao {
 	public Item editItem(Item item) throws SQLException{
 		if(!this.getItemTimestamp(item.getId())
 				.equals(item.getLastModified())){
-			System.out.println(item.getLastModified() + " " + this.getItemTimestamp(item.getId()));
 			throw new SQLException("This item has been modified by another " +
 					"user. We will refresh the view.");
 		}
 		
 		int locationId = this.insertOrUpdate_TypeTable(1, 
 				item.getLocation().getValue());
-		String updateSql = "update `inventory` set `parts_id` = ?, " +
+		String partOrProduct = "";
+		int partOrProductId = 0;
+		if(!item.hasProduct()){
+			partOrProductId = item.getPart().getId();
+			partOrProduct = "`parts_id`";
+		} else {
+			partOrProductId = item.getProductTemplate().getId();
+			partOrProduct = "`product_templates_id`";
+		}
+		String updateSql = "update `inventory` set " + partOrProduct 
+				+ " = ?, " +
 				"`quantity` = ?, " +
 				"`locations_id` = ?," +
 				"`last_modified` = null" +
@@ -63,7 +72,7 @@ public class ItemDao extends AbstractDao {
 		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(updateSql);
 		
-		prepStmt.setInt(1, item.getPart().getId());
+		prepStmt.setInt(1, partOrProductId);
 		prepStmt.setInt(2, item.getQuantity());
 		prepStmt.setInt(3, locationId);
 		prepStmt.setInt(4, item.getId());

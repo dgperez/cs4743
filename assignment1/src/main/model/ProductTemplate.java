@@ -76,4 +76,51 @@ public class ProductTemplate {
 				"prod#: " + this.productNumber + ", " + 
 				"prod_desc: " + this.productDescription;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		result = prime
+				* result
+				+ ((productDescription == null) ? 0 : productDescription
+						.hashCode());
+		result = prime * result
+				+ ((productNumber == null) ? 0 : productNumber.hashCode());
+		result = prime
+				* result
+				+ ((productTemplateParts == null) ? 0 : productTemplateParts
+						.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ProductTemplate other = (ProductTemplate) obj;
+		if (id != other.id)
+			return false;
+		if (productDescription == null) {
+			if (other.productDescription != null)
+				return false;
+		} else if (!productDescription.equals(other.productDescription))
+			return false;
+		if (productNumber == null) {
+			if (other.productNumber != null)
+				return false;
+		} else if (!productNumber.equals(other.productNumber))
+			return false;
+		if (productTemplateParts == null) {
+			if (other.productTemplateParts != null)
+				return false;
+		} else if (!productTemplateParts.equals(other.productTemplateParts))
+			return false;
+		return true;
+	}
 }

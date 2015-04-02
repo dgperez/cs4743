@@ -59,19 +59,6 @@ public class ProductTemplateDetailController implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Error: " + 
 						e1.getMessage());
 			}
-		} else if(e.getActionCommand().endsWith("createProduct")){
-			ProductTemplate productTemplate = 
-					this.productTemplateDetailView.getProductTemplate();
-			try{
-				ProductsDao pDao = new ProductsDao(connGateway);
-				pDao.addProduct(productTemplate);
-				this.productTemplates.editProductTemplate(productTemplate);
-			} catch(Exception e1){
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(null, "Error: " +
-						e1.toString());
-			}
-			this.productTemplateDetailView.refreshObserver();
 		}
 	}
 

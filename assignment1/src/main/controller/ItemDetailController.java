@@ -22,7 +22,7 @@ public class ItemDetailController implements ActionListener {
 	private Session session;
 	
 	public ItemDetailController(ItemDetailView view
-			,Inventory inventory, Session session) {
+			, Inventory inventory, Session session) {
 		this.view = view;
 		this.inventory = inventory;
 		this.session = session;

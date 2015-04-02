@@ -36,7 +36,8 @@ public class InventoryListController implements MouseListener, ActionListener {
 
 	public InventoryListController(InventoryListView listView, 
 			Inventory inventory, Locations locations, 
-			PartsInventory partsInventory, Session session, ProductTemplates productTemplates) {
+			PartsInventory partsInventory, Session session, 
+			ProductTemplates productTemplates) {
 		this.locations = locations;
 		this.listView = listView;
 		this.inventory = inventory;
@@ -58,7 +59,7 @@ public class InventoryListController implements MouseListener, ActionListener {
 				}
 				ItemDetailView view = new 
 						ItemDetailView(this.locations, this.partsInventory, 
-								false, isProduct);
+								false, isProduct, this.productTemplates);
 				this.inventory.registerObservers(view);
 				view.setItem(tempItem);
 				ItemDetailController itemController = 
@@ -114,7 +115,8 @@ public class InventoryListController implements MouseListener, ActionListener {
 		}
 		if(e.getActionCommand().startsWith("add")){
 			ItemDetailView view = new ItemDetailView(this.locations, 
-					this.partsInventory, true, isProduct);
+					this.partsInventory, true, isProduct, 
+					this.productTemplates);
 			ItemDetailController itemController = 
 					new ItemDetailController(view, this.inventory, 
 							this.session);

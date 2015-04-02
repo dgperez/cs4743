@@ -75,6 +75,10 @@ public class Item {
 		this.lastModified = lastModified;
 	}
 	
+	public boolean hasProduct(){
+		return this.getPart() == null;
+	}
+	
 	@Override
 	public String toString(){
 		String temp = (this.part != null) ?
@@ -93,8 +97,12 @@ public class Item {
 		int result = 1;
 		result = prime * result + id;
 		result = prime * result
+				+ ((lastModified == null) ? 0 : lastModified.hashCode());
+		result = prime * result
 				+ ((location == null) ? 0 : location.hashCode());
 		result = prime * result + ((part == null) ? 0 : part.hashCode());
+		result = prime * result
+				+ ((productTemplate == null) ? 0 : productTemplate.hashCode());
 		result = prime * result + quantity;
 		return result;
 	}
@@ -109,6 +117,11 @@ public class Item {
 			return false;
 		Item other = (Item) obj;
 		if (id != other.id)
+			return false;
+		if (lastModified == null) {
+			if (other.lastModified != null)
+				return false;
+		} else if (!lastModified.equals(other.lastModified))
 			return false;
 		if (location == null) {
 			if (other.location != null)
@@ -128,6 +141,5 @@ public class Item {
 		if (quantity != other.quantity)
 			return false;
 		return true;
-	}
-	
+	}	
 }

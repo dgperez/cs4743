@@ -6,6 +6,7 @@ import java.util.List;
 
 import main.dao.ConnectionGateway;
 import main.dao.ItemDao;
+import main.dao.ProductsDao;
 import main.view.InventoryListView;
 import main.view.ItemDetailView;
 
@@ -23,10 +24,13 @@ public class Inventory {
 	
 	private ItemDao itemDao;
 	
+	private ProductsDao productsDao;
+	
 	public Inventory(ConnectionGateway connGateway){
 		this.connGateway = connGateway;
 		this.inventory = new ArrayList<Item>();
 		this.itemDao = new ItemDao(this.connGateway);
+		this.productsDao = new ProductsDao(this.connGateway);
 	}
 	
 	public void loadInitialInventory() throws Exception{
@@ -45,7 +49,12 @@ public class Inventory {
  	}
 	
  	public Item addItem(Item item) throws Exception{
- 		Item temp = this.itemDao.addItem(item);
+ 		Item temp = null;
+ 		if(!item.hasProduct()){
+ 			temp = this.itemDao.addItem(item);
+ 		} else {
+ 			temp = this.productsDao.addProduct(item);
+ 		}
  		this.inventory.add(temp);
  		this.updateView();
  		return temp;
@@ -125,7 +134,8 @@ public class Inventory {
 						.equals(item.getLocation().getValue())
 							&& i.getId() != item.getId()){
 				System.out.println(i.getPart() + " : " + item.getPart());
-				System.out.println(i.getLocation() + " : " + item.getLocation());
+				System.out.println(i.getLocation() 
+						+ " : " + item.getLocation());
 				System.out.println(i.getId() + " : " + item.getId());
 				message += "No two Item's can have the same " +
 						"Location and Part Number.\n";

@@ -68,6 +68,7 @@ public class ItemDetailView extends JFrame {
 		this.inputs = new JPanel(new BorderLayout(5,5));
 		this.isNewItem = isNewItem;
 		this.isProduct = isProduct;
+		this.productTemplates = productTemplates;
 
 		JPanel labelsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
 		JPanel fieldsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
