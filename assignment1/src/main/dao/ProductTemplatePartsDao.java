@@ -22,8 +22,23 @@ public class ProductTemplatePartsDao extends AbstractDao {
 		String insertSql = "INSERT INTO `product_template_parts` " +
 				"(`parts_id`, `product_template_id`, `quantity`) " +
 				"VALUES (?, ?, ?);";
+		String preventAddSql = "SELECT count(`pid`) FROM `inventory` "
+				+ "WHERE `product_templates_id` = ?;";
+		PreparedStatement prepStmt = tempConn.prepareStatement(preventAddSql);
+		prepStmt.setInt(1, productTemplatePart.getProductTemplateId());
+		ResultSet rs = prepStmt.executeQuery();
+		rs.next();
+		int product_template_count = rs.getInt(1);
+		if(product_template_count > 0){
+			throw new SQLException("Cannot add additional parts to a "
+					+ "Product Template that has already been "
+					+ "created in inventory.\n If you wish to modify an "
+					+ "existing template that has been added to inventory, "
+					+ "please create a new template with "
+					+ "that additional part.");
+		}
 		
-		PreparedStatement prepStmt = tempConn.prepareStatement(insertSql);
+		prepStmt = tempConn.prepareStatement(insertSql);
 		prepStmt.setInt(1, productTemplatePart.getPart().getId());
 		prepStmt.setInt(2, productTemplatePart.getProductTemplateId());
 		prepStmt.setInt(3, productTemplatePart.getPartQuantity());
@@ -33,7 +48,7 @@ public class ProductTemplatePartsDao extends AbstractDao {
 		
 		String getIdSql = "select last_insert_id();";
 		prepStmt = tempConn.prepareStatement(getIdSql);
-		ResultSet rs = prepStmt.executeQuery();
+		rs = prepStmt.executeQuery();
 		rs.next();
 		int productTemplatePartId = rs.getInt(1);
 		ProductTemplatePart tempProductTemplatePart = 
