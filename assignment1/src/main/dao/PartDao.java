@@ -17,10 +17,11 @@ public class PartDao extends AbstractDao {
 	}
 
 	public Part addPart(Part part) throws SQLException {
+		Connection tempConn = this.connGateway.getConnection();
 		int vendorId = this.insertOrUpdate_TypeTable(2, 
-				part.getVendor());
+				part.getVendor(), tempConn);
 		int unitOfQuantityId = this.insertOrUpdate_TypeTable(3, 
-				part.getUnitOfQuantity().getValue());
+				part.getUnitOfQuantity().getValue(), tempConn);
 		if(0 == unitOfQuantityId || 
 				0 == vendorId){
 			throw new SQLException(
@@ -28,7 +29,6 @@ public class PartDao extends AbstractDao {
 							vendorId, unitOfQuantityId));
 		}
 		
-		Connection tempConn = this.connGateway.getConnection();
 		String insertPart = "insert into `parts` " +
 				"(`part_number`,`part_name`,`vendor_id`," +
 				"`extern_part_number`,`unit_of_quantities_id`) " +
@@ -58,10 +58,11 @@ public class PartDao extends AbstractDao {
 	}
 	
 	public void editPart(Part part) throws SQLException{
+		Connection conn = this.connGateway.getConnection();
 		int vendorId = this.insertOrUpdate_TypeTable(2, 
-				part.getVendor());
+				part.getVendor(), conn);
 		int unitOfQuantityId = this.insertOrUpdate_TypeTable(3, 
-				part.getUnitOfQuantity().getValue());
+				part.getUnitOfQuantity().getValue(), conn);
 		
 		String updatePart = "update `parts` set `part_number` = ?," +
 				" `part_name` = ?," +
@@ -69,7 +70,6 @@ public class PartDao extends AbstractDao {
 				" `extern_part_number` = ?," +
 				" `unit_of_quantities_id` = ?" +
 				" where `pid` = ?;";
-		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(updatePart);
 		prepStmt.setNString(1, part.getPartNumber());
 		prepStmt.setNString(2, part.getPartName());
@@ -91,8 +91,8 @@ public class PartDao extends AbstractDao {
 		ResultSet rs = prepStmt.executeQuery();
 		// Originally had two queries hitting the database
 		TypeDao types = new TypeDao(this.connGateway);
-		HashMap<Integer, String> vendors = types.getTypeList(2);
-		HashMap<Integer, String> units = types.getTypeList(3);
+		HashMap<Integer, String> vendors = types.getTypeList(2, conn);
+		HashMap<Integer, String> units = types.getTypeList(3, conn);
 		ArrayList<Part> parts = new ArrayList<Part>();
 		while(rs.next()){
 			int id = rs.getInt(1);
@@ -136,17 +136,42 @@ public class PartDao extends AbstractDao {
 		String partNumber = rs.getString(2);
 		String partName = rs.getString(3);
 		Entry<Integer, String> vendor = this.selectType(
-				AbstractDao.TableType.VENDORS.getType(), rs.getInt(4));
+				AbstractDao.TableType.VENDORS.getType(), rs.getInt(4), conn);
 		String externPartNumber = rs.getString(5);
 		Entry<Integer, String> unitOfQuantity = 
 				this.selectType(
 						AbstractDao.TableType.UNITS_OF_QUANTITY.getType(), 
-							rs.getInt(6));
+							rs.getInt(6), conn);
 		Part tempPart = new Part(id, partNumber, partName, 
 				vendor.getValue(), unitOfQuantity, externPartNumber);
 		rs.close();
 		prepStmt.close();
 		this.connGateway.closeConnection(conn);
+		return tempPart;
+	}
+	
+	public Part getPart(int pid, Connection conn) throws SQLException{
+		String selectParts = "select `pid`,`part_number`,`part_name`," +
+				"`vendor_id`,`extern_part_number`,`unit_of_quantities_id` " +
+				"from `parts` where `pid` = ?;";
+		PreparedStatement prepStmt = conn.prepareStatement(selectParts);
+		prepStmt.setInt(1, pid);
+		ResultSet rs = prepStmt.executeQuery();
+		rs.next();
+		int id = rs.getInt(1);
+		String partNumber = rs.getString(2);
+		String partName = rs.getString(3);
+		Entry<Integer, String> vendor = this.selectType(
+				AbstractDao.TableType.VENDORS.getType(), rs.getInt(4), conn);
+		String externPartNumber = rs.getString(5);
+		Entry<Integer, String> unitOfQuantity = 
+				this.selectType(
+						AbstractDao.TableType.UNITS_OF_QUANTITY.getType(), 
+							rs.getInt(6), conn);
+		Part tempPart = new Part(id, partNumber, partName, 
+				vendor.getValue(), unitOfQuantity, externPartNumber);
+		rs.close();
+		prepStmt.close();
 		return tempPart;
 	}
 	

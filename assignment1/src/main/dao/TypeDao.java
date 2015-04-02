@@ -38,4 +38,28 @@ public class TypeDao extends AbstractDao {
 		return map;
 	}
 	
+	public HashMap<Integer, String> getTypeList(int typeTable, Connection conn) 
+			throws SQLException{
+		String tableName = "";
+		String columnName = "";
+		String[] tempArray = this.getTypeTableValues(typeTable);
+		tableName = tempArray[0];
+		columnName = tempArray[1];
+		if(tableName.isEmpty()){
+			return null;
+		}
+		String selectSql = "select `pid`, `"+columnName
+				+"` from `"+tableName+"`;";
+		PreparedStatement prepStmt = conn.prepareStatement(selectSql);
+		ResultSet rs = prepStmt.executeQuery();
+		HashMap<Integer, String> map = new HashMap<Integer, String>();
+		while(rs.next()){
+			int pid = rs.getInt(1);
+			String value = rs.getString(2);
+			map.put(pid, value);
+		}
+		prepStmt.close();
+		return map;
+	}
+	
 }

@@ -82,7 +82,7 @@ public class ProductTemplateDao extends AbstractDao {
 			String productDescription = rs.getString(3);
 			ArrayList<ProductTemplatePart> parts = 
 					productTemplatePartsDao.
-						getProductTemplateParts(productTemplateId);
+						getProductTemplateParts(productTemplateId, conn);
 			ProductTemplate productTemplate = 
 					new ProductTemplate(productTemplateId, 
 							productNumber, productDescription);
@@ -117,6 +117,34 @@ public class ProductTemplateDao extends AbstractDao {
 					getProductTemplateParts(productTemplateId);
 		
 		this.connGateway.closeConnection(conn);
+		
+		ProductTemplate productTemplate = 
+				new ProductTemplate(productTemplateId, productNumber, 
+						productDescription);
+		productTemplate.setProductTemplateParts(parts);
+		return productTemplate;
+	}
+	
+	public ProductTemplate getProductTemplate(int pid, Connection conn) 
+			throws SQLException{
+		String selectSql = "SELECT `pid`, `product_number`, " +
+				"`product_description` FROM `product_templates` " +
+				"WHERE `pid` = ?;";
+		PreparedStatement prepStmt = conn.prepareStatement(selectSql);
+		prepStmt.setInt(1, pid);
+		ResultSet rs = prepStmt.executeQuery();
+		rs.next();
+		int productTemplateId = rs.getInt(1);
+		String productNumber = rs.getString(2);
+		String productDescription = rs.getString(3);
+		rs.close();
+		prepStmt.close();
+		
+		ProductTemplatePartsDao productTemplatePartsDao = 
+				new ProductTemplatePartsDao(this.connGateway);
+		ArrayList<ProductTemplatePart> parts = 
+				productTemplatePartsDao.
+					getProductTemplateParts(productTemplateId, conn);
 		
 		ProductTemplate productTemplate = 
 				new ProductTemplate(productTemplateId, productNumber, 

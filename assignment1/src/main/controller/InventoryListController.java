@@ -48,7 +48,8 @@ public class InventoryListController implements MouseListener, ActionListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(e.getClickCount() == 2 && session.canAddInventory()){
+		if(e.getClickCount() == 2 && (this.session.canAddInventory() 
+				|| this.session.canCreateProducts())){
 			if(e.getSource() instanceof JList){
 				@SuppressWarnings("unchecked")
 				JList<Object> list = (JList<Object>)e.getSource();
@@ -59,7 +60,8 @@ public class InventoryListController implements MouseListener, ActionListener {
 				}
 				ItemDetailView view = new 
 						ItemDetailView(this.locations, this.partsInventory, 
-								false, isProduct, this.productTemplates);
+								false, isProduct, this.productTemplates, 
+								this.session);
 				this.inventory.registerObservers(view);
 				view.setItem(tempItem);
 				ItemDetailController itemController = 
@@ -116,7 +118,7 @@ public class InventoryListController implements MouseListener, ActionListener {
 		if(e.getActionCommand().startsWith("add")){
 			ItemDetailView view = new ItemDetailView(this.locations, 
 					this.partsInventory, true, isProduct, 
-					this.productTemplates);
+					this.productTemplates, this.session);
 			ItemDetailController itemController = 
 					new ItemDetailController(view, this.inventory, 
 							this.session);

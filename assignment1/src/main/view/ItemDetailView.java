@@ -22,6 +22,7 @@ import main.model.Part;
 import main.model.PartsInventory;
 import main.model.ProductTemplate;
 import main.model.ProductTemplates;
+import main.model.Session;
 
 public class ItemDetailView extends JFrame {
 
@@ -60,15 +61,18 @@ public class ItemDetailView extends JFrame {
 	private boolean isNewItem;
 	
 	private boolean isProduct;
+	
+	private Session session;
 
 	public ItemDetailView(Locations locations, PartsInventory partsInventory, 
 			boolean isNewItem, boolean isProduct, 
-			ProductTemplates productTemplates) {
+			ProductTemplates productTemplates, Session session) {
 		this.locations = locations;
 		this.inputs = new JPanel(new BorderLayout(5,5));
 		this.isNewItem = isNewItem;
 		this.isProduct = isProduct;
 		this.productTemplates = productTemplates;
+		this.session = session;
 
 		JPanel labelsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
 		JPanel fieldsPanel = new JPanel(new GridLayout(0, 1, 3, 3));
@@ -103,9 +107,12 @@ public class ItemDetailView extends JFrame {
 
 		labelsPanel.add(this.partOrProductLabel);
 		fieldsPanel.add(this.partsOrProductTemplates);
-
+		
 		labelsPanel.add(this.quantityLabel);
 		fieldsPanel.add(this.quantity);
+		if(this.isProduct){
+			this.quantity.setEditable(false);
+		}
 
 		labelsPanel.add(this.locationLabel);
 		fieldsPanel.add(this.location);
@@ -114,7 +121,9 @@ public class ItemDetailView extends JFrame {
 
 		this.saveItem = new JButton("Save Item");
 		this.saveItem.setActionCommand("saveItem");
-
+		if(!this.session.canCreateProducts()){
+			this.saveItem.setEnabled(false);
+		}
 		this.controls.add(this.saveItem);
 
 		JPanel gui = new JPanel(new BorderLayout(10,10));

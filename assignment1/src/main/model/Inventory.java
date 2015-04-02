@@ -54,8 +54,11 @@ public class Inventory {
  			temp = this.itemDao.addItem(item);
  		} else {
  			temp = this.productsDao.addProduct(item);
+ 			this.loadInitialInventory();
  		}
- 		this.inventory.add(temp);
+ 		if(!item.hasProduct()){
+ 			this.inventory.add(temp);
+ 		}
  		this.updateView();
  		return temp;
  	}
@@ -129,25 +132,23 @@ public class Inventory {
 			valid = false;
 		}
 		for(Item i : this.inventory){
-			if(i.getPart().equals(item.getPart()) 
-					&& i.getLocation().getValue()
-						.equals(item.getLocation().getValue())
-							&& i.getId() != item.getId()){
-				System.out.println(i.getPart() + " : " + item.getPart());
-				System.out.println(i.getLocation() 
-						+ " : " + item.getLocation());
-				System.out.println(i.getId() + " : " + item.getId());
-				message += "No two Item's can have the same " +
-						"Location and Part Number.\n";
-				valid = false;
-				break;
+			if(!item.hasProduct() && !i.hasProduct()){
+				if(i.getPart().equals(item.getPart()) 
+						&& i.getLocation().getValue()
+							.equals(item.getLocation().getValue())
+								&& i.getId() != item.getId()){
+					message += "No two Item's can have the same " +
+							"Location and Part Number.\n";
+					valid = false;
+					break;
+				}
 			}
 		}
 		if(item.getLocation().getValue().equals("Unknown")){
 			valid = false;
 			message += "Location cannot be Unknown.\n";
 		}
-		if(item.getQuantity() < 0){
+		if(item.getQuantity() < 0 && !item.hasProduct()){
 			valid = false;
 			message += "Quantity cannot be less than zero " +
 					"and must be a number.\n";

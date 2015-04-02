@@ -31,7 +31,8 @@ public class ItemDetailController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("saveItem") 
-				&& this.session.canAddInventory()){
+				&& (this.session.canAddInventory() 
+						|| this.session.canCreateProducts())){
 			Item item = this.view.getItem();
 			boolean itemRefreshed = false;
 			try {
@@ -41,11 +42,17 @@ public class ItemDetailController implements ActionListener {
 						this.newItem = false;
 						this.view.setNewItem(this.newItem);
 					} else {
-						this.view.setItem(this.inventory.editItem(item));
+						if(item.hasProduct()){
+							this.view.setItem(this.inventory.addItem(item));
+						} else {
+							this.view.setItem(this.inventory.editItem(item));
+						}
 					}
 				}
 			} catch (Exception e1) {
 				String message = e1.getMessage();
+				if(message == null)
+					message = "";
 				JOptionPane.showMessageDialog(null, "Error: " + 
 						message);
 				if(message.contains(

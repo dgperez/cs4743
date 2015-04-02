@@ -18,7 +18,6 @@ import main.controller.InventoryListController;
 import main.model.Inventory;
 import main.model.Item;
 import main.model.ProductTemplate;
-import main.model.ProductTemplateInventory;
 import main.model.Session;
 
 public class InventoryListView extends JFrame {
@@ -37,8 +36,6 @@ public class InventoryListView extends JFrame {
 
 	private Inventory inventory;
 
-	private ProductTemplateInventory productInventory;
-
 	private JScrollPane scrollPane;
 
 	private JPanel controls;
@@ -47,12 +44,10 @@ public class InventoryListView extends JFrame {
 
 	private Session session;
 
-	public InventoryListView(Inventory inventory, 
-			ProductTemplateInventory productInventory, Session session) {
+	public InventoryListView(Inventory inventory, Session session) {
 		super("Cabinetron Inventory");
 
 		this.inventory = inventory;
-		this.productInventory = productInventory;
 		this.session = session;
 
 		this.panel = new JPanel();
@@ -62,9 +57,6 @@ public class InventoryListView extends JFrame {
 		listModel = new DefaultListModel<Object>();
 		for(Item item : this.inventory.getInventory()){
 			listModel.addElement(item);
-		}
-		for(ProductTemplate product : this.productInventory.getInventory()){
-			listModel.addElement(product);
 		}
 		this.list = new JList<Object>(listModel);
 
@@ -135,11 +127,6 @@ public class InventoryListView extends JFrame {
 
 	public void refreshList(Inventory inventory){
 		this.inventory = inventory;
-		refreshList();
-	}
-
-	public void refreshList(ProductTemplateInventory productInventory){
-		this.productInventory = productInventory;
 		refreshList();
 	}
 

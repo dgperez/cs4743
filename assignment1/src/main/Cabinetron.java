@@ -1,5 +1,6 @@
 package main;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import main.controller.InventoryListController;
@@ -12,7 +13,6 @@ import main.dao.TypeDao;
 import main.model.Inventory;
 import main.model.Locations;
 import main.model.PartsInventory;
-import main.model.ProductTemplateInventory;
 import main.model.ProductTemplates;
 import main.model.Session;
 import main.model.UnitsOfQuantity;
@@ -31,6 +31,7 @@ public class Cabinetron {
 
 		try {
 			ConnectionGateway connGateway = new ConnectionGateway();
+			Connection conn = connGateway.getConnection();
 			
 			User user1 = new User("Tom Jones", "tom.jones@test.com", 
 					"Production Manager");
@@ -76,9 +77,6 @@ public class Cabinetron {
 			ProductTemplates productTemplates = 
 					new ProductTemplates(connGateway);
 			productTemplates.loadInitialProductTemplates();
-			ProductTemplateInventory productInventory = 
-					new ProductTemplateInventory(connGateway);
-			productInventory.loadInitialInventory();
 			if(session.canViewProductTemplates()){
 				ProductTemplateListView productTemplatesListView = 
 						new ProductTemplateListView(productTemplates);
@@ -88,7 +86,7 @@ public class Cabinetron {
 						new ProductTemplateListController(productTemplates, 
 								productTemplatesListView, connGateway);
 				productTemplatesListView
-				.registerListener(productTemplatesListController);
+					.registerListener(productTemplatesListController);
 			}
 			
 			
@@ -97,9 +95,9 @@ public class Cabinetron {
 			if(session.canViewInventory()){
 				Locations locations = new Locations();
 				locations.resetLocations(typeDao.getTypeList(
-						AbstractDao.TableType.LOCATIONS.getType()));
+						AbstractDao.TableType.LOCATIONS.getType(), conn));
 				
-				inventoryListView = new InventoryListView(inventory, productInventory, session);
+				inventoryListView = new InventoryListView(inventory, session);
 				inventoryListController = new 
 						InventoryListController(inventoryListView, 
 								inventory, locations, partsInventory, session, 
@@ -111,7 +109,8 @@ public class Cabinetron {
 			if(session.canViewParts()){
 				UnitsOfQuantity unitsOfQuantity = new UnitsOfQuantity();
 				unitsOfQuantity.resetUnitsOfQuantity(typeDao.getTypeList(
-						AbstractDao.TableType.UNITS_OF_QUANTITY.getType()));
+						AbstractDao.TableType.UNITS_OF_QUANTITY.getType(),
+						conn));
 				
 				PartsListView partsListView = 
 						new PartsListView(partsInventory, session);
@@ -123,6 +122,7 @@ public class Cabinetron {
 	
 				partsInventory.registerView(partsListView);
 			}
+			connGateway.closeConnection(conn);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

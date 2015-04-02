@@ -15,7 +15,8 @@ public abstract class AbstractDao {
 		this.connGateway = connGateway;
 	}
 	
-	protected int insertOrUpdate_TypeTable(int typeTable, String value) 
+	protected int insertOrUpdate_TypeTable(int typeTable, String value, 
+			Connection conn) 
 			throws SQLException{
 		String tableName = "";
 		String columnName = "";
@@ -25,8 +26,6 @@ public abstract class AbstractDao {
 		if(tableName.isEmpty()){
 			return 0;
 		}
-		
-		Connection conn = this.connGateway.getConnection();
 		String selectLocation = "select `pid` from `"+tableName+"` where" +
 				" `"+columnName+"` = ?;";
 		PreparedStatement prepStmt = 
@@ -53,11 +52,11 @@ public abstract class AbstractDao {
 		}
 		rs.close();
 		prepStmt.close();
-		connGateway.closeConnection(conn);
 		return id;
 	}
 	
-	protected Entry<Integer, String> selectType(int typeTable, int pid) 
+	protected Entry<Integer, String> selectType(int typeTable, int pid, 
+			Connection conn) 
 			throws SQLException{
 		String tableName = "";
 		String columnName = "";
@@ -69,7 +68,6 @@ public abstract class AbstractDao {
 		}
 		String selectEntry = "select `"+columnName+"` from `"
 				+tableName+"` where `pid` = ?;";
-		Connection conn = this.connGateway.getConnection();
 		PreparedStatement prepStmt = conn.prepareStatement(selectEntry);
 		prepStmt.setInt(1, pid);
 		ResultSet rs = prepStmt.executeQuery();
@@ -77,10 +75,8 @@ public abstract class AbstractDao {
 		if(rs.next()){
 			value = rs.getString(1);
 			rs.close();
-			this.connGateway.closeConnection(conn);
 		} else {
 			rs.close();
-			this.connGateway.closeConnection(conn);
 			throw new SQLException(
 					String.format("Could not select from %s.", tableName));
 		}
