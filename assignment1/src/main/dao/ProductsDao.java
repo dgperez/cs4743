@@ -127,10 +127,6 @@ public class ProductsDao extends AbstractDao {
 				}
 				prepStmt.close();
 				conn.commit();
-				conn.setAutoCommit(true);
-				prepStmt = conn.prepareStatement(unlockSql);
-				prepStmt.execute();
-				prepStmt.close();
 				int itemId = 0;
 				if(actual_quantity == 0){
 					String getIdSql = "select last_insert_id();";
@@ -160,6 +156,10 @@ public class ProductsDao extends AbstractDao {
 				conn.rollback();
 				tempException = e;
 			} finally {
+				conn.setAutoCommit(true);
+				prepStmt = conn.prepareStatement(unlockSql);
+				prepStmt.execute();
+				prepStmt.close();
 				this.connGateway.closeConnection(conn);
 				if(tempException != null){
 					throw tempException;
