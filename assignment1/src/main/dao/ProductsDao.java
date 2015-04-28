@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import main.model.Item;
-import main.model.ProductTemplate;
 import main.model.ProductTemplatePart;
 
 public class ProductsDao extends AbstractDao {

@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import main.dao.ConnectionGateway;
-import main.dao.ProductsDao;
 import main.model.ProductTemplate;
 import main.model.ProductTemplates;
 import main.view.ProductTemplateDetailView;

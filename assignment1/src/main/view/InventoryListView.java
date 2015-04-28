@@ -17,7 +17,6 @@ import javax.swing.JScrollPane;
 import main.controller.InventoryListController;
 import main.model.Inventory;
 import main.model.Item;
-import main.model.ProductTemplate;
 import main.model.Session;
 
 public class InventoryListView extends JFrame {
