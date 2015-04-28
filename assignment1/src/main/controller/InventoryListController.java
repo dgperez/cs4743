@@ -13,12 +13,10 @@ import main.model.Inventory;
 import main.model.Item;
 import main.model.Locations;
 import main.model.PartsInventory;
-import main.model.ProductTemplate;
 import main.model.ProductTemplates;
 import main.model.Session;
 import main.view.InventoryListView;
 import main.view.ItemDetailView;
-import main.view.ProductTemplateDetailView;
 
 public class InventoryListController implements MouseListener, ActionListener {
 

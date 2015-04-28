@@ -1,31 +1,19 @@
 package main.dao;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
 import java.util.Properties;
 
 
 public class ConnectionGateway {
 	
 	private Properties connectionParams;
-
-	private static String macSqlConnPropPath = 
-			"/Users/kylehaley/dev/school/courses/cs/cs4743/" +
-			"assignment1/misc/properties/db.properties";
 	
-	private static String windowsSqlConnPropPath = 
-			"F:\\git\\cs4743\\assignment1\\misc\\properties\\db.properties";
-	
-	private static String propertyFilePath;
-	
-	private static int total = 0;
+	private static String propertyFilePath = "/properties/db.properties";
 	
 	public ConnectionGateway() {
 		this.initProperties();		
@@ -33,21 +21,26 @@ public class ConnectionGateway {
 	
 	private void initProperties(){
 		this.connectionParams = new Properties();
-		/*if(System.getProperty("os.name").contains("Mac OS X")){
-			ConnectionGateway.propertyFilePath = 
-					ConnectionGateway.macSqlConnPropPath;
+		this.connectionParams.put("db.user", "nlw716");
+		this.connectionParams.put("db.password", "i56q7uR6Vl51qQ4tLbOE");
+		this.connectionParams.put("db.hostname", 
+				"devcloud.fulgentcorp.com");
+		this.connectionParams.put("db.port", "3306");
+		this.connectionParams.put("db.default_schema", "nlw716");
+		/*if(System.getProperty("os.name").contains("Mac OS X")){ 
 			try {
-				FileInputStream file = new FileInputStream(
-						new File(ConnectionGateway.propertyFilePath));
-				this.connectionParams.load(file);
-				file.close();
+				InputStream stream = 
+						this.getClass().getResourceAsStream(
+								ConnectionGateway.propertyFilePath);
+				this.connectionParams.load(stream);
+				stream.close();
 			} catch (FileNotFoundException fnfe) {
 				// TODO Auto-generated catch block
 				fnfe.printStackTrace();
 			} catch (IOException ioex){
 				ioex.printStackTrace();
 			}
-		} else { */
+		} else { 
 			this.connectionParams = new Properties();
 			this.connectionParams.put("db.user", "nlw716");
 			this.connectionParams.put("db.password", "i56q7uR6Vl51qQ4tLbOE");
@@ -55,7 +48,7 @@ public class ConnectionGateway {
 					"devcloud.fulgentcorp.com");
 			this.connectionParams.put("db.port", "3306");
 			this.connectionParams.put("db.default_schema", "nlw716");
-		//}
+		}*/
 		
 	}
 	
@@ -75,7 +68,6 @@ public class ConnectionGateway {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			conn = DriverManager.getConnection(this.getConnectionString());
-			System.out.println(++total);
 		} catch (InstantiationException | IllegalAccessException
 				| ClassNotFoundException e) {
 			// TODO Auto-generated catch block
