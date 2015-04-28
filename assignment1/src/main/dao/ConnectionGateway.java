@@ -33,7 +33,7 @@ public class ConnectionGateway {
 	
 	private void initProperties(){
 		this.connectionParams = new Properties();
-		if(System.getProperty("os.name").contains("Mac OS X")){
+		/*if(System.getProperty("os.name").contains("Mac OS X")){
 			ConnectionGateway.propertyFilePath = 
 					ConnectionGateway.macSqlConnPropPath;
 			try {
@@ -47,7 +47,7 @@ public class ConnectionGateway {
 			} catch (IOException ioex){
 				ioex.printStackTrace();
 			}
-		} else {
+		} else { */
 			this.connectionParams = new Properties();
 			this.connectionParams.put("db.user", "nlw716");
 			this.connectionParams.put("db.password", "i56q7uR6Vl51qQ4tLbOE");
@@ -55,7 +55,7 @@ public class ConnectionGateway {
 					"devcloud.fulgentcorp.com");
 			this.connectionParams.put("db.port", "3306");
 			this.connectionParams.put("db.default_schema", "nlw716");
-		}
+		//}
 		
 	}
 	
